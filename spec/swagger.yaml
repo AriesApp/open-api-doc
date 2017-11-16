@@ -13,6 +13,8 @@ info:
 host: api.waiverforever.com
 basePath: /openapi/v1
 tags:
+  - name: auth
+    description: Test authentication
   - name: webhooks
     description: How WaiverForever sending out data
   - name: template
@@ -20,6 +22,26 @@ tags:
 schemes:
   - https
 paths:
+  /auth/ping:
+    get:
+      tags:
+        - auth
+      summary: Test if the api key is valid
+      operationId: authPing
+      produces:
+       - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              user:
+                type: string
+              
+        '403':
+          description: Invalid api key
+      
   /webhooks/subscribeEvent:
     post:
       tags:
@@ -47,9 +69,9 @@ paths:
                 type: string
       responses:
         '200':
-          description: successful operation
+          description: Successful request
           schema:
-            type: object
+            $ref: '#/definitions/Response'
         '403':
           description: Invalid api key
   /webhooks/unsubscribeEvent:
@@ -77,9 +99,9 @@ paths:
                 type: string
       responses:
         '200':
-          description: successful operation
+          description: Successful request
           schema:
-            type: object
+            $ref: '#/definitions/Response'
         '403':
           description: Invalid api key
   /template:
@@ -93,14 +115,21 @@ paths:
         '200':
           description: successful operation
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/Template'
+            type: object
+            properties:
+              result:
+                type: boolean
+              msg:
+                type: string
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/Template'
         '403':
           description: Invalid api key
       security:
         - api_key: []
-  '/template/{template_id}/sampleWaiver':
+  /template/{template_id}/sampleWaiver:
     get:
       tags:
         - template
@@ -116,21 +145,69 @@ paths:
           type: string
       responses:
         '200':
-          description: successful operation
+          description: Successful request
           schema:
-            $ref: '#/definitions/Waiver'
+            type: object
+            properties:
+              result:
+                type: boolean
+              msg:
+                type: string
+              data:
+                $ref: '#/definitions/Waiver'
         '403':
           description: Invalid api key
         '404':
-          description: Waiver not found
+          description: Template not found
       security:
         - api_key: []
+  /template/{template_id}/requestWaiver:
+    post:
+      tags:
+        - template
+      summary: Request a waiver to sign
+      operationId: requestWaiver
+      produces:
+        - application/json
+      parameters:
+        - name: template_id
+          in: path
+          description: template id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful request
+          schema:
+            type: object
+            properties:
+              result:
+                type: boolean
+              msg:
+                type: string
+              data:
+                type: object
+                properties:
+                  tracking_id:
+                    type: string
+        '403':
+          description: Invalid api key
+        '404':
+          description: Template not found
+    
 securityDefinitions:
   api_key:
     type: apiKey
     name: X-API-Key
     in: header
 definitions:
+  Response:
+    type: object
+    properties:
+      result:
+        type: boolean
+      msg:
+        type: string
   Template:
     type: object
     properties:
