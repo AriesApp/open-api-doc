@@ -3,27 +3,45 @@
 
 ## Introduction
 
-TBD
+WaiverForever is a leading edge electronic waiver system, we take it seriously to consider openning our APIs for developers and power users.
+
+By integrating these APIs with existing services or creating them from scratch, users now are able to automate new workflows that couldn't done before.
+
+For demonstration, we have built a [Zapier](https://zapier.com) app using these APIs.
+
+This is only the first step, stay stuned for more open APIs.
+
+### Terminologies
+
+**Template** is similar to *class* in object-oriented languages. Each template in WaiverForever has a unique identifier. Each time after you edit and save it, a new version of this template will be created.
+
+In general, we always return the latest version.
+
+**Wavier** is similar to *instance* in object-oriented languages. Each time after user sign and submit (uploaded), a new waiver was created and saved.
 
 ## Workflow
 
-TBD
+<How it works>
 
-### Authentication
+### 1. Authentication
 
-TBD
+You need a valid **api key** to access these APIs, each API key should represent an standalone app. You can generate and revoke your API keys in the  [Settings / API]() tab.
 
-#### API Key
+The auth mechanism is simple, all you need to do is add a customer HTTP header: `X-API-Key`
 
-TBD
+### 2. Webhooks
 
-### Webhooks
+Webhooks allow you to build or set up apps which subscribe to certain events on WaiverForever. Webhooks work on template / waiver level.
 
-TBD
+For example, when a new waiver is signed, aka a `new_waiver_signed` event is triggered, we'll send a HTTP POST payload with the waiver data to the webhook's target URL.
+
+We'll support various events in the feature.
+
+#### Static Webhooks
 
 #### Rest Webhooks
 
-TBD
+<flow chart>
 
 ## Links
 

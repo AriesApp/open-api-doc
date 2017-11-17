@@ -16,9 +16,11 @@ tags:
   - name: auth
     description: Test authentication
   - name: webhooks
-    description: How WaiverForever sending out data
+    description: Subscribe / Unsubscribe event
   - name: template
-    description: Access templates and waivers
+    description: Access templates
+  - name: waiver
+    description: Access waivers
 schemes:
   - https
 paths:
@@ -65,6 +67,7 @@ paths:
             properties:
               event:
                 type: string
+                enum: ['new_waiver_signed']
               target_url:
                 type: string
       responses:
@@ -194,6 +197,28 @@ paths:
           description: Invalid api key
         '404':
           description: Template not found
+  /waiver/{waiver_id}/pdf:
+    get:
+      tags:
+        - waiver
+      summary: Download waiver in pdf
+      operationId: downloadWaiverPdf
+      parameters:
+        - name: waiver_id
+          in: path
+          description: waiver id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful request
+          schema:
+            type: string
+            format: binary
+        '403':
+          description: Invalid api key
+        '404':
+          description: Wavier not found
     
 securityDefinitions:
   api_key:
