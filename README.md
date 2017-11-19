@@ -51,7 +51,7 @@ Dynamic webhooks provide maximum flexibility to manage your events, you can subs
 The whole flow is dead simple:
 
 ```
-Your App				       WavierForever			              User                                          
+Your App		       WavierForever		              User                                          
 |                                   |                                   |
 |---------------------------------->|                                   
 |1) Auth ping (optional)            |                                   |
