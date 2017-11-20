@@ -66,35 +66,35 @@ Dynamic webhooks provide maximum flexibility to manage your events. You can subs
 The whole flow is dead simple ->
 
 ```
-Your App		       WavierForever		              User
-|                                   |                                   |
-|---------------------------------->|
-|1) Auth ping (optional)            |                                   |
-|                                   |
-|<----------------------------------|                                   |
-|2) Return 200 if API key valid     |
-|                                   |                                   |
-|---------------------------------->|
-|3) Subscribe template event        |                                   |
-|e.g. `new_waiver_signed`           |
-|                                   |<----------------------------------|
-|                                   |4) Sign and upload a waiver        |
-|<----------------------------------|                                   |
-|5) POST waiver payload             |                                   |
-|                                   |                                   |
-|---------------------------------->|                                   |
-|6) Download waiver pdf             |                                   |
-|                                   |                                   |
-|---------------------------------->|                                   |
-|7) Unsubscribe event               |                                   |
-|                                   |                                   |
-X                                   |                                   |
-X                                   |                                   |
-|                                   |                                   |
-                                    |                                   |
-                                    |                                   |
-                                    |                                   |
-                                    |                                   |
+Your App		              WavierForever		                    User
+|                               |                               |
+|------------------------------>|
+|1) Auth ping (optional)        |                               |
+|                               |
+|<------------------------------|                               |
+|2) Return 200 if API key valid |
+|                               |                               |
+|------------------------------>|
+|3) Subscribe template event    |                               |
+|e.g. `new_waiver_signed`       |
+|                               |<------------------------------|
+|                               |4) Sign and upload a waiver    |
+|<------------------------------|                               |
+|5) POST waiver payload         |                               |
+|                               |                               |
+|------------------------------>|                               |
+|6) Download waiver pdf         |                               |
+|                               |                               |
+|------------------------------>|                               |
+|7) Unsubscribe event           |                               |
+|                               |                               |
+X                               |                               |
+X                               |                               |
+|                               |                               |
+                                |                               |
+                                |                               |
+                                |                               |
+                                |                               |
 ```
 
 #### Static Webhooks
@@ -215,7 +215,7 @@ Status Code **200**
 
 Name|Type|Required|Description
 ---|---|---|---|---|
-username|string|false|username of the account
+username|string|true|username of the account
 
 <aside class="success">
 This API is used for testing.
@@ -250,7 +250,6 @@ const inputBody = '{
 const headers = {
   'Content-Type':'application/json',
   'Accept':'application/json'
-
 };
 
 fetch('https://api.waiverforever.com/openapi/v1/webhooks/',
@@ -290,7 +289,6 @@ headers = {
 }
 
 r = requests.put('https://api.waiverforever.com/openapi/v1/webhooks/', params={
-
 }, headers = headers)
 
 print r.json()
@@ -354,7 +352,6 @@ const inputBody = '{
 const headers = {
   'Content-Type':'application/json',
   'Accept':'application/json'
-
 };
 
 fetch('https://api.waiverforever.com/openapi/v1/webhooks/',
@@ -394,7 +391,6 @@ headers = {
 }
 
 r = requests.delete('https://api.waiverforever.com/openapi/v1/webhooks/', params={
-
 }, headers = headers)
 
 print r.json()
@@ -444,11 +440,11 @@ Access templates
 
 Name|Type|Required|Description
 ---|---|---|---|
-title|string|false|template title
-id|string|false|template id
-disabled|boolean|false|true if disabled by user
-created_at|integer|false|created timestamp
-update_at|integer|false|updated timestamp
+title|string|true|template title
+id|string|true|template id
+disabled|boolean|true|true if disabled by user
+created_at|integer|true|created timestamp
+update_at|integer|true|updated timestamp
 
 ## Get Template list
 
@@ -466,13 +462,11 @@ const request = require('node-fetch');
 
 const headers = {
   'Accept':'application/json'
-
 };
 
 fetch('https://api.waiverforever.com/openapi/v1/templates',
 {
   method: 'GET',
-
   headers: headers
 })
 .then(function(res) {
@@ -504,7 +498,6 @@ headers = {
 }
 
 r = requests.get('https://api.waiverforever.com/openapi/v1/templates', params={
-
 }, headers = headers)
 
 print r.json()
@@ -542,9 +535,9 @@ Status Code **200**
 
 Name|Type|Required|Description
 ---|---|---|---|---|
-result|boolean|false|request success or fail
-msg|string|false|response message
-data|[[Template](#schematemplate)]|false|template list
+result|boolean|true|request success or fail
+msg|string|true|response message
+data|[[Template](#schematemplate)]|true|template list
 
 ## Get Sample Waiver
 
@@ -562,13 +555,11 @@ const request = require('node-fetch');
 
 const headers = {
   'Accept':'application/json'
-
 };
 
 fetch('https://api.waiverforever.com/openapi/v1/template/{template_id}/sampleWaiver',
 {
   method: 'GET',
-
   headers: headers
 })
 .then(function(res) {
@@ -600,7 +591,6 @@ headers = {
 }
 
 r = requests.get('https://api.waiverforever.com/openapi/v1/template/{template_id}/sampleWaiver', params={
-
 }, headers = headers)
 
 print r.json()
@@ -667,9 +657,9 @@ Status Code **200**
 
 Name|Type|Required|Description
 ---|---|---|---|---|
-result|boolean|false|request success or fail
-msg|string|false|response message
-data|[Waiver](#schemawaiver)|false|Tailored Waiver
+result|boolean|true|request success or fail
+msg|string|true|response message
+data|[Waiver](#schemawaiver)|true|Tailored Waiver
 
 ## Requeset Waiver
 
@@ -687,13 +677,11 @@ const request = require('node-fetch');
 
 const headers = {
   'Accept':'application/json'
-
 };
 
 fetch('https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver',
 {
   method: 'GET',
-
   headers: headers
 })
 .then(function(res) {
@@ -768,11 +756,11 @@ Status Code **200**
 
 Name|Type|Required|Description
 ---|---|---|---|---|
-result|boolean|false|request success or fail
-msg|string|false|response message
-data|object|false|data
-» tracking_id|string|false|tracking id for requested waiver
-» request_waiver_url|string|false|remote signing url for requested waiver
+result|boolean|true|request success or fail
+msg|string|true|response message
+data|object|true|data
+» tracking_id|string|true|tracking id for requested waiver
+» request_waiver_url|string|true|remote signing url for requested waiver
 
 # Waiver Endpoints
 
@@ -811,18 +799,14 @@ const request = require('node-fetch');
 
 const headers = {
   'Accept':'*/*'
-
 };
 
 fetch('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pdf',
 {
   method: 'GET',
-
   headers: headers
 })
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
+.then(function(body) {
     console.log(body);
 });
 ```
@@ -849,7 +833,6 @@ headers = {
 }
 
 r = requests.get('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pdf', params={
-
 }, headers = headers)
 
 print r.json()
@@ -877,7 +860,7 @@ Status|Meaning|Description|Schema
 404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Wavier not found|None
 
 <aside class="notice">
-We will redirect download request to Amazon S3.
+We will redirect the download request to Amazon S3.
 </aside>
 
 # Schemas
@@ -1038,9 +1021,9 @@ middle_name|string|false|middle name (optional)
 
 Name|Type|Required|Description
 ---|---|---|---|
-title|string|false|email field title
-value|string|false|filled email
-type|string|false|always "email_field"
+title|string|true|email field title
+value|string|true|filled email
+type|string|true|always "email_field"
 
 
 ## PhoneField
@@ -1059,9 +1042,9 @@ type|string|false|always "email_field"
 
 Name|Type|Required|Description
 ---|---|---|---|
-title|string|false|phone field title
-value|string|false|filled phone
-type|string|false|always "phone_field"
+title|string|true|phone field title
+value|string|true|filled phone
+type|string|true|always "phone_field"
 
 ## InitialField
 
@@ -1079,9 +1062,9 @@ type|string|false|always "phone_field"
 
 Name|Type|Required|Description
 ---|---|---|---|
-title|string|false|initial field
-value|string|false|initialed value
-type|string|false|always "initial_field"
+title|string|true|initial field
+value|string|true|initialed value
+type|string|true|always "initial_field"
 
 ## AgeField
 
@@ -1099,9 +1082,9 @@ type|string|false|always "initial_field"
 
 Name|Type|Required|Description
 ---|---|---|---|
-title|string|false|age field title
-value|string|false|filled age
-type|string|false|always "age_field"
+title|string|true|age field title
+value|string|true|filled age
+type|string|true|always "age_field"
 
 
 ## CheckBoxField
@@ -1120,9 +1103,9 @@ type|string|false|always "age_field"
 
 Name|Type|Required|Description
 ---|---|---|---|
-title|string|false|checkbox field
-value|string|false|checked value
-type|string|false|always "checkbox_field"
+title|string|true|checkbox field
+value|string|true|checked value
+type|string|true|always "checkbox_field"
 
 ## ShortAnswerField
 
@@ -1140,9 +1123,9 @@ type|string|false|always "checkbox_field"
 
 Name|Type|Required|Description
 ---|---|---|---|
-title|string|false|short answer field title
-value|string|false|filled answer
-type|string|false|always "short_answer_field"
+title|string|true|short answer field title
+value|string|true|filled answer
+type|string|true|always "short_answer_field"
 
 ## AddressField
 
@@ -1166,15 +1149,15 @@ type|string|false|always "short_answer_field"
 
 Name|Type|Required|Description
 ---|---|---|---|
-title|string|false|address field title
-value|string|false|display value
-type|string|false|always "address_field"
-first_line|string|false|first line
-second_lien|string|false|second line
-city|string|false|city
-state|string|false|state or province
+title|string|true|address field title
+value|string|true|display value
+type|string|true|always "address_field"
+first_line|true|false|first line
+second_lien|true|false|second line
+city|string|true|city
+state|string|true|state or province
 country|string|false|country
-zipcode|string|false|zipcode or postal code
+zipcode|string|true|zipcode or postal code
 
 ## DateField
 
@@ -1195,12 +1178,12 @@ zipcode|string|false|zipcode or postal code
 
 Name|Type|Required|Description
 ---|---|---|---|
-title|string|false|date field
-value|string|false|selected date
-type|string|false|always "date_field"
-year|string|false|year of the date
-month|string|false|month of the date
-day|string|false|day of the date
+title|string|true|date field
+value|string|true|selected date
+type|string|true|always "date_field"
+year|string|true|year of the date
+month|string|true|month of the date
+day|string|true|day of the date
 
 
 ## SingleChoiceField
@@ -1219,9 +1202,9 @@ day|string|false|day of the date
 
 Name|Type|Required|Description
 ---|---|---|---|
-title|string|false|choice field title
-value|string|false|selected choice
-type|string|false|always "single_choice_field"
+title|string|true|choice field title
+value|string|true|selected choice
+type|string|true|always "single_choice_field"
 
 ## MultipleChoiceField
 
@@ -1241,9 +1224,9 @@ type|string|false|always "single_choice_field"
 
 Name|Type|Required|Description
 ---|---|---|---|
-title|string|false|choice field title
-value|[string]|false|selected choices
-type|string|false|always "multiple_choice_field"
+title|string|true|choice field title
+value|[string]|true|selected choices
+type|string|true|always "multiple_choice_field"
 
 ## ContainerField
 
@@ -1263,9 +1246,9 @@ type|string|false|always "multiple_choice_field"
 
 Name|Type|Required|Description
 ---|---|---|---|
-title|string|false|container field title
-type|string|false|always "container_field"
-result_list|[[Field](#schemafield)]|false|child fields set
+title|string|true|container field title
+type|string|true|always "container_field"
+result_list|[[Field](#schemafield)]|true|child fields set
 
 ## Picture
 
@@ -1283,9 +1266,9 @@ result_list|[[Field](#schemafield)]|false|child fields set
 
 Name|Type|Required|Description
 ---|---|---|---|
-title|string|false|picture title
-url|string|false|temporary download picture url
-timestamp|integer|false|created timestamp
+title|string|true|picture title
+url|string|true|temporary download picture url
+timestamp|integer|true|created timestamp
 
 
 ## GeoLocation
@@ -1304,6 +1287,6 @@ timestamp|integer|false|created timestamp
 
 Name|Type|Required|Description
 ---|---|---|---|
-accuracy|integer|false|location accuracy level
-latitude|string|false|latitude value
-longtitude|string|false|longtitude value
+accuracy|integer|true|location accuracy level
+latitude|string|true|latitude value
+longtitude|string|true|longtitude value
