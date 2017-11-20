@@ -92,6 +92,139 @@ Under the hood, static webhooks are also built on top of the dynamic webhooks.
 
 You can find the comprehensive documentation [here](https://ariesapp.github.io/open-api-doc/).
 
+## Model
+
+A sample **waiver** JSON model:
+
+```js
+{
+  "waiver_id": "zZ613txA741510127626",
+  "has_pdf": true,
+  "pictures": [
+    {
+      "title": "Your Photo",
+      "url": "<temp_s3_url>",
+      "timestamp": 1510127609
+    }
+  ],
+  "data": [
+    {
+      "value": "HF",
+      "type": "initial_field",
+      "title": "please input your initials"
+    },
+    {
+      "first_name": "first",
+      "middle_name": "",
+      "last_name": "",
+      "value": "first m last",
+      "title": "Please fill in your name",
+      "type": "name_field"
+    },
+    {
+      "title": "Please fill in your email",
+      "value": "gh@me.com",
+      "type": "email_field"
+    },
+    {
+      "value": "1 851-234-5678",
+      "title": "Please fill in your phone number",
+      "type": "phone_field"
+    },
+    {
+      "state": "TX",
+      "first_line": "No 123",
+      "value": "No 123 TX, USA",
+      "type": "address_field",
+      "country": "USA",
+      "title": "Please fill in your address",
+      "zipcode": "123456",
+      "second_line": "",
+      "city": ""
+    },
+    {
+      "value": "18",
+      "title": "Please fill in your age",
+      "type": "age_field"
+    },
+    {
+      "type": "date_field",
+      "title": "Please fill date",
+      "value": "2017-11-8",
+      "year": "2017",
+      "month": "11",
+      "day": "8"
+    },
+    {
+      "type": "checkbox_field",
+      "title": "Text to agree on",
+      "value": "checked"
+    },
+    {
+      "value": "Ghosts ",
+      "title": "Your fav team",
+      "type": "short_answer_field"
+    },
+    {
+      "value": "Femal",
+      "title": "Male or Female",
+      "type": "single_choice_field"
+    },
+    {
+      "value": ["Magazine", "Trip advisor"],
+      "title": "Where did you hear about us? (Gain market insight!)",
+      "type": "multiple_choice_field"
+    },
+    {
+      "type": "container_field",
+      "title": "please enter your minors' information",
+      "result_list": [
+        [
+          {
+            "first_name": "first",
+            "middle_name": "",
+            "last_name": "",
+            "value": "C1 first m last",
+            "title": "Please fill in your name",
+            "type": "name_field"
+          },
+          {
+            "title": "Please fill in your email",
+            "value": "C1 gh@me.com",
+            "type": "email_field"
+          }
+        ],
+        [
+          {
+            "first_name": "first",
+            "middle_name": "",
+            "last_name": "",
+            "value": "C2 first m last",
+            "title": "Please fill in your name",
+            "type": "name_field"
+          },
+          {
+            "title": "Please fill in your email",
+            "value": "C2 gh@me.com",
+            "type": "email_field"
+          }
+        ]
+      ]
+    }
+  ],
+  "received_at": "1510127625",
+  "template_version": "2.0",
+  "template_title": "Bike Rental Waiver",
+  "template_id": "JwIvKHHfW81493594388",
+  "signed_at": 1510127615,
+  "geolocation": {
+      "accuracy": 5,
+      "latitude": "137.785834",
+      "longitude": "-22.406417"
+  }
+}
+```
+
 ## Links
 
 - Documentation: https://ariesapp.github.io/open-api-doc/
