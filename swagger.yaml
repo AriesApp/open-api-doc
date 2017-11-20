@@ -1,0 +1,498 @@
+swagger: '2.0'
+info:
+  description: |
+    This documentation is still work in process.
+  version: 1.0.0
+  title: WavierForever Open API
+  termsOfService: 'https://www.waiverforever.com/terms'
+  contact:
+    email: mobile@waiverforever.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: api.waiverforever.com
+basePath: /openapi/v1
+tags:
+  - name: auth
+    description: Test authentication
+  - name: webhooks
+    description: Subscribe / Unsubscribe event
+  - name: template
+    description: Access templates
+  - name: waiver
+    description: Access waivers
+schemes:
+  - https
+paths:
+  /auth/ping:
+    get:
+      tags:
+        - auth
+      summary: Test if the API key is valid
+      operationId: authPing
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              user:
+                type: string
+        '403':
+          description: Invalid API key
+  /webhooks/subscribeEvent:
+    post:
+      tags:
+        - webhooks
+      summary: Subscribe an event.
+      description: 'Subscribe an event you care about, and WaiverForever will call you back when certain it occurred.'
+      operationId: subscribeEvent
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: event
+          description: Event that you're interested.
+          schema:
+            type: object
+            required:
+              - event
+              - target_url
+            properties:
+              event:
+                type: string
+                enum:
+                  - new_waiver_signed
+              target_url:
+                type: string
+      responses:
+        '200':
+          description: Successful request
+          schema:
+            $ref: '#/definitions/Response'
+        '403':
+          description: Invalid API key
+  /webhooks/unsubscribeEvent:
+    post:
+      tags:
+        - webhooks
+      summary: Unsubscribe an event.
+      description: Unsubscribe an event.
+      operationId: unsubscribeEvent
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: event
+          description: Event that you're not interested any more.
+          schema:
+            type: object
+            required:
+              - event
+              - target_url
+            properties:
+              event:
+                type: string
+              target_url:
+                type: string
+      responses:
+        '200':
+          description: Successful request
+          schema:
+            $ref: '#/definitions/Response'
+        '403':
+          description: Invalid API key
+  /template:
+    get:
+      tags:
+        - template
+      summary: Get all waiver templates.
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              result:
+                type: boolean
+              msg:
+                type: string
+              data:
+                type: array
+                items:
+                  $ref: '#/definitions/Template'
+        '403':
+          description: Invalid API key
+      security:
+        - api_key: []
+  '/template/{template_id}/sampleWaiver':
+    get:
+      tags:
+        - template
+      summary: Get a sample waiver from specified template id
+      operationId: getSampleWaiverById
+      produces:
+        - application/json
+      parameters:
+        - name: template_id
+          in: path
+          description: template id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful request
+          schema:
+            type: object
+            properties:
+              result:
+                type: boolean
+              msg:
+                type: string
+              data:
+                $ref: '#/definitions/Waiver'
+        '403':
+          description: Invalid api key
+        '404':
+          description: Template not found
+      security:
+        - api_key: []
+  '/template/{template_id}/requestWaiver':
+    post:
+      tags:
+        - template
+      summary: Request a waiver to sign
+      operationId: requestWaiver
+      produces:
+        - application/json
+      parameters:
+        - name: template_id
+          in: path
+          description: template id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful request
+          schema:
+            type: object
+            properties:
+              result:
+                type: boolean
+              msg:
+                type: string
+              data:
+                type: object
+                properties:
+                  tracking_id:
+                    type: string
+        '403':
+          description: Invalid api key
+        '404':
+          description: Template not found
+  '/waiver/{waiver_id}/pdf':
+    get:
+      tags:
+        - waiver
+      summary: Download waiver in pdf
+      operationId: downloadWaiverPdf
+      parameters:
+        - name: waiver_id
+          in: path
+          description: waiver id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful request
+          schema:
+            type: string
+            format: binary
+        '403':
+          description: Invalid api key
+        '404':
+          description: Wavier not found
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: X-API-Key
+    in: header
+definitions:
+  Response:
+    type: object
+    properties:
+      result:
+        type: boolean
+      msg:
+        type: string
+  Template:
+    type: object
+    properties:
+      title:
+        type: string
+      id:
+        type: string
+      disabled:
+        type: boolean
+      created_at:
+        type: integer
+        format: date
+      update_at:
+        type: integer
+        format: date
+  Waiver:
+    type: object
+    description: Tailored Waiver
+    properties:
+      waiver_id:
+        type: string
+      template_id:
+        type: string
+      template_version:
+        type: string
+      template_title:
+        type: string
+      has_pdf:
+        type: boolean
+      geolocation:
+        $ref: '#/definitions/GeoLocation'
+      pictures:
+        type: array
+        items:
+          $ref: '#/definitions/Picture'
+      received_at:
+        type: integer
+        format: date-time
+      signed_at:
+        type: integer
+        format: date-time
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/Field'
+  Field:
+    type: object
+    description: 'Abstract field type, checkout the concrete field below'
+    properties:
+      title:
+        type: string
+        description: field title
+      value:
+        type: string
+        description: field value
+      type:
+        type: string
+        enum:
+          - name_field
+          - email_field
+          - phone_field
+          - age_field
+          - initial_field
+          - date_field
+          - address_field
+          - checkbox_field
+          - short_answer_field
+          - single_choice_field
+          - multiple_choice_field
+          - container_field
+  NameField:
+    type: object
+    description: Name Field
+    properties:
+      title:
+        type: string
+      value:
+        type: string
+      type:
+        type: string
+        enum:
+          - name_field
+      first_name:
+        type: string
+      last_name:
+        type: string
+      middle_name:
+        type: string
+  EmailField:
+    type: object
+    description: Email Field
+    properties:
+      title:
+        type: string
+      value:
+        type: string
+      type:
+        type: string
+        enum:
+          - email_field
+  PhoneField:
+    type: object
+    description: Phone Field
+    properties:
+      title:
+        type: string
+      value:
+        type: string
+      type:
+        type: string
+        enum:
+          - phone_field
+  InitialField:
+    type: object
+    description: Initial Field
+    properties:
+      title:
+        type: string
+      value:
+        type: string
+      type:
+        type: string
+        enum:
+          - initial_field
+  AgeField:
+    type: object
+    description: Age Field
+    properties:
+      title:
+        type: string
+      value:
+        type: string
+      type:
+        type: string
+        enum:
+          - age_field
+  CheckBoxField:
+    type: object
+    description: Checkbox Field
+    properties:
+      title:
+        type: string
+      value:
+        type: string
+      type:
+        type: string
+        enum:
+          - checkbox_field
+  ShortAnswerField:
+    type: object
+    description: Short Answer Field
+    properties:
+      title:
+        type: string
+      value:
+        type: string
+      type:
+        type: string
+        enum:
+          - short_answer_field
+  AddressField:
+    type: object
+    description: Address Field
+    properties:
+      title:
+        type: string
+      value:
+        type: string
+      type:
+        type: string
+        enum:
+          - address_field
+      first_line:
+        type: string
+      second_lien:
+        type: string
+      city:
+        type: string
+      state:
+        type: string
+      country:
+        type: string
+      zipcode:
+        type: string
+  DateField:
+    type: object
+    description: Date Field
+    properties:
+      title:
+        type: string
+      value:
+        type: string
+      type:
+        type: string
+        enum:
+          - date_field
+      year:
+        type: string
+      month:
+        type: string
+      day:
+        type: string
+  SingleChoiceField:
+    type: object
+    description: Single Choice Field
+    properties:
+      title:
+        type: string
+      value:
+        type: string
+      type:
+        type: string
+        enum:
+          - single_choice_field
+  MultipleChoiceField:
+    type: object
+    description: Multiple Choice Field
+    properties:
+      title:
+        type: string
+      type:
+        type: string
+        enum:
+          - multiple_choice_field
+      value:
+        type: array
+        items:
+          type: string
+  ContainerField:
+    type: object
+    description: Multiple Choice Field
+    properties:
+      title:
+        type: string
+      value:
+        type: string
+      type:
+        type: string
+        enum:
+          - container_field
+      result_list:
+        type: array
+        items:
+          $ref: '#/definitions/Field'
+  Picture:
+    type: object
+    properties:
+      title:
+        type: string
+      url:
+        type: string
+        description: temporary picture url
+      timestamp:
+        type: integer
+        format: date-time
+  GeoLocation:
+    type: object
+    properties:
+      accuracy:
+        type: integer
+      latitude:
+        type: string
+      longtitude:
+        type: string
+externalDocs:
+  description: Find out more about WaiverForever
+  url: 'https://www.waiverforever.com'
