@@ -3,19 +3,19 @@
 
 ## Introduction
 
-WaiverForever is a leading edge electronic waiver system, streamline your business is our first priority. so we take it seriously to steadily opening our APIs for third-party developers and power users.
+WaiverForever is a leading edge electronic waiver system. Streamlining your business is our first priority. We take it seriously to steadily openning our APIs for third-party developers and power users.
 
-By integrating our APIs with existing services or creating them from scratch, users should be able to improve or automate new workflows which couldn't do before.
+By integrating our APIs with existing services or creating them from scratch, users are now able to create or improve workflows that's not possible before.
 
-For demonstration, we have built a [Zapier](https://zapier.com) app based on the same APIs. And this is only the first step, please stay tuned for more updates.
+For demonstration, we have built a [Zapier](https://zapier.com) app based on these APIs. This is only the first step, stay tuned for more updates.
 
 ### Terminologies
 
-Let's explain some frequently-used terms on WaiverForever.
+Let's explain some frequently-used terms of WaiverForever.
 
-**Template** is similar to a *class* in object-oriented languages, just like a blank form. Each template in WaiverForever has a unique identifier and multiple versions. Each time after you edit and save, a new template version will be created. In general, we always return the latest version.
+**Template** is similar to a *class* in object-oriented languages, in other words a blank waiver form. Each template in WaiverForever has a unique identifier and multiple versions. Each time a waiver is edited and saved, a new template version is created. In general, we always return the latest version when requesting a waiver template.
 
-**Wavier** is similar to an *instance* in object-oriented languages, just like a filled form. Each time after user sign and submit/upload, a new waiver will be created and saved.
+**Wavier** is similar to an *instance* in object-oriented languages, in other words a filled waiver form. Each time after user sign and submit/upload, a new waiver is created and saved.
 
 ## Workflow
 
@@ -23,9 +23,9 @@ How does it work really?
 
 ### 1. Authentication
 
-Firstly, you need a valid **API key** to access our APIs, each API key should represent one standalone app. You can generate and revoke your API keys in the  [Settings / API]() tab.
+First off, you need a valid **API key** to access our APIs, each API key should represent one standalone app. You can generate and revoke your API keys in the  [Settings / API]() tab.
 
-The authentication mechanism is quite simple, all you need to do is adding a customer HTTP header: `X-API-Key`.
+The authentication mechanism is quite simple, all you need to do is to add a custom HTTP header: `X-API-Key`.
 
 like this:
 
@@ -36,19 +36,19 @@ GET /auth/ping \
 
 ### 2. Webhooks
 
-Secondly, we leverage webhooks to communicate with you.
+Second, we use webhooks to communicate with you.
 
-Webhooks are commonly used techniques that allow you to build or set up apps which subscribe to certain events on WaiverForever.
+Webhook is a commonly used technique that allows you to build or set up apps which subscribe to certain events on WaiverForever.
 
 For example, when a new waiver is signed, aka a `new_waiver_signed` event is triggered, we'll send an HTTP POST payload with the waiver data to the webhook's target URL.
 
-Please note that webhooks work on template/waiver level.
+Please note that webhooks work on the template/waiver level.
 
-We'll support more events in the future.
+We'll support more webhook events in the future.
 
-#### Dynamic
+#### Dynamic Webhooks
 
-Dynamic webhooks provide maximum flexibility to manage your events, you can subscribe/unsubscribe them at any time.
+Dynamic webhooks provide maximum flexibility to manage your events. You can subscribe/unsubscribe to dynamic webhooks at any time.
 
 The whole flow is dead simple:
 
@@ -84,13 +84,13 @@ X                                   |                                   |
                                     |                                   |
 ```
 
-#### Static
+#### Static Webhooks
 
-Comparing to dynamic webhooks, static webhooks are relatively easy to setup (you don't have to write codes). Just go to the template settings page, paste your target URL, then we'll handle the rest for you.
+Compared to dynamic webhooks, static webhooks are relatively easy to setup (you don't have to write code). Just go to the template settings page, specify your target URL, then we'll handle the rest for you.
 
-Under the hood, static webhooks are also built on top of the dynamic webhooks.
+Under the hood, static webhooks are also built on top of dynamic webhooks.
 
-You can find the comprehensive documentation [here](https://ariesapp.github.io/open-api-doc/).
+You can find a comprehensive documentation [here](https://ariesapp.github.io/open-api-doc/).
 
 ## Model
 
@@ -111,7 +111,7 @@ A sample **waiver** JSON model:
     {
       "value": "HF",
       "type": "initial_field",
-      "title": "please input your initials"
+      "title": "please type your initials"
     },
     {
       "first_name": "first",
@@ -243,8 +243,8 @@ A sample **waiver** JSON model:
 ### Usage
 
 1. Run `yarn start`
-2. Checkout console output to see where local server is started. You can use all [links](#links) (except `preview`) by replacing https://ariesapp.github.io/open-api-doc/ with url from the message: `Server started <url>`
+2. Check console output to see where the local server is started. You can use all [links](#links) (except `preview`) by replacing https://ariesapp.github.io/open-api-doc/ with url from the message: `Server started <url>`
 3. Make changes using your favorite editor or `swagger-editor` (look for URL in console output)
-4. All changes are immediately propagated to your local server, moreover all documentation pages will be automagically refreshed in a browser after each change
+4. All changes are immediately propagated to your local server. In addition, all documentation pages will be automagically refreshed in a browser after each change
 **TIP:** you can open `swagger-editor`, documentation and `swagger-ui` in parallel
 5. Once you finish with the changes you can run tests using: `yarn test`
