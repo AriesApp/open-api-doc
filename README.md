@@ -3,19 +3,19 @@
 
 ## Introduction
 
-WaiverForever is a leading edge electronic waiver system, streamline your business is our first priorities. so we take it seriously to steadily openning our APIs for third party developers and power users.
+WaiverForever is a leading edge electronic waiver system, streamline your business is our first priority. so we take it seriously to steadily opening our APIs for third-party developers and power users.
 
-By integrating our APIs with existing services or creating them from scratch, users should be able to improve or automate new workflows which couldn't done before.
+By integrating our APIs with existing services or creating them from scratch, users should be able to improve or automate new workflows which couldn't do before.
 
-For demonstration, we have built a [Zapier](https://zapier.com) app based upon the same APIs. And this is only the first step, please stay stuned for more updates.
+For demonstration, we have built a [Zapier](https://zapier.com) app based on the same APIs. And this is only the first step, please stay tuned for more updates.
 
 ### Terminologies
 
 Let's explain some frequently-used terms on WaiverForever.
 
-**Template** is similar to *class* in object-oriented languages, just like a blank form. Each template in WaiverForever has a unique identifier and multiple versions. Each time after you edit and save, a new template version will be created. In general, we always return the latest version.
+**Template** is similar to a *class* in object-oriented languages, just like a blank form. Each template in WaiverForever has a unique identifier and multiple versions. Each time after you edit and save, a new template version will be created. In general, we always return the latest version.
 
-**Wavier** is similar to *instance* in object-oriented languages, just like a filled form. Each time after user sign and submit / upload, a new waiver will be created and saved.
+**Wavier** is similar to an *instance* in object-oriented languages, just like a filled form. Each time after user sign and submit/upload, a new waiver will be created and saved.
 
 ## Workflow
 
@@ -23,9 +23,11 @@ How does it work really?
 
 ### 1. Authentication
 
-Firstly, you need a valid **api key** to access our APIs, each API key should represent one standalone app. You can generate and revoke your API keys in the  [Settings / API]() tab.
+Firstly, you need a valid **API key** to access our APIs, each API key should represent one standalone app. You can generate and revoke your API keys in the  [Settings / API]() tab.
 
-The authentication mechanism is quite simple, all your need to do is adding a customer HTTP header: `X-API-Key`
+The authentication mechanism is quite simple, all you need to do is adding a customer HTTP header: `X-API-Key`.
+
+like this:
 
 ```
 GET /auth/ping \
@@ -34,19 +36,19 @@ GET /auth/ping \
 
 ### 2. Webhooks
 
-Secondly, we leverage webhooks to notify you.
+Secondly, we leverage webhooks to communicate with you.
 
 Webhooks are commonly used techniques that allow you to build or set up apps which subscribe to certain events on WaiverForever.
 
-For example, when a new waiver is signed, aka a `new_waiver_signed` event is triggered, we'll send a HTTP POST payload with the waiver data to the webhook's target URL.
+For example, when a new waiver is signed, aka a `new_waiver_signed` event is triggered, we'll send an HTTP POST payload with the waiver data to the webhook's target URL.
 
-Please note that webhooks work on template / waiver level.
+Please note that webhooks work on template/waiver level.
 
-We'll support more events in the feature.
+We'll support more events in the future.
 
 #### Dynamic
 
-Dynamic webhooks provide maximum flexibility to manage your events, you can subscribe / unsubscribe them at anytime.
+Dynamic webhooks provide maximum flexibility to manage your events, you can subscribe/unsubscribe them at any time.
 
 The whole flow is dead simple:
 
@@ -57,7 +59,7 @@ Your App		       WavierForever		              User
 |1) Auth ping (optional)            |                                   |
 |                                   |                                   
 |<----------------------------------|                                   |
-|2) Return success if API key valid |                                   
+|2) Return 200 if API key valid     |                                   
 |                                   |                                   |
 |---------------------------------->|                                   
 |3) Subscribe template event        |                                   |
@@ -84,11 +86,12 @@ X                                   |                                   |
 
 #### Static
 
-Comparing to dynamic webhooks, static webhooks are relative easy to setup (you don't have to write code). Just go to the template settings page, paste your target URL, then we'll handle the reset for you.
+Comparing to dynamic webhooks, static webhooks are relatively easy to setup (you don't have to write codes). Just go to the template settings page, paste your target URL, then we'll handle the rest for you.
 
 Under the hood, static webhooks are also built on top of the dynamic webhooks.
 
-You can find the comprehensive documentation [here](https://ariesapp.github.io/open-api-doc/)
+You can find the comprehensive documentation [here](https://ariesapp.github.io/open-api-doc/).
+
 ## Links
 
 - Documentation: https://ariesapp.github.io/open-api-doc/
