@@ -377,7 +377,7 @@ License: <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a
 <h2 id='workflow'>Workflow</h2>
 <p>How does it work really?</p>
 <h3 id='1-authentication'>1. Authentication</h3>
-<p>First off, you need a valid <strong>API key</strong> to access our APIs. Each API key should represent one standalone app. You can generate and revoke your API keys in the  <a href="https://app.waiverforever.com/settings/">Settings / API</a> tab.</p>
+<p>First off, you need a valid <strong>API key</strong> to access our APIs. Each API key should represent one standalone app. You can generate and revoke your API keys in the  <a href="https://app.waiverforever.com/settings">Settings / API</a> tab.</p>
 
 <p>The authentication mechanism is quite simple, all you need to do is to add a custom HTTP header: <code>X-API-Key</code>.</p>
 <h3 id='2-webhooks'>2. Webhooks</h3>
@@ -434,7 +434,7 @@ X                                   |                                   |
                                     |                                   |
                                     |                                   |
 </code></pre><h1 id='authentication'>Authentication</h1>
-<p>WaiverForever uses API keys to allow access to the API. You can register a new API key at <a href="https://app.waiverforever.com/settings/api">Settings/API tab</a>.</p>
+<p>WaiverForever uses API keys to allow access to the API. You can register a new API key at <a href="https://app.waiverforever.com/settings">Settings/API tab</a>.</p>
 
 <p>WaiverForever expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
 
@@ -1484,8 +1484,6 @@ curl -X GET https://api.waiverforever.com/openapi/v1/template/<span class="o">{<
 <td>filled fields</td>
 </tr>
 </tbody></table>
-
-<p>You can find a sample JSON <a href="./sample_waiver.json">here</a>.</p>
 <h2 id='download-waiver-pdf'>Download Waiver PDF</h2>
 <blockquote>
 <p>Code samples</p>
@@ -1752,37 +1750,19 @@ We will redirect the download request to Amazon S3.
 </tr>
 </thead><tbody>
 <tr>
-<td>result</td>
-<td>boolean</td>
-<td>false</td>
-<td>request success or fail</td>
-</tr>
-<tr>
-<td>msg</td>
-<td>string</td>
-<td>false</td>
-<td>response message</td>
-</tr>
-<tr>
-<td>data</td>
-<td>object</td>
-<td>true</td>
-<td>data</td>
-</tr>
-<tr>
-<td>» id</td>
+<td>id</td>
 <td>string</td>
 <td>true</td>
 <td>subscription id</td>
 </tr>
 <tr>
-<td>» event</td>
+<td>event</td>
 <td>string</td>
 <td>true</td>
 <td>event name</td>
 </tr>
 <tr>
-<td>» template_id</td>
+<td>template_id</td>
 <td>string</td>
 <td>true</td>
 <td>template id</td>
