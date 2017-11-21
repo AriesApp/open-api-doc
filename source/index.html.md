@@ -231,7 +231,7 @@ Current support events:
 
 ```shell
 # You can also use wget
-curl -X PUT https://api.waiverforever.com/openapi/v1/webhooks/ \
+curl -X POST https://api.waiverforever.com/openapi/v1/webhooks/ \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json'
 
@@ -250,7 +250,7 @@ const headers = {
 
 fetch('https://api.waiverforever.com/openapi/v1/webhooks/',
 {
-  method: 'PUT',
+  method: 'POST',
   body: inputBody,
   headers: headers
 })
@@ -270,7 +270,7 @@ headers = {
   'Accept' => 'application/json'
 }
 
-result = RestClient.put 'https://api.waiverforever.com/openapi/v1/webhooks/',
+result = RestClient.post 'https://api.waiverforever.com/openapi/v1/webhooks/',
   params: {
   }, headers: headers
 
@@ -284,13 +284,13 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.put('https://api.waiverforever.com/openapi/v1/webhooks/', params={
+r = requests.post('https://api.waiverforever.com/openapi/v1/webhooks/', params={
 }, headers = headers)
 
 print r.json()
 ```
 
-`PUT /webhooks/`
+`POST /webhooks/`
 
 *Subscribe an event.*
 
