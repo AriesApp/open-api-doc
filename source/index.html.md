@@ -17,6 +17,10 @@ headingLevel: 2
 
 # WaiverForever OpenAPI
 
+Contact: <a href="mailto:mobile@waiverforever.com">mobile@waiverforever.com</a></br>
+License: <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a></br>
+<a href="https://www.waiverforever.com/terms">Terms of service</a></br>
+
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
 ## Introduction
@@ -43,7 +47,7 @@ How does it work really?
 
 ### 1. Authentication
 
-First off, you need a valid **API key** to access our APIs, each API key should represent one standalone app. You can generate and revoke your API keys in the  [Settings / API]() tab.
+First off, you need a valid **API key** to access our APIs. Each API key should represent one standalone app. You can generate and revoke your API keys in the  [Settings / API](https://app.waiverforever.com/settings/) tab.
 
 The authentication mechanism is quite simple, all you need to do is to add a custom HTTP header: `X-API-Key`.
 
@@ -53,7 +57,7 @@ Second, we use webhooks to communicate with you.
 
 Webhook is a commonly used technique that allows you to build or set up apps which subscribe to certain events on WaiverForever.
 
-For example, when a new waiver is signed, aka a `new_waiver_signed` event is triggered, we'll send an HTTP POST payload with the waiver data to the webhook's target URL.
+For example, when a `new_waiver_signed` event is triggered, aka a new waiver is signed, we'll send an HTTP POST payload with the waiver data to the webhook's target URL.
 
 Please note that webhooks work on the template/waiver level.
 
@@ -63,53 +67,53 @@ We'll support more webhook events in the future.
 
 Dynamic webhooks provide maximum flexibility to manage your events. You can subscribe/unsubscribe to dynamic webhooks at any time.
 
-The whole flow is dead simple ->
-
-```
-Your App                 WavierForever                         User
-|                               |                               |
-|------------------------------>|
-|1) Auth ping (optional)        |                               |
-|                               |
-|<------------------------------|                               |
-|2) Return 200 if API key valid |
-|                               |                               |
-|------------------------------>|
-|3) Subscribe template event    |                               |
-|e.g. `new_waiver_signed`       |
-|                               |<------------------------------|
-|                               |4) Sign and upload a waiver    |
-|<------------------------------|                               |
-|5) POST waiver payload         |                               |
-|                               |                               |
-|------------------------------>|                               |
-|6) Download waiver pdf         |                               |
-|                               |                               |
-|------------------------------>|                               |
-|7) Unsubscribe event           |                               |
-|                               |                               |
-X                               |                               |
-X                               |                               |
-|                               |                               |
-                                |                               |
-                                |                               |
-                                |                               |
-                                |                               |
-```
-
 #### Static Webhooks
 
 Compared to dynamic webhooks, static webhooks are relatively easy to setup (you don't have to write code). Just go to the template settings page, specify your target URL, then we'll handle the rest for you.
 
-Under the hood, static webhooks are also built on top of dynamic webhooks.
+
+### 3. API
 
 Base URLs:
 
 * <a href="https://api.waiverforever.com/openapi/v1">https://api.waiverforever.com/openapi/v1</a>
 
-Contact: <a href="mailto:mobile@waiverforever.com">mobile@waiverforever.com</a></br>
-License: <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a></br>
-<a href="https://www.waiverforever.com/terms">Terms of service</a></br>
+The whole flow is dead simple ->
+
+
+```
+Your App                     WavierForever                             User
+|                                   |                                   |
+|---------------------------------->|
+|1) Auth ping (optional)            |                                   |
+|                                   |
+|<----------------------------------|                                   |
+|2) Return 200 if API key valid     |
+|                                   |                                   |
+|---------------------------------->|
+|3) Subscribe template event        |                                   |
+| with your target url.             |
+| e.g. `new_waiver_signed`          |                                   |
+|                                   |<----------------------------------|
+|                                   |4) Sign and upload a waiver        |
+|<----------------------------------|                                   |
+|5) POST waiver payload to target   |                                   |
+| url                               |                                   |
+|                                   |                                   |
+|---------------------------------->|                                   |
+|6) Download waiver pdf             |                                   |
+|                                   |                                   |
+|---------------------------------->|                                   |
+|7) Unsubscribe event               |                                   |
+|                                   |                                   |
+X                                   |                                   |
+X                                   |                                   |
+|                                   |                                   |
+                                    |                                   |
+                                    |                                   |
+                                    |                                   |
+                                    |                                   |
+```
 
 # Authentication
 
@@ -301,7 +305,8 @@ Subscribe an event you care about, and WaiverForever will call you back when cer
 ```json
 {
   "event": "<event_name>",
-  "target_url": "<callback url>"
+  "target_url": "<callback url>",
+  "template_id": "<template_id>"
 }
 ```
 <h3 id="subscribeEvent-parameters">Parameters</h3>
@@ -311,20 +316,26 @@ Parameter|In|Type|Required|Description
 body|body|object|false|Event that you're interested.
 » event|body|string|true|event name
 » target_url|body|string|true|callback url
+» template_id|body|string|true|template id
 
 > Example responses
 
 ```json
 {
   "result": true,
-  "msg": "success"
+  "msg": "success",
+  "data": {
+    "id": "subscription id",
+    "event": "event name",
+    "template_id": "template id"
+  }
 }
 ```
 <h3 id="subscribeEvent-responses">Responses</h3>
 
 Status|Meaning|Description|Schema
 ---|---|---|---|
-200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|[Response](#schemaresponse)
+200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|[Subscription](#schemasubscription)
 403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid API key|None
 
 ## Unsubscribe an event.
@@ -400,7 +411,8 @@ print r.json()
 ```json
 {
   "event": "<event_name>",
-  "target_url": "<callback_url>"
+  "target_url": "<callback_url>",
+  "template_id": "<template_id>"
 }
 ```
 <h3 id="unsubscribeEvent-parameters">Parameters</h3>
@@ -410,7 +422,7 @@ Parameter|In|Type|Required|Description
 body|body|object|false|Event that you're not interested any more.
 » event|body|string|true|event name
 » target_url|body|string|true|callback url
-
+» template_id|body|string|true|template id
 
 > Example responses
 
@@ -435,8 +447,8 @@ Access templates
 
 Name|Type|Required|Description
 ---|---|---|---|
-title|string|true|template title
 id|string|true|template id
+title|string|true|template title
 disabled|boolean|true|true if disabled by user
 created_at|integer|true|created timestamp
 updated_at|integer|true|updated timestamp
@@ -604,12 +616,12 @@ template_id|path|string|true|template id
 
 ```json
 {
-  "waiver_id": "zZ613txA741510127626",
+  "id": "zZ613txA741510127626",
   "has_pdf": true,
   "pictures": [
     {
+      "id": "picture id",
       "title": "Your Photo",
-      "url": "<temp_s3_url>",
       "timestamp": 1510127609
     }
   ],
@@ -718,10 +730,9 @@ template_id|path|string|true|template id
       ]
     }
   ],
-  "received_at": "1510127625",
-  "template_version": "2.0",
   "template_title": "Bike Rental Waiver",
   "template_id": "JwIvKHHfW81493594388",
+  "received_at": 1510127625,
   "signed_at": 1510127615,
   "geolocation": {
       "accuracy": 5,
@@ -823,7 +834,7 @@ template_id|path|string|true|template id
   "msg": "success",
   "data": {
     "tracking_id": "<tracking_id>",
-    "tracking_url": "<tracking_url>"
+    "request_waiver_url": "<request_waiver_url>"
   }
 }
 ```
@@ -855,9 +866,8 @@ Access waiver
 
 Name|Type|Required|Description
 ---|---|---|---|
-waiver_id|string|true|waiver id
+id|string|true|waiver id
 template_id|string|true|template id
-template_version|string|true|template version
 template_title|string|true|template title
 has_pdf|boolean|true|true if the PDF is available to download
 geolocation|[GeoLocation](#schemageolocation)|false|signing location
@@ -948,6 +958,87 @@ Status|Meaning|Description|Schema
 We will redirect the download request to Amazon S3.
 </aside>
 
+## Download Waiver Pictures
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X GET https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pictures/{picture_id} \
+  -H 'Accept: */*'
+
+```
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+const headers = {
+  'Accept':'*/*'
+};
+
+fetch('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pictures/{picture_id}',
+{
+  method: 'GET',
+  headers: headers
+})
+.then(function(body) {
+    console.log(body);
+});
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => '*/*'
+}
+
+result = RestClient.get 'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pictures/{picture_id}',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+```
+
+```python
+import requests
+headers = {
+  'Accept': '*/*'
+}
+
+r = requests.get('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pictures/{picture_id}', params={
+}, headers = headers)
+
+print r.json()
+```
+
+`GET /waiver/{waiver_id}/pictures/{picture_id}`
+
+*Download waiver pictures*
+
+<h3 id="downloadWaiverPdf-parameters">Parameters</h3>
+
+Parameter|In|Type|Required|Description
+---|---|---|---|---|
+waiver_id|path|string|true|waiver id
+picture_id|path|string|true|picture id
+
+
+> Example responses
+
+<h3 id="downloadWaiverPdf-responses">Responses</h3>
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|binary
+403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
+404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Wavier not found|None
+
+<aside class="notice">
+We will redirect the download request to Amazon S3.
+</aside>
+
 # Schemas
 
 ## Response
@@ -968,6 +1059,32 @@ Name|Type|Required|Description
 result|boolean|false|request success or fail
 msg|string|false|response message
 
+## Subscription
+
+<a name="schemasubscription"></a>
+
+```json
+{
+  "result": true,
+  "msg": "success",
+  "data": {
+    "id": "subscription id",
+    "event": "event name",
+    "template_id": "template id"
+  }
+}
+```
+
+### Properties
+
+Name|Type|Required|Description
+---|---|---|---|
+result|boolean|false|request success or fail
+msg|string|false|response message
+data|object|true|data
+» id|string|true|subscription id
+» event|string|true|event name
+» template_id|string|true|template id
 
 ## Template
 
@@ -987,8 +1104,8 @@ msg|string|false|response message
 
 Name|Type|Required|Description
 ---|---|---|---|
-title|string|true|template title
 id|string|true|template id
+title|string|true|template title
 disabled|boolean|true|true if disabled by user
 created_at|integer|true|created timestamp
 updated_at|integer|true|updated timestamp
@@ -1000,12 +1117,12 @@ updated_at|integer|true|updated timestamp
 
 ```json
 {
-  "waiver_id": "zZ613txA741510127626",
+  "id": "zZ613txA741510127626",
   "has_pdf": true,
   "pictures": [
     {
+      "id": "picture id",
       "title": "Your Photo",
-      "url": "<temp_s3_url>",
       "timestamp": 1510127609
     }
   ],
@@ -1114,10 +1231,9 @@ updated_at|integer|true|updated timestamp
       ]
     }
   ],
-  "received_at": "1510127625",
-  "template_version": "2.0",
   "template_title": "Bike Rental Waiver",
   "template_id": "JwIvKHHfW81493594388",
+  "received_at": 1510127625,
   "signed_at": 1510127615,
   "geolocation": {
       "accuracy": 5,
@@ -1131,9 +1247,8 @@ updated_at|integer|true|updated timestamp
 
 Name|Type|Required|Description
 ---|---|---|---|
-waiver_id|string|true|waiver id
+id|string|true|waiver id
 template_id|string|true|template id
-template_version|string|true|template version
 template_title|string|true|template title
 has_pdf|boolean|true|true if the PDF is available to download
 geolocation|[GeoLocation](#schemageolocation)|false|signing location
@@ -1337,8 +1452,8 @@ Name|Type|Required|Description
 title|string|true|address field title
 value|string|true|display value
 type|string|true|always "address_field"
-first_line|true|false|first line
-second_lien|true|false|second line
+first_line|string|false|first line
+second_line|string|false|second line
 city|string|true|city
 state|string|true|state or province
 country|string|false|country
@@ -1420,7 +1535,7 @@ type|string|true|always "multiple_choice_field"
   "title": "string",
   "type": "container_field",
   "result_list": [
-    // same as ordinary fields
+    // a list of ordinary fields set
   ]
 }
 ```
@@ -1431,7 +1546,7 @@ Name|Type|Required|Description
 ---|---|---|---|
 title|string|true|container field title
 type|string|true|always "container_field"
-result_list|[[Field](#schemafield)]|true|child fields set
+result_list|[[Field](#schemafield)]|true|a list of ordinary fields set
 
 ## Picture
 
@@ -1440,7 +1555,7 @@ result_list|[[Field](#schemafield)]|true|child fields set
 ```json
 {
   "title": "Your Photo",
-  "url": "https://s3.amazonaws.com/qs3_datafiles_v2/doc_pictures/OBp7EkPfw51510127630.jpeg",
+  "id": "picture id",
   "timestamp": 1510127609
 }
 ```
@@ -1450,7 +1565,7 @@ result_list|[[Field](#schemafield)]|true|child fields set
 Name|Type|Required|Description
 ---|---|---|---|
 title|string|true|picture title
-url|string|true|temporary download picture url
+id|string|true|picture id
 timestamp|integer|true|created timestamp
 
 
@@ -1470,6 +1585,6 @@ timestamp|integer|true|created timestamp
 
 Name|Type|Required|Description
 ---|---|---|---|
-accuracy|integer|true|location accuracy level
+accuracy|integer|true|location accuracy level in meters
 latitude|string|true|latitude value
 longtitude|string|true|longtitude value
