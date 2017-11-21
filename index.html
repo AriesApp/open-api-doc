@@ -711,23 +711,16 @@ curl -X POST https://api.waiverforever.com/openapi/v1/webhooks/ <span class="se"
 <p>Code samples</p>
 </blockquote>
 <pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
-curl -X DELETE https://api.waiverforever.com/openapi/v1/webhooks/ <span class="se">\</span>
-  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+curl -X DELETE https://api.waiverforever.com/openapi/v1/webhooks/<span class="o">{</span>subscription_id<span class="o">}</span> <span class="se">\</span>
   -H <span class="s1">'Accept: application/json'</span>
 </code></pre><pre class="highlight javascript tab-javascript--nodejs"><code><span class="kr">const</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'node-fetch'</span><span class="p">);</span>
-<span class="kr">const</span> <span class="nx">inputBody</span> <span class="o">=</span> <span class="s1">'{
-  "event": "string",
-  "target_url": "string"
-}'</span><span class="p">;</span>
 <span class="kr">const</span> <span class="nx">headers</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s1">'Content-Type'</span><span class="p">:</span><span class="s1">'application/json'</span><span class="p">,</span>
   <span class="s1">'Accept'</span><span class="p">:</span><span class="s1">'application/json'</span>
 <span class="p">};</span>
 
-<span class="nx">fetch</span><span class="p">(</span><span class="s1">'https://api.waiverforever.com/openapi/v1/webhooks/'</span><span class="p">,</span>
+<span class="nx">fetch</span><span class="p">(</span><span class="s1">'https://api.waiverforever.com/openapi/v1/webhooks/{subscription_id}'</span><span class="p">,</span>
 <span class="p">{</span>
   <span class="na">method</span><span class="p">:</span> <span class="s1">'DELETE'</span><span class="p">,</span>
-  <span class="na">body</span><span class="p">:</span> <span class="nx">inputBody</span><span class="p">,</span>
   <span class="na">headers</span><span class="p">:</span> <span class="nx">headers</span>
 <span class="p">})</span>
 <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
@@ -739,39 +732,28 @@ curl -X DELETE https://api.waiverforever.com/openapi/v1/webhooks/ <span class="s
 <span class="nb">require</span> <span class="s1">'json'</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s1">'Content-Type'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
   <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span>
 <span class="p">}</span>
 
-<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">delete</span> <span class="s1">'https://api.waiverforever.com/openapi/v1/webhooks/'</span><span class="p">,</span>
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">delete</span> <span class="s1">'https://api.waiverforever.com/openapi/v1/webhooks/{subscription_id}'</span><span class="p">,</span>
   <span class="ss">params: </span><span class="p">{</span>
   <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
   <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span>
 <span class="p">}</span>
 
-<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s">'https://api.waiverforever.com/openapi/v1/webhooks/'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s">'https://api.waiverforever.com/openapi/v1/webhooks/{subscription_id}'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
 <span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
 
 <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </code></pre>
-<p><code>DELETE /webhooks/</code></p>
+<p><code>DELETE /webhooks/{subscription_id}</code></p>
 
 <p><em>Unsubscribe an event.</em></p>
 
-<blockquote>
-<p>Body parameter</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;event_name&gt;"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"target_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;callback_url&gt;"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"template_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;template_id&gt;"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
 <h3 id="unsubscribeEvent-parameters">Parameters</h3>
 
 <table><thead>
@@ -784,32 +766,11 @@ curl -X DELETE https://api.waiverforever.com/openapi/v1/webhooks/ <span class="s
 </tr>
 </thead><tbody>
 <tr>
-<td>body</td>
-<td>body</td>
-<td>object</td>
-<td>false</td>
-<td>Event that you&#39;re not interested any more.</td>
-</tr>
-<tr>
-<td>» event</td>
-<td>body</td>
+<td>subscription_id</td>
+<td>path</td>
 <td>string</td>
 <td>true</td>
-<td>event name</td>
-</tr>
-<tr>
-<td>» target_url</td>
-<td>body</td>
-<td>string</td>
-<td>true</td>
-<td>callback url</td>
-</tr>
-<tr>
-<td>» template_id</td>
-<td>body</td>
-<td>string</td>
-<td>true</td>
-<td>template id</td>
+<td>subscription id</td>
 </tr>
 </tbody></table>
 
