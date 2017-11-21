@@ -280,6 +280,9 @@
                   <li>
                     <a href="#download-waiver-pdf" class="toc-h2 toc-link" data-title="Download Waiver PDF">Download Waiver PDF</a>
                   </li>
+                  <li>
+                    <a href="#download-waiver-pictures" class="toc-h2 toc-link" data-title="Download Waiver Pictures">Download Waiver Pictures</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -287,6 +290,9 @@
               <ul class="toc-list-h2">
                   <li>
                     <a href="#response" class="toc-h2 toc-link" data-title="Response">Response</a>
+                  </li>
+                  <li>
+                    <a href="#subscription" class="toc-h2 toc-link" data-title="Subscription">Subscription</a>
                   </li>
                   <li>
                     <a href="#template" class="toc-h2 toc-link" data-title="Template">Template</a>
@@ -347,6 +353,10 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='waiverforever-openapi'>WaiverForever OpenAPI</h1>
+<p>Contact: <a href="mailto:mobile@waiverforever.com">mobile@waiverforever.com</a></br>
+License: <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a></br>
+<a href="https://www.waiverforever.com/terms">Terms of service</a></br></p>
+
 <blockquote>
 <p>Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.</p>
 </blockquote>
@@ -367,7 +377,7 @@
 <h2 id='workflow'>Workflow</h2>
 <p>How does it work really?</p>
 <h3 id='1-authentication'>1. Authentication</h3>
-<p>First off, you need a valid <strong>API key</strong> to access our APIs, each API key should represent one standalone app. You can generate and revoke your API keys in the  <a href="#">Settings / API</a> tab.</p>
+<p>First off, you need a valid <strong>API key</strong> to access our APIs. Each API key should represent one standalone app. You can generate and revoke your API keys in the  <a href="https://app.waiverforever.com/settings/">Settings / API</a> tab.</p>
 
 <p>The authentication mechanism is quite simple, all you need to do is to add a custom HTTP header: <code>X-API-Key</code>.</p>
 <h3 id='2-webhooks'>2. Webhooks</h3>
@@ -375,59 +385,55 @@
 
 <p>Webhook is a commonly used technique that allows you to build or set up apps which subscribe to certain events on WaiverForever.</p>
 
-<p>For example, when a new waiver is signed, aka a <code>new_waiver_signed</code> event is triggered, we&#39;ll send an HTTP POST payload with the waiver data to the webhook&#39;s target URL.</p>
+<p>For example, when a <code>new_waiver_signed</code> event is triggered, aka a new waiver is signed, we&#39;ll send an HTTP POST payload with the waiver data to the webhook&#39;s target URL.</p>
 
 <p>Please note that webhooks work on the template/waiver level.</p>
 
 <p>We&#39;ll support more webhook events in the future.</p>
 <h4 id='dynamic-webhooks'>Dynamic Webhooks</h4>
 <p>Dynamic webhooks provide maximum flexibility to manage your events. You can subscribe/unsubscribe to dynamic webhooks at any time.</p>
-
-<p>The whole flow is dead simple -&gt;</p>
-<pre class="highlight plaintext"><code>Your App                 WavierForever                         User
-|                               |                               |
-|------------------------------&gt;|
-|1) Auth ping (optional)        |                               |
-|                               |
-|&lt;------------------------------|                               |
-|2) Return 200 if API key valid |
-|                               |                               |
-|------------------------------&gt;|
-|3) Subscribe template event    |                               |
-|e.g. `new_waiver_signed`       |
-|                               |&lt;------------------------------|
-|                               |4) Sign and upload a waiver    |
-|&lt;------------------------------|                               |
-|5) POST waiver payload         |                               |
-|                               |                               |
-|------------------------------&gt;|                               |
-|6) Download waiver pdf         |                               |
-|                               |                               |
-|------------------------------&gt;|                               |
-|7) Unsubscribe event           |                               |
-|                               |                               |
-X                               |                               |
-X                               |                               |
-|                               |                               |
-                                |                               |
-                                |                               |
-                                |                               |
-                                |                               |
-</code></pre><h4 id='static-webhooks'>Static Webhooks</h4>
+<h4 id='static-webhooks'>Static Webhooks</h4>
 <p>Compared to dynamic webhooks, static webhooks are relatively easy to setup (you don&#39;t have to write code). Just go to the template settings page, specify your target URL, then we&#39;ll handle the rest for you.</p>
-
-<p>Under the hood, static webhooks are also built on top of dynamic webhooks.</p>
-
+<h3 id='3-api'>3. API</h3>
 <p>Base URLs:</p>
 
 <ul>
 <li><a href="https://api.waiverforever.com/openapi/v1">https://api.waiverforever.com/openapi/v1</a></li>
 </ul>
 
-<p>Contact: <a href="mailto:mobile@waiverforever.com">mobile@waiverforever.com</a></br>
-License: <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a></br>
-<a href="https://www.waiverforever.com/terms">Terms of service</a></br></p>
-<h1 id='authentication'>Authentication</h1>
+<p>The whole flow is dead simple -&gt;</p>
+<pre class="highlight plaintext"><code>Your App                     WavierForever                             User
+|                                   |                                   |
+|----------------------------------&gt;|
+|1) Auth ping (optional)            |                                   |
+|                                   |
+|&lt;----------------------------------|                                   |
+|2) Return 200 if API key valid     |
+|                                   |                                   |
+|----------------------------------&gt;|
+|3) Subscribe template event        |                                   |
+| with your target url.             |
+| e.g. `new_waiver_signed`          |                                   |
+|                                   |&lt;----------------------------------|
+|                                   |4) Sign and upload a waiver        |
+|&lt;----------------------------------|                                   |
+|5) POST waiver payload to target   |                                   |
+| url                               |                                   |
+|                                   |                                   |
+|----------------------------------&gt;|                                   |
+|6) Download waiver pdf             |                                   |
+|                                   |                                   |
+|----------------------------------&gt;|                                   |
+|7) Unsubscribe event               |                                   |
+|                                   |                                   |
+X                                   |                                   |
+X                                   |                                   |
+|                                   |                                   |
+                                    |                                   |
+                                    |                                   |
+                                    |                                   |
+                                    |                                   |
+</code></pre><h1 id='authentication'>Authentication</h1>
 <p>WaiverForever uses API keys to allow access to the API. You can register a new API key at <a href="https://app.waiverforever.com/settings/api">Settings/API tab</a>.</p>
 
 <p>WaiverForever expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
@@ -619,7 +625,8 @@ curl -X POST https://api.waiverforever.com/openapi/v1/webhooks/ <span class="se"
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;event_name&gt;"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"target_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;callback url&gt;"</span><span class="w">
+  </span><span class="s2">"target_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;callback url&gt;"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"template_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;template_id&gt;"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <h3 id="subscribeEvent-parameters">Parameters</h3>
@@ -654,6 +661,13 @@ curl -X POST https://api.waiverforever.com/openapi/v1/webhooks/ <span class="se"
 <td>true</td>
 <td>callback url</td>
 </tr>
+<tr>
+<td>» template_id</td>
+<td>body</td>
+<td>string</td>
+<td>true</td>
+<td>template id</td>
+</tr>
 </tbody></table>
 
 <blockquote>
@@ -661,7 +675,12 @@ curl -X POST https://api.waiverforever.com/openapi/v1/webhooks/ <span class="se"
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="w">
+  </span><span class="s2">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscription id"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"event name"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"template_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"template id"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <h3 id="subscribeEvent-responses">Responses</h3>
@@ -678,7 +697,7 @@ curl -X POST https://api.waiverforever.com/openapi/v1/webhooks/ <span class="se"
 <td>200</td>
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
 <td>Successful request</td>
-<td><a href="#schemaresponse">Response</a></td>
+<td><a href="#schemasubscription">Subscription</a></td>
 </tr>
 <tr>
 <td>403</td>
@@ -749,7 +768,8 @@ curl -X DELETE https://api.waiverforever.com/openapi/v1/webhooks/ <span class="s
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;event_name&gt;"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"target_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;callback_url&gt;"</span><span class="w">
+  </span><span class="s2">"target_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;callback_url&gt;"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"template_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;template_id&gt;"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <h3 id="unsubscribeEvent-parameters">Parameters</h3>
@@ -783,6 +803,13 @@ curl -X DELETE https://api.waiverforever.com/openapi/v1/webhooks/ <span class="s
 <td>string</td>
 <td>true</td>
 <td>callback url</td>
+</tr>
+<tr>
+<td>» template_id</td>
+<td>body</td>
+<td>string</td>
+<td>true</td>
+<td>template id</td>
 </tr>
 </tbody></table>
 
@@ -829,16 +856,16 @@ curl -X DELETE https://api.waiverforever.com/openapi/v1/webhooks/ <span class="s
 </tr>
 </thead><tbody>
 <tr>
-<td>title</td>
-<td>string</td>
-<td>true</td>
-<td>template title</td>
-</tr>
-<tr>
 <td>id</td>
 <td>string</td>
 <td>true</td>
 <td>template id</td>
+</tr>
+<tr>
+<td>title</td>
+<td>string</td>
+<td>true</td>
+<td>template title</td>
 </tr>
 <tr>
 <td>disabled</td>
@@ -1051,12 +1078,12 @@ curl -X GET https://api.waiverforever.com/openapi/v1/template/<span class="o">{<
 <p>Example responses</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"waiver_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"zZ613txA741510127626"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"zZ613txA741510127626"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"has_pdf"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"pictures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"picture id"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Your Photo"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;temp_s3_url&gt;"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1510127609</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
@@ -1165,10 +1192,9 @@ curl -X GET https://api.waiverforever.com/openapi/v1/template/<span class="o">{<
       </span><span class="p">]</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
-  </span><span class="s2">"received_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1510127625"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"template_version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"template_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bike Rental Waiver"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"template_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JwIvKHHfW81493594388"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"received_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1510127625</span><span class="p">,</span><span class="w">
   </span><span class="s2">"signed_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1510127615</span><span class="p">,</span><span class="w">
   </span><span class="s2">"geolocation"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="s2">"accuracy"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
@@ -1315,7 +1341,7 @@ curl -X GET https://api.waiverforever.com/openapi/v1/template/<span class="o">{<
   </span><span class="s2">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"tracking_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;tracking_id&gt;"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"tracking_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;tracking_url&gt;"</span><span class="w">
+    </span><span class="s2">"request_waiver_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;request_waiver_url&gt;"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -1404,7 +1430,7 @@ curl -X GET https://api.waiverforever.com/openapi/v1/template/<span class="o">{<
 </tr>
 </thead><tbody>
 <tr>
-<td>waiver_id</td>
+<td>id</td>
 <td>string</td>
 <td>true</td>
 <td>waiver id</td>
@@ -1414,12 +1440,6 @@ curl -X GET https://api.waiverforever.com/openapi/v1/template/<span class="o">{<
 <td>string</td>
 <td>true</td>
 <td>template id</td>
-</tr>
-<tr>
-<td>template_version</td>
-<td>string</td>
-<td>true</td>
-<td>template version</td>
 </tr>
 <tr>
 <td>template_title</td>
@@ -1465,7 +1485,7 @@ curl -X GET https://api.waiverforever.com/openapi/v1/template/<span class="o">{<
 </tr>
 </tbody></table>
 
-<p>You can find a sample JSON <a href="sample_waiver.json">here</a>.</p>
+<p>You can find a sample JSON <a href="./sample_waiver.json">here</a>.</p>
 <h2 id='download-waiver-pdf'>Download Waiver PDF</h2>
 <blockquote>
 <p>Code samples</p>
@@ -1571,6 +1591,118 @@ curl -X GET https://api.waiverforever.com/openapi/v1/waiver/<span class="o">{</s
 <aside class="notice">
 We will redirect the download request to Amazon S3.
 </aside>
+<h2 id='download-waiver-pictures'>Download Waiver Pictures</h2>
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl -X GET https://api.waiverforever.com/openapi/v1/waiver/<span class="o">{</span>waiver_id<span class="o">}</span>/pictures/<span class="o">{</span>picture_id<span class="o">}</span> <span class="se">\</span>
+  -H <span class="s1">'Accept: */*'</span>
+
+</code></pre><pre class="highlight javascript tab-javascript--nodejs"><code><span class="kr">const</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'node-fetch'</span><span class="p">);</span>
+
+<span class="kr">const</span> <span class="nx">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span><span class="p">:</span><span class="s1">'*/*'</span>
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="s1">'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pictures/{picture_id}'</span><span class="p">,</span>
+<span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="nx">headers</span>
+<span class="p">})</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'*/*'</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pictures/{picture_id}'</span><span class="p">,</span>
+  <span class="ss">params: </span><span class="p">{</span>
+  <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'*/*'</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pictures/{picture_id}'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+<span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</code></pre>
+<p><code>GET /waiver/{waiver_id}/pictures/{picture_id}</code></p>
+
+<p><em>Download waiver pictures</em></p>
+
+<h3 id="downloadWaiverPdf-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>waiver_id</td>
+<td>path</td>
+<td>string</td>
+<td>true</td>
+<td>waiver id</td>
+</tr>
+<tr>
+<td>picture_id</td>
+<td>path</td>
+<td>string</td>
+<td>true</td>
+<td>picture id</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+</blockquote>
+
+<h3 id="downloadWaiverPdf-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>Successful request</td>
+<td>binary</td>
+</tr>
+<tr>
+<td>403</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.3">Forbidden</a></td>
+<td>Invalid api key</td>
+<td>None</td>
+</tr>
+<tr>
+<td>404</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.4">Not Found</a></td>
+<td>Wavier not found</td>
+<td>None</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+We will redirect the download request to Amazon S3.
+</aside>
 <h1 id='schemas'>Schemas</h1><h2 id='response'>Response</h2>
 <p><a name="schemaresponse"></a></p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
@@ -1599,14 +1731,16 @@ We will redirect the download request to Amazon S3.
 <td>response message</td>
 </tr>
 </tbody></table>
-<h2 id='template'>Template</h2>
-<p><a name="schematemplate"></a></p>
+<h2 id='subscription'>Subscription</h2>
+<p><a name="schemasubscription"></a></p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Demo Wavier"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"oBrbmWnp7X1446531274"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"disabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1446531274</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1493594388</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscription id"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"event name"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"template_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"template id"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre><h3 id='properties-2'>Properties</h3>
 <table><thead>
@@ -1618,16 +1752,71 @@ We will redirect the download request to Amazon S3.
 </tr>
 </thead><tbody>
 <tr>
-<td>title</td>
+<td>result</td>
+<td>boolean</td>
+<td>false</td>
+<td>request success or fail</td>
+</tr>
+<tr>
+<td>msg</td>
+<td>string</td>
+<td>false</td>
+<td>response message</td>
+</tr>
+<tr>
+<td>data</td>
+<td>object</td>
+<td>true</td>
+<td>data</td>
+</tr>
+<tr>
+<td>» id</td>
 <td>string</td>
 <td>true</td>
-<td>template title</td>
+<td>subscription id</td>
 </tr>
+<tr>
+<td>» event</td>
+<td>string</td>
+<td>true</td>
+<td>event name</td>
+</tr>
+<tr>
+<td>» template_id</td>
+<td>string</td>
+<td>true</td>
+<td>template id</td>
+</tr>
+</tbody></table>
+<h2 id='template'>Template</h2>
+<p><a name="schematemplate"></a></p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Demo Wavier"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"oBrbmWnp7X1446531274"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"disabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1446531274</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"updated_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1493594388</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='properties-3'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
 <tr>
 <td>id</td>
 <td>string</td>
 <td>true</td>
 <td>template id</td>
+</tr>
+<tr>
+<td>title</td>
+<td>string</td>
+<td>true</td>
+<td>template title</td>
 </tr>
 <tr>
 <td>disabled</td>
@@ -1651,12 +1840,12 @@ We will redirect the download request to Amazon S3.
 <h2 id='waiver'>Waiver</h2>
 <p><a name="schemawaiver"></a></p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"waiver_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"zZ613txA741510127626"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"zZ613txA741510127626"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"has_pdf"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"pictures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"picture id"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Your Photo"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;temp_s3_url&gt;"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1510127609</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
@@ -1765,10 +1954,9 @@ We will redirect the download request to Amazon S3.
       </span><span class="p">]</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
-  </span><span class="s2">"received_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1510127625"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"template_version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"template_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bike Rental Waiver"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"template_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JwIvKHHfW81493594388"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"received_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1510127625</span><span class="p">,</span><span class="w">
   </span><span class="s2">"signed_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1510127615</span><span class="p">,</span><span class="w">
   </span><span class="s2">"geolocation"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="s2">"accuracy"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
@@ -1776,7 +1964,7 @@ We will redirect the download request to Amazon S3.
       </span><span class="s2">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-22.406417"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='properties-3'>Properties</h3>
+</span></code></pre><h3 id='properties-4'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -1786,7 +1974,7 @@ We will redirect the download request to Amazon S3.
 </tr>
 </thead><tbody>
 <tr>
-<td>waiver_id</td>
+<td>id</td>
 <td>string</td>
 <td>true</td>
 <td>waiver id</td>
@@ -1796,12 +1984,6 @@ We will redirect the download request to Amazon S3.
 <td>string</td>
 <td>true</td>
 <td>template id</td>
-</tr>
-<tr>
-<td>template_version</td>
-<td>string</td>
-<td>true</td>
-<td>template version</td>
 </tr>
 <tr>
 <td>template_title</td>
@@ -1914,7 +2096,7 @@ We will redirect the download request to Amazon S3.
   </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Please fill in your name"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"name_field"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='properties-4'>Properties</h3>
+</span></code></pre><h3 id='properties-5'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -1967,7 +2149,7 @@ We will redirect the download request to Amazon S3.
   </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"demo@example.com"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"email_field"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='properties-5'>Properties</h3>
+</span></code></pre><h3 id='properties-6'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -2002,7 +2184,7 @@ We will redirect the download request to Amazon S3.
   </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Please fill in your phone number"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"phone_field"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='properties-6'>Properties</h3>
+</span></code></pre><h3 id='properties-7'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -2037,7 +2219,7 @@ We will redirect the download request to Amazon S3.
   </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"initial_field"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"please input your initials"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='properties-7'>Properties</h3>
+</span></code></pre><h3 id='properties-8'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -2072,7 +2254,7 @@ We will redirect the download request to Amazon S3.
   </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"17"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"age_field"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='properties-8'>Properties</h3>
+</span></code></pre><h3 id='properties-9'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -2108,7 +2290,7 @@ We will redirect the download request to Amazon S3.
   </span><span class="s2">"checked"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"checkbox_field"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='properties-9'>Properties</h3>
+</span></code></pre><h3 id='properties-10'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -2149,7 +2331,7 @@ We will redirect the download request to Amazon S3.
   </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mavericks"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"short_answer_field"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='properties-10'>Properties</h3>
+</span></code></pre><h3 id='properties-11'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -2190,7 +2372,7 @@ We will redirect the download request to Amazon S3.
   </span><span class="s2">"second_line"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
   </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='properties-11'>Properties</h3>
+</span></code></pre><h3 id='properties-12'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -2219,13 +2401,13 @@ We will redirect the download request to Amazon S3.
 </tr>
 <tr>
 <td>first_line</td>
-<td>true</td>
+<td>string</td>
 <td>false</td>
 <td>first line</td>
 </tr>
 <tr>
-<td>second_lien</td>
-<td>true</td>
+<td>second_line</td>
+<td>string</td>
 <td>false</td>
 <td>second line</td>
 </tr>
@@ -2264,7 +2446,7 @@ We will redirect the download request to Amazon S3.
   </span><span class="s2">"month"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"day"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='properties-12'>Properties</h3>
+</span></code></pre><h3 id='properties-13'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -2317,7 +2499,7 @@ We will redirect the download request to Amazon S3.
   </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Male or Female"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"single_choice_field"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='properties-13'>Properties</h3>
+</span></code></pre><h3 id='properties-14'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -2352,7 +2534,7 @@ We will redirect the download request to Amazon S3.
   </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Where did you hear about us? (Gain market insight!)"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"multiple_choice_field"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='properties-14'>Properties</h3>
+</span></code></pre><h3 id='properties-15'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -2386,10 +2568,10 @@ We will redirect the download request to Amazon S3.
   </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"container_field"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"result_list"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="err">//</span><span class="w"> </span><span class="err">same</span><span class="w"> </span><span class="err">as</span><span class="w"> </span><span class="err">ordinary</span><span class="w"> </span><span class="err">fields</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">list</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">ordinary</span><span class="w"> </span><span class="err">fields</span><span class="w"> </span><span class="err">set</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='properties-15'>Properties</h3>
+</span></code></pre><h3 id='properties-16'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -2414,17 +2596,17 @@ We will redirect the download request to Amazon S3.
 <td>result_list</td>
 <td>[<a href="#schemafield">Field</a>]</td>
 <td>true</td>
-<td>child fields set</td>
+<td>a list of ordinary fields set</td>
 </tr>
 </tbody></table>
 <h2 id='picture'>Picture</h2>
 <p><a name="schemapicture"></a></p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Your Photo"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://s3.amazonaws.com/qs3_datafiles_v2/doc_pictures/OBp7EkPfw51510127630.jpeg"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"picture id"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="mi">1510127609</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='properties-16'>Properties</h3>
+</span></code></pre><h3 id='properties-17'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -2440,10 +2622,10 @@ We will redirect the download request to Amazon S3.
 <td>picture title</td>
 </tr>
 <tr>
-<td>url</td>
+<td>id</td>
 <td>string</td>
 <td>true</td>
-<td>temporary download picture url</td>
+<td>picture id</td>
 </tr>
 <tr>
 <td>timestamp</td>
@@ -2459,7 +2641,7 @@ We will redirect the download request to Amazon S3.
   </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="s2">"37.785834"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-122.406417"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='properties-17'>Properties</h3>
+</span></code></pre><h3 id='properties-18'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -2472,7 +2654,7 @@ We will redirect the download request to Amazon S3.
 <td>accuracy</td>
 <td>integer</td>
 <td>true</td>
-<td>location accuracy level</td>
+<td>location accuracy level in meters</td>
 </tr>
 <tr>
 <td>latitude</td>
