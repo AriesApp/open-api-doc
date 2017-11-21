@@ -47,7 +47,7 @@ How does it work really?
 
 ### 1. Authentication
 
-First off, you need a valid **API key** to access our APIs. Each API key should represent one standalone app. You can generate and revoke your API keys in the  [Settings / API](https://app.waiverforever.com/settings/) tab.
+First off, you need a valid **API key** to access our APIs. Each API key should represent one standalone app. You can generate and revoke your API keys in the  [Settings / API](https://app.waiverforever.com/settings) tab.
 
 The authentication mechanism is quite simple, all you need to do is to add a custom HTTP header: `X-API-Key`.
 
@@ -117,7 +117,7 @@ X                                   |                                   |
 
 # Authentication
 
-WaiverForever uses API keys to allow access to the API. You can register a new API key at [Settings/API tab](https://app.waiverforever.com/settings/api).
+WaiverForever uses API keys to allow access to the API. You can register a new API key at [Settings/API tab](https://app.waiverforever.com/settings).
 
 WaiverForever expects for the API key to be included in all API requests to the server in a header that looks like the following:
 
@@ -876,8 +876,6 @@ signed_at|integer|true|waiver signed timestamp
 pictures|[[Picture](#schemapicture)]|false|attached pictures
 data|[[Field](#schemafield)]|true|filled fields
 
-You can find a sample JSON [here](./sample_waiver.json).
-
 ## Download Waiver PDF
 
 > Code samples
@@ -1079,12 +1077,9 @@ msg|string|false|response message
 
 Name|Type|Required|Description
 ---|---|---|---|
-result|boolean|false|request success or fail
-msg|string|false|response message
-data|object|true|data
-» id|string|true|subscription id
-» event|string|true|event name
-» template_id|string|true|template id
+id|string|true|subscription id
+event|string|true|event name
+template_id|string|true|template id
 
 ## Template
 
