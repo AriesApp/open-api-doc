@@ -33,7 +33,7 @@ Let's explain some frequently-used terms of WaiverForever.
 
 **Template** is similar to a *class* in object-oriented languages, in other words a blank waiver form. Each template in WaiverForever has a unique identifier and multiple versions. Each time a waiver is edited and saved, a new template version is created. In general, we always return the latest version when requesting a waiver template.
 
-**Wavier** is similar to an *instance* in object-oriented languages, in other words a filled waiver form. Each time after user sign and submit/upload, a new waiver is created and saved. Waiver may have pictures attached.
+**Waiver** is similar to an *instance* in object-oriented languages, in other words a filled waiver form. Each time after user sign and submit/upload, a new waiver is created and saved. Waiver may have pictures attached.
 
 **Field** is the smallest logical unit of a template or a waiver. You can find all the fields we support here: [Field Types](#schemafield).
 
