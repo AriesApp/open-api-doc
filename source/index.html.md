@@ -66,7 +66,7 @@ Dynamic webhooks provide maximum flexibility to manage your events. You can subs
 The whole flow is dead simple ->
 
 ```
-Your App                 WavierForever		                    User
+Your App                 WavierForever                         User
 |                               |                               |
 |------------------------------>|
 |1) Auth ping (optional)        |                               |
@@ -107,10 +107,9 @@ Base URLs:
 
 * <a href="https://api.waiverforever.com/openapi/v1">https://api.waiverforever.com/openapi/v1</a>
 
-
-<a href="https://www.waiverforever.com/terms">Terms of service</a>
-Support Email: <a href="mailto:mobile@waiverforever.com">mobile@waiverforever.com</a>
-License: <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>
+Contact: <a href="mailto:mobile@waiverforever.com">mobile@waiverforever.com</a></br>
+License: <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a></br>
+<a href="https://www.waiverforever.com/terms">Terms of service</a></br>
 
 # Authentication
 
@@ -142,13 +141,11 @@ const request = require('node-fetch');
 
 const headers = {
   'Accept':'application/json'
-
 };
 
 fetch('https://api.waiverforever.com/openapi/v1/auth/ping',
 {
   method: 'GET',
-
   headers: headers
 })
 .then(function(res) {
@@ -180,7 +177,6 @@ headers = {
 }
 
 r = requests.get('https://api.waiverforever.com/openapi/v1/auth/ping', params={
-
 }, headers = headers)
 
 print r.json()
@@ -195,9 +191,9 @@ print r.json()
 ```json
 {
   "result": true,
-  "msg": "",
+  "msg": "success",
   "data": {
-    "username": "string"
+    "username": "demo@example.com"
   }
 }
 
@@ -235,7 +231,7 @@ Current support events:
 
 ```shell
 # You can also use wget
-curl -X PUT https://api.waiverforever.com/openapi/v1/webhooks \
+curl -X PUT https://api.waiverforever.com/openapi/v1/webhooks/ \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json'
 
@@ -304,7 +300,7 @@ Subscribe an event you care about, and WaiverForever will call you back when cer
 
 ```json
 {
-  "event": "new_waiver_signed",
+  "event": "<event_name>",
   "target_url": "<callback url>"
 }
 ```
@@ -340,7 +336,6 @@ Status|Meaning|Description|Schema
 curl -X DELETE https://api.waiverforever.com/openapi/v1/webhooks/ \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json'
-
 ```
 
 ```javascript--nodejs
@@ -444,7 +439,7 @@ title|string|true|template title
 id|string|true|template id
 disabled|boolean|true|true if disabled by user
 created_at|integer|true|created timestamp
-update_at|integer|true|updated timestamp
+updated_at|integer|true|updated timestamp
 
 ## Get Template list
 
@@ -454,7 +449,6 @@ update_at|integer|true|updated timestamp
 # You can also use wget
 curl -X GET https://api.waiverforever.com/openapi/v1/templates \
   -H 'Accept: application/json'
-
 ```
 
 ```javascript--nodejs
@@ -503,7 +497,7 @@ r = requests.get('https://api.waiverforever.com/openapi/v1/templates', params={
 print r.json()
 ```
 
-*Get template list.*
+*GET /templates*
 
 > Example responses
 
@@ -513,11 +507,11 @@ print r.json()
   "msg": "success",
   "data": [
     {
-      "title": "string",
-      "id": "string",
-      "disabled": true,
-      "created_at": 0,
-      "update_at": 0
+      "title": "Demo Wavier",
+      "id": "oBrbmWnp7X1446531274",
+      "disabled": false,
+      "created_at": 1446531274,
+      "updated_at": 1493594388
     }
   ]
 }
@@ -547,7 +541,6 @@ data|[[Template](#schematemplate)]|true|template list
 # You can also use wget
 curl -X GET https://api.waiverforever.com/openapi/v1/template/{template_id}/sampleWaiver \
   -H 'Accept: application/json'
-
 ```
 
 ```javascript--nodejs
@@ -596,7 +589,7 @@ r = requests.get('https://api.waiverforever.com/openapi/v1/template/{template_id
 print r.json()
 ```
 
-`GET /template/{template_id}/sample`
+`GET /template/{template_id}/sampleWaiver`
 
 *Get a sample waiver from specified template id*
 
@@ -611,35 +604,129 @@ template_id|path|string|true|template id
 
 ```json
 {
-  "result": true,
-  "msg": "string",
-  "data": {
-    "waiver_id": "string",
-    "template_id": "string",
-    "template_version": "string",
-    "template_title": "string",
-    "has_pdf": true,
-    "geolocation": {
-      "accuracy": 0,
-      "latitude": "string",
-      "longtitude": "string"
+  "waiver_id": "zZ613txA741510127626",
+  "has_pdf": true,
+  "pictures": [
+    {
+      "title": "Your Photo",
+      "url": "<temp_s3_url>",
+      "timestamp": 1510127609
+    }
+  ],
+  "data": [
+    {
+      "value": "HF",
+      "type": "initial_field",
+      "title": "please input your initials"
     },
-    "pictures": [
-      {
-        "title": "string",
-        "url": "string",
-        "timestamp": 0
-      }
-    ],
-    "received_at": 0,
-    "signed_at": 0,
-    "data": [
-      {
-        "title": "string",
-        "value": "string",
-        "type": "name_field"
-      }
-    ]
+    {
+      "first_name": "first",
+      "middle_name": "",
+      "last_name": "",
+      "value": "first m last",
+      "title": "Please fill in your name",
+      "type": "name_field"
+    },
+    {
+      "title": "Please fill in your email",
+      "value": "gh@me.com",
+      "type": "email_field"
+    },
+    {
+      "value": "1 851-234-5678",
+      "title": "Please fill in your phone number",
+      "type": "phone_field"
+    },
+    {
+      "state": "TX",
+      "first_line": "No 123",
+      "value": "No 123 TX, USA",
+      "type": "address_field",
+      "country": "USA",
+      "title": "Please fill in your address",
+      "zipcode": "123456",
+      "second_line": "",
+      "city": ""
+    },
+    {
+      "value": "18",
+      "title": "Please fill in your age",
+      "type": "age_field"
+    },
+    {
+      "type": "date_field",
+      "title": "Please fill date",
+      "value": "2017-11-8",
+      "year": "2017",
+      "month": "11",
+      "day": "8"
+    },
+    {
+      "type": "checkbox_field",
+      "title": "Text to agree on",
+      "value": "checked"
+    },
+    {
+      "value": "Ghosts ",
+      "title": "Your fav team",
+      "type": "short_answer_field"
+    },
+    {
+      "value": "Femal",
+      "title": "Male or Female",
+      "type": "single_choice_field"
+    },
+    {
+      "value": ["Magazine", "Trip advisor"],
+      "title": "Where did you hear about us? (Gain market insight!)",
+      "type": "multiple_choice_field"
+    },
+    {
+      "type": "container_field",
+      "title": "please enter your minors' information",
+      "result_list": [
+        [
+          {
+            "first_name": "first",
+            "middle_name": "",
+            "last_name": "",
+            "value": "C1 first m last",
+            "title": "Please fill in your name",
+            "type": "name_field"
+          },
+          {
+            "title": "Please fill in your email",
+            "value": "C1 gh@me.com",
+            "type": "email_field"
+          }
+        ],
+        [
+          {
+            "first_name": "first",
+            "middle_name": "",
+            "last_name": "",
+            "value": "C2 first m last",
+            "title": "Please fill in your name",
+            "type": "name_field"
+          },
+          {
+            "title": "Please fill in your email",
+            "value": "C2 gh@me.com",
+            "type": "email_field"
+          }
+        ]
+      ]
+    }
+  ],
+  "received_at": "1510127625",
+  "template_version": "2.0",
+  "template_title": "Bike Rental Waiver",
+  "template_id": "JwIvKHHfW81493594388",
+  "signed_at": 1510127615,
+  "geolocation": {
+      "accuracy": 5,
+      "latitude": "137.785834",
+      "longitude": "-22.406417"
   }
 }
 ```
@@ -669,7 +756,6 @@ data|[Waiver](#schemawaiver)|true|Tailored Waiver
 # You can also use wget
 curl -X GET https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver \
   -H 'Accept: application/json'
-
 ```
 
 ```javascript--nodejs
@@ -713,13 +799,12 @@ headers = {
 }
 
 r = requests.get('https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver', params={
-
 }, headers = headers)
 
 print r.json()
 ```
 
-`POST /template/{template_id}/requestWaiver`
+`GET /template/{template_id}/requestWaiver`
 
 *Request a waiver to sign*
 
@@ -735,7 +820,7 @@ template_id|path|string|true|template id
 ```json
 {
   "result": true,
-  "msg": "string",
+  "msg": "success",
   "data": {
     "tracking_id": "<tracking_id>",
     "tracking_url": "<tracking_url>"
@@ -890,11 +975,11 @@ msg|string|false|response message
 
 ```json
 {
-  "title": "string",
-  "id": "string",
-  "disabled": true,
-  "created_at": 0,
-  "update_at": 0
+  "title": "Demo Wavier",
+  "id": "oBrbmWnp7X1446531274",
+  "disabled": false,
+  "created_at": 1446531274,
+  "updated_at": 1493594388
 }
 ```
 
@@ -906,7 +991,7 @@ title|string|true|template title
 id|string|true|template id
 disabled|boolean|true|true if disabled by user
 created_at|integer|true|created timestamp
-update_at|integer|true|updated timestamp
+updated_at|integer|true|updated timestamp
 
 
 ## Waiver
@@ -915,32 +1000,130 @@ update_at|integer|true|updated timestamp
 
 ```json
 {
-  "waiver_id": "string",
-  "template_id": "string",
-  "template_version": "string",
-  "template_title": "string",
+  "waiver_id": "zZ613txA741510127626",
   "has_pdf": true,
-  "geolocation": {
-    "accuracy": 0,
-    "latitude": "string",
-    "longtitude": "string"
-  },
   "pictures": [
     {
-      "title": "string",
-      "url": "string",
-      "timestamp": 0
+      "title": "Your Photo",
+      "url": "<temp_s3_url>",
+      "timestamp": 1510127609
     }
   ],
-  "received_at": 0,
-  "signed_at": 0,
   "data": [
     {
-      "title": "string",
-      "value": "string",
+      "value": "HF",
+      "type": "initial_field",
+      "title": "please input your initials"
+    },
+    {
+      "first_name": "first",
+      "middle_name": "",
+      "last_name": "",
+      "value": "first m last",
+      "title": "Please fill in your name",
       "type": "name_field"
+    },
+    {
+      "title": "Please fill in your email",
+      "value": "gh@me.com",
+      "type": "email_field"
+    },
+    {
+      "value": "1 851-234-5678",
+      "title": "Please fill in your phone number",
+      "type": "phone_field"
+    },
+    {
+      "state": "TX",
+      "first_line": "No 123",
+      "value": "No 123 TX, USA",
+      "type": "address_field",
+      "country": "USA",
+      "title": "Please fill in your address",
+      "zipcode": "123456",
+      "second_line": "",
+      "city": ""
+    },
+    {
+      "value": "18",
+      "title": "Please fill in your age",
+      "type": "age_field"
+    },
+    {
+      "type": "date_field",
+      "title": "Please fill date",
+      "value": "2017-11-8",
+      "year": "2017",
+      "month": "11",
+      "day": "8"
+    },
+    {
+      "type": "checkbox_field",
+      "title": "Text to agree on",
+      "value": "checked"
+    },
+    {
+      "value": "Ghosts ",
+      "title": "Your fav team",
+      "type": "short_answer_field"
+    },
+    {
+      "value": "Femal",
+      "title": "Male or Female",
+      "type": "single_choice_field"
+    },
+    {
+      "value": ["Magazine", "Trip advisor"],
+      "title": "Where did you hear about us? (Gain market insight!)",
+      "type": "multiple_choice_field"
+    },
+    {
+      "type": "container_field",
+      "title": "please enter your minors' information",
+      "result_list": [
+        [
+          {
+            "first_name": "first",
+            "middle_name": "",
+            "last_name": "",
+            "value": "C1 first m last",
+            "title": "Please fill in your name",
+            "type": "name_field"
+          },
+          {
+            "title": "Please fill in your email",
+            "value": "C1 gh@me.com",
+            "type": "email_field"
+          }
+        ],
+        [
+          {
+            "first_name": "first",
+            "middle_name": "",
+            "last_name": "",
+            "value": "C2 first m last",
+            "title": "Please fill in your name",
+            "type": "name_field"
+          },
+          {
+            "title": "Please fill in your email",
+            "value": "C2 gh@me.com",
+            "type": "email_field"
+          }
+        ]
+      ]
     }
-  ]
+  ],
+  "received_at": "1510127625",
+  "template_version": "2.0",
+  "template_title": "Bike Rental Waiver",
+  "template_id": "JwIvKHHfW81493594388",
+  "signed_at": 1510127615,
+  "geolocation": {
+      "accuracy": 5,
+      "latitude": "137.785834",
+      "longitude": "-22.406417"
+  }
 }
 ```
 
@@ -984,12 +1167,12 @@ data|[[Field](#schemafield)]|true|filled fields
 
 ```json
 {
-  "title": "string",
-  "value": "string",
-  "type": "name_field",
-  "first_name": "string",
-  "last_name": "string",
-  "middle_name": "string"
+  "first_name": "first",
+  "middle_name": "m",
+  "last_name": "last",
+  "value": "first m last",
+  "title": "Please fill in your name",
+  "type": "name_field"
 }
 ```
 
@@ -1011,8 +1194,8 @@ middle_name|string|false|middle name (optional)
 
 ```json
 {
-  "title": "string",
-  "value": "string",
+  "title": "Please fill in your email",
+  "value": "demo@example.com",
   "type": "email_field"
 }
 ```
@@ -1032,8 +1215,8 @@ type|string|true|always "email_field"
 
 ```json
 {
-  "title": "string",
-  "value": "string",
+  "value": "1 408-123-5678",
+  "title": "Please fill in your phone number",
   "type": "phone_field"
 }
 ```
@@ -1052,9 +1235,9 @@ type|string|true|always "phone_field"
 
 ```json
 {
-  "title": "string",
-  "value": "string",
-  "type": "initial_field"
+  "value": "HF",
+  "type": "initial_field",
+  "title": "please input your initials"
 }
 ```
 
@@ -1072,8 +1255,8 @@ type|string|true|always "initial_field"
 
 ```json
 {
-  "title": "string",
-  "value": "string",
+  "title": "Please fill in your age",
+  "value": "17",
   "type": "age_field"
 }
 ```
@@ -1093,8 +1276,9 @@ type|string|true|always "age_field"
 
 ```json
 {
-  "title": "string",
-  "value": "string",
+  "title": "Text to agree on",
+  "value": "checked",
+  "checked": true,
   "type": "checkbox_field"
 }
 ```
@@ -1105,6 +1289,7 @@ Name|Type|Required|Description
 ---|---|---|---|
 title|string|true|checkbox field
 value|string|true|checked value
+checked|boolean|true|true / false
 type|string|true|always "checkbox_field"
 
 ## ShortAnswerField
@@ -1113,8 +1298,8 @@ type|string|true|always "checkbox_field"
 
 ```json
 {
-  "title": "string",
-  "value": "string",
+  "title": "Your fav team",
+  "value": "Mavericks",
   "type": "short_answer_field"
 }
 ```
@@ -1133,15 +1318,15 @@ type|string|true|always "short_answer_field"
 
 ```json
 {
-  "title": "string",
-  "value": "string",
+  "state": "TX",
+  "first_line": "No 123",
+  "value": "No 123 TX, USA",
   "type": "address_field",
-  "first_line": "string",
-  "second_lien": "string",
-  "city": "string",
-  "state": "string",
-  "country": "string",
-  "zipcode": "string"
+  "country": "USA",
+  "title": "Please fill in your address",
+  "zipcode": "123456",
+  "second_line": "",
+  "city": ""
 }
 ```
 
@@ -1165,12 +1350,12 @@ zipcode|string|true|zipcode or postal code
 
 ```json
 {
-  "title": "string",
-  "value": "string",
   "type": "date_field",
-  "year": "string",
-  "month": "string",
-  "day": "string"
+  "title": "Please fill date",
+  "value": "2017-11-8",
+  "year": "2017",
+  "month": "11",
+  "day": "8"
 }
 ```
 
@@ -1192,8 +1377,8 @@ day|string|true|day of the date
 
 ```json
 {
-  "title": "string",
-  "value": "string",
+  "value": "Femal",
+  "title": "Male or Female",
   "type": "single_choice_field"
 }
 ```
@@ -1212,11 +1397,9 @@ type|string|true|always "single_choice_field"
 
 ```json
 {
-  "title": "string",
-  "type": "multiple_choice_field",
-  "value": [
-    "string"
-  ]
+  "value": ["Magazine", "Trip advisor"],
+  "title": "Where did you hear about us? (Gain market insight!)",
+  "type": "multiple_choice_field"
 }
 ```
 
@@ -1256,9 +1439,9 @@ result_list|[[Field](#schemafield)]|true|child fields set
 
 ```json
 {
-  "title": "string",
-  "url": "string",
-  "timestamp": 0
+  "title": "Your Photo",
+  "url": "https://s3.amazonaws.com/qs3_datafiles_v2/doc_pictures/OBp7EkPfw51510127630.jpeg",
+  "timestamp": 1510127609
 }
 ```
 
@@ -1278,8 +1461,8 @@ timestamp|integer|true|created timestamp
 ```json
 {
   "accuracy": 5,
-  "latitude": "string",
-  "longtitude": "string"
+  "latitude": "37.785834",
+  "longitude": "-122.406417"
 }
 ```
 
