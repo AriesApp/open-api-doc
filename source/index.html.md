@@ -344,26 +344,19 @@ Status|Meaning|Description|Schema
 
 ```shell
 # You can also use wget
-curl -X DELETE https://api.waiverforever.com/openapi/v1/webhooks/ \
-  -H 'Content-Type: application/json' \
+curl -X DELETE https://api.waiverforever.com/openapi/v1/webhooks/{subscription_id} \
   -H 'Accept: application/json'
 ```
 
 ```javascript--nodejs
 const request = require('node-fetch');
-const inputBody = '{
-  "event": "string",
-  "target_url": "string"
-}';
 const headers = {
-  'Content-Type':'application/json',
   'Accept':'application/json'
 };
 
-fetch('https://api.waiverforever.com/openapi/v1/webhooks/',
+fetch('https://api.waiverforever.com/openapi/v1/webhooks/{subscription_id}',
 {
   method: 'DELETE',
-  body: inputBody,
   headers: headers
 })
 .then(function(res) {
@@ -378,11 +371,10 @@ require 'rest-client'
 require 'json'
 
 headers = {
-  'Content-Type' => 'application/json',
   'Accept' => 'application/json'
 }
 
-result = RestClient.delete 'https://api.waiverforever.com/openapi/v1/webhooks/',
+result = RestClient.delete 'https://api.waiverforever.com/openapi/v1/webhooks/{subscription_id}',
   params: {
   }, headers: headers
 
@@ -392,37 +384,24 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Content-Type': 'application/json',
   'Accept': 'application/json'
 }
 
-r = requests.delete('https://api.waiverforever.com/openapi/v1/webhooks/', params={
+r = requests.delete('https://api.waiverforever.com/openapi/v1/webhooks/{subscription_id}', params={
 }, headers = headers)
 
 print r.json()
 ```
 
-`DELETE /webhooks/`
+`DELETE /webhooks/{subscription_id}`
 
 *Unsubscribe an event.*
 
-> Body parameter
-
-```json
-{
-  "event": "<event_name>",
-  "target_url": "<callback_url>",
-  "template_id": "<template_id>"
-}
-```
 <h3 id="unsubscribeEvent-parameters">Parameters</h3>
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-body|body|object|false|Event that you're not interested any more.
-» event|body|string|true|event name
-» target_url|body|string|true|callback url
-» template_id|body|string|true|template id
+subscription_id|path|string|true|subscription id
 
 > Example responses
 
