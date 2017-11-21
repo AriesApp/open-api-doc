@@ -559,7 +559,7 @@ This API is used for testing.
 <p>Code samples</p>
 </blockquote>
 <pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
-curl -X PUT https://api.waiverforever.com/openapi/v1/webhooks/ <span class="se">\</span>
+curl -X POST https://api.waiverforever.com/openapi/v1/webhooks/ <span class="se">\</span>
   -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
   -H <span class="s1">'Accept: application/json'</span>
 
@@ -575,7 +575,7 @@ curl -X PUT https://api.waiverforever.com/openapi/v1/webhooks/ <span class="se">
 
 <span class="nx">fetch</span><span class="p">(</span><span class="s1">'https://api.waiverforever.com/openapi/v1/webhooks/'</span><span class="p">,</span>
 <span class="p">{</span>
-  <span class="na">method</span><span class="p">:</span> <span class="s1">'PUT'</span><span class="p">,</span>
+  <span class="na">method</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
   <span class="na">body</span><span class="p">:</span> <span class="nx">inputBody</span><span class="p">,</span>
   <span class="na">headers</span><span class="p">:</span> <span class="nx">headers</span>
 <span class="p">})</span>
@@ -592,7 +592,7 @@ curl -X PUT https://api.waiverforever.com/openapi/v1/webhooks/ <span class="se">
   <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span>
 <span class="p">}</span>
 
-<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">put</span> <span class="s1">'https://api.waiverforever.com/openapi/v1/webhooks/'</span><span class="p">,</span>
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">post</span> <span class="s1">'https://api.waiverforever.com/openapi/v1/webhooks/'</span><span class="p">,</span>
   <span class="ss">params: </span><span class="p">{</span>
   <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
 
@@ -603,12 +603,12 @@ curl -X PUT https://api.waiverforever.com/openapi/v1/webhooks/ <span class="se">
   <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span>
 <span class="p">}</span>
 
-<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s">'https://api.waiverforever.com/openapi/v1/webhooks/'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://api.waiverforever.com/openapi/v1/webhooks/'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
 <span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
 
 <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </code></pre>
-<p><code>PUT /webhooks/</code></p>
+<p><code>POST /webhooks/</code></p>
 
 <p><em>Subscribe an event.</em></p>
 
