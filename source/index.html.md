@@ -227,7 +227,9 @@ Subscribe / Unsubscribe webhooks events.
 
 Current support events:
 
-- `new_waiver_signed`
+Event|Payload Schema|Description
+---|---|---|
+`new_waiver_signed`|[Waiver](#schemawaiver)|a new waiver is signed
 
 ## Subscribe an event
 
