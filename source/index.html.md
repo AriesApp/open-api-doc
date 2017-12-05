@@ -129,13 +129,13 @@ You must replace <code>api_key</code> with your personal API key.
 
 # Auth Endpoints
 
-## Test Auth Ping
+## Get User Info
 
 > Code samples
 
 ```shell
 # You can also use wget
-curl -X GET https://api.waiverforever.com/openapi/v1/auth/ping \
+curl -X GET https://api.waiverforever.com/openapi/v1/auth/userInfo \
   -H 'Accept: application/json'
 
 ```
@@ -147,7 +147,7 @@ const headers = {
   'Accept':'application/json'
 };
 
-fetch('https://api.waiverforever.com/openapi/v1/auth/ping',
+fetch('https://api.waiverforever.com/openapi/v1/auth/userInfo',
 {
   method: 'GET',
   headers: headers
@@ -167,7 +167,7 @@ headers = {
   'Accept' => 'application/json'
 }
 
-result = RestClient.get 'https://api.waiverforever.com/openapi/v1/auth/ping',
+result = RestClient.get 'https://api.waiverforever.com/openapi/v1/auth/userInfo',
   params: {
   }, headers: headers
 
@@ -180,15 +180,15 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://api.waiverforever.com/openapi/v1/auth/ping', params={
+r = requests.get('https://api.waiverforever.com/openapi/v1/auth/userInfo', params={
 }, headers = headers)
 
 print r.json()
 ```
 
-`GET /auth/ping`
+`GET /auth/userInfo`
 
-*Test if the API key is valid*
+*Get user info for the API key*
 
 > Example responses
 
@@ -218,7 +218,7 @@ Name|Type|Required|Description
 username|string|true|username of the account
 
 <aside class="success">
-This API is used for testing.
+Use this API to test your API key.
 </aside>
 
 # Webhooks Endpoints
@@ -746,7 +746,7 @@ data|[Waiver](#schemawaiver)|true|Tailored Waiver
 
 ```shell
 # You can also use wget
-curl -X GET https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver \
+curl -X GET https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl> \
   -H 'Accept: application/json'
 ```
 
@@ -757,7 +757,7 @@ const headers = {
   'Accept':'application/json'
 };
 
-fetch('https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver',
+fetch('https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>',
 {
   method: 'GET',
   headers: headers
@@ -777,7 +777,7 @@ headers = {
   'Accept' => 'application/json'
 }
 
-result = RestClient.get 'https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver',
+result = RestClient.get 'https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>',
   params: {
   }, headers: headers
 
@@ -790,13 +790,13 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver', params={
+r = requests.get('https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>', params={
 }, headers = headers)
 
 print r.json()
 ```
 
-`GET /template/{template_id}/requestWaiver`
+`GET /template/{template_id}/requestWaiver?ttl=<ttl>`
 
 *Request a waiver to sign*
 
@@ -805,6 +805,7 @@ print r.json()
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
 template_id|path|string|true|template id
+ttl|query|string|false|request waiver expiration time (in seconds)
 
 
 > Example responses
@@ -815,7 +816,8 @@ template_id|path|string|true|template id
   "msg": "success",
   "data": {
     "tracking_id": "<tracking_id>",
-    "request_waiver_url": "<request_waiver_url>"
+    "request_waiver_url": "<request_waiver_url>",
+    "ttl": 86400
   }
 }
 ```
@@ -838,6 +840,7 @@ msg|string|true|response message
 data|object|true|data
 » tracking_id|string|true|tracking id for requested waiver
 » request_waiver_url|string|true|remote signing url for requested waiver
+» ttl|string|true|request waiver expiration time (in seconds)
 
 # Waiver Endpoints
 
