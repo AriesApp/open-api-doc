@@ -239,7 +239,7 @@
             <a href="#auth-endpoints" class="toc-h1 toc-link" data-title="Auth Endpoints">Auth Endpoints</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#test-auth-ping" class="toc-h2 toc-link" data-title="Test Auth Ping">Test Auth Ping</a>
+                    <a href="#get-user-info" class="toc-h2 toc-link" data-title="Get User Info">Get User Info</a>
                   </li>
               </ul>
           </li>
@@ -443,12 +443,12 @@ X                                   |                                   |
 <aside class="notice">
 You must replace <code>api_key</code> with your personal API key.
 </aside>
-<h1 id='auth-endpoints'>Auth Endpoints</h1><h2 id='test-auth-ping'>Test Auth Ping</h2>
+<h1 id='auth-endpoints'>Auth Endpoints</h1><h2 id='get-user-info'>Get User Info</h2>
 <blockquote>
 <p>Code samples</p>
 </blockquote>
 <pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
-curl -X GET https://api.waiverforever.com/openapi/v1/auth/ping <span class="se">\</span>
+curl -X GET https://api.waiverforever.com/openapi/v1/auth/userInfo <span class="se">\</span>
   -H <span class="s1">'Accept: application/json'</span>
 
 </code></pre><pre class="highlight javascript tab-javascript--nodejs"><code><span class="kr">const</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'node-fetch'</span><span class="p">);</span>
@@ -457,7 +457,7 @@ curl -X GET https://api.waiverforever.com/openapi/v1/auth/ping <span class="se">
   <span class="s1">'Accept'</span><span class="p">:</span><span class="s1">'application/json'</span>
 <span class="p">};</span>
 
-<span class="nx">fetch</span><span class="p">(</span><span class="s1">'https://api.waiverforever.com/openapi/v1/auth/ping'</span><span class="p">,</span>
+<span class="nx">fetch</span><span class="p">(</span><span class="s1">'https://api.waiverforever.com/openapi/v1/auth/userInfo'</span><span class="p">,</span>
 <span class="p">{</span>
   <span class="na">method</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
   <span class="na">headers</span><span class="p">:</span> <span class="nx">headers</span>
@@ -474,7 +474,7 @@ curl -X GET https://api.waiverforever.com/openapi/v1/auth/ping <span class="se">
   <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span>
 <span class="p">}</span>
 
-<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.waiverforever.com/openapi/v1/auth/ping'</span><span class="p">,</span>
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.waiverforever.com/openapi/v1/auth/userInfo'</span><span class="p">,</span>
   <span class="ss">params: </span><span class="p">{</span>
   <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
 
@@ -484,14 +484,14 @@ curl -X GET https://api.waiverforever.com/openapi/v1/auth/ping <span class="se">
   <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span>
 <span class="p">}</span>
 
-<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.waiverforever.com/openapi/v1/auth/ping'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.waiverforever.com/openapi/v1/auth/userInfo'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
 <span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
 
 <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </code></pre>
-<p><code>GET /auth/ping</code></p>
+<p><code>GET /auth/userInfo</code></p>
 
-<p><em>Test if the API key is valid</em></p>
+<p><em>Get user info for the API key</em></p>
 
 <blockquote>
 <p>Example responses</p>
@@ -550,7 +550,7 @@ curl -X GET https://api.waiverforever.com/openapi/v1/auth/ping <span class="se">
 </tbody></table>
 
 <aside class="success">
-This API is used for testing.
+Use this API to test your API key.
 </aside>
 <h1 id='webhooks-endpoints'>Webhooks Endpoints</h1>
 <p>Subscribe / Unsubscribe webhooks events.</p>
@@ -1240,7 +1240,7 @@ curl -X GET https://api.waiverforever.com/openapi/v1/template/<span class="o">{<
 <p>Code samples</p>
 </blockquote>
 <pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
-curl -X GET https://api.waiverforever.com/openapi/v1/template/<span class="o">{</span>template_id<span class="o">}</span>/requestWaiver <span class="se">\</span>
+curl -X GET https://api.waiverforever.com/openapi/v1/template/<span class="o">{</span>template_id<span class="o">}</span>/requestWaiver?ttl<span class="o">=</span>&lt;ttl&gt; <span class="se">\</span>
   -H <span class="s1">'Accept: application/json'</span>
 </code></pre><pre class="highlight javascript tab-javascript--nodejs"><code><span class="kr">const</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'node-fetch'</span><span class="p">);</span>
 
@@ -1248,7 +1248,7 @@ curl -X GET https://api.waiverforever.com/openapi/v1/template/<span class="o">{<
   <span class="s1">'Accept'</span><span class="p">:</span><span class="s1">'application/json'</span>
 <span class="p">};</span>
 
-<span class="nx">fetch</span><span class="p">(</span><span class="s1">'https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver'</span><span class="p">,</span>
+<span class="nx">fetch</span><span class="p">(</span><span class="s1">'https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=&lt;ttl&gt;'</span><span class="p">,</span>
 <span class="p">{</span>
   <span class="na">method</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
   <span class="na">headers</span><span class="p">:</span> <span class="nx">headers</span>
@@ -1265,7 +1265,7 @@ curl -X GET https://api.waiverforever.com/openapi/v1/template/<span class="o">{<
   <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span>
 <span class="p">}</span>
 
-<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver'</span><span class="p">,</span>
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=&lt;ttl&gt;'</span><span class="p">,</span>
   <span class="ss">params: </span><span class="p">{</span>
   <span class="p">},</span> <span class="ss">headers: </span><span class="n">headers</span>
 
@@ -1275,12 +1275,12 @@ curl -X GET https://api.waiverforever.com/openapi/v1/template/<span class="o">{<
   <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span>
 <span class="p">}</span>
 
-<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=&lt;ttl&gt;'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
 <span class="p">},</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">headers</span><span class="p">)</span>
 
 <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
 </code></pre>
-<p><code>GET /template/{template_id}/requestWaiver</code></p>
+<p><code>GET /template/{template_id}/requestWaiver?ttl=&lt;ttl&gt;</code></p>
 
 <p><em>Request a waiver to sign</em></p>
 
@@ -1302,6 +1302,13 @@ curl -X GET https://api.waiverforever.com/openapi/v1/template/<span class="o">{<
 <td>true</td>
 <td>template id</td>
 </tr>
+<tr>
+<td>ttl</td>
+<td>query</td>
+<td>string</td>
+<td>false</td>
+<td>request waiver expiration time (in seconds)</td>
+</tr>
 </tbody></table>
 
 <blockquote>
@@ -1312,7 +1319,8 @@ curl -X GET https://api.waiverforever.com/openapi/v1/template/<span class="o">{<
   </span><span class="s2">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"tracking_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;tracking_id&gt;"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"request_waiver_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;request_waiver_url&gt;"</span><span class="w">
+    </span><span class="s2">"request_waiver_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;request_waiver_url&gt;"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"ttl"</span><span class="p">:</span><span class="w"> </span><span class="mi">86400</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -1387,6 +1395,12 @@ curl -X GET https://api.waiverforever.com/openapi/v1/template/<span class="o">{<
 <td>string</td>
 <td>true</td>
 <td>remote signing url for requested waiver</td>
+</tr>
+<tr>
+<td>» ttl</td>
+<td>string</td>
+<td>true</td>
+<td>request waiver expiration time (in seconds)</td>
 </tr>
 </tbody></table>
 <h1 id='waiver-endpoints'>Waiver Endpoints</h1>
