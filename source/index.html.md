@@ -47,7 +47,7 @@ How does it work really?
 
 ### 1. Authentication
 
-First off, you need a valid **API key** to access our APIs. Each API key should represent one standalone app. You can generate and revoke your API keys in the  [Settings / API](https://app.waiverforever.com/settings) tab.
+First off, you need a valid **API key** to access our APIs. Each API key should represent one standalone app. You can generate and revoke your API keys in the  [Settings / Integration](https://app.waiverforever.com/settings/integrations) tab.
 
 The authentication mechanism is quite simple, all you need to do is to add a custom HTTP header: `X-API-Key`.
 
@@ -117,7 +117,7 @@ X                                   |                                   |
 
 # Authentication
 
-WaiverForever uses API keys to allow access to the API. You can register a new API key at [Settings/API tab](https://app.waiverforever.com/settings).
+WaiverForever uses API keys to allow access to the API. You can register a new API key at [Settings / Integration tab](https://app.waiverforever.com/settings/integrations).
 
 WaiverForever expects for the API key to be included in all API requests to the server in a header that looks like the following:
 
