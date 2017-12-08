@@ -231,6 +231,95 @@ Event|Payload Schema|Description
 ---|---|---|
 `new_waiver_signed`|[Waiver](#schemawaiver)|a new waiver is signed
 
+## Subscription Resource
+
+Name|Type|Required|Description
+---|---|---|---|
+id|string|true|subscription id
+event|string|true|event name
+template_id|string|true|template id
+target_url|string|true|target url
+
+## Get All Subscriptions
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X GET https://api.waiverforever.com/openapi/v1/webhooks/ \
+  -H 'Accept: application/json'
+```
+
+```javascript--nodejs
+const request = require('node-fetch');
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('https://api.waiverforever.com/openapi/v1/webhooks/',
+{
+  method: 'GET',
+  headers: headers
+})
+.then(function(res) {
+  return res.json();
+}).then(function(body) {
+  console.log(body);
+});
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+result = RestClient.get 'https://api.waiverforever.com/openapi/v1/webhooks/',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+```
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+r = requests.get('https://api.waiverforever.com/openapi/v1/webhooks/', params={
+}, headers = headers)
+
+print r.json()
+```
+
+`GET /webhooks/`
+
+*Get all webhooks subscriptions.*
+
+> Example responses
+
+```json
+{
+  "result": true,
+  "msg": "success",
+  "data": [{
+    "id": "subscription id",
+    "event": "event name",
+    "template_id": "template id",
+    "target_url": "target url"
+  }]
+}
+```
+<h3 id="subscribeEvent-responses">Responses</h3>
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|[[Subscription]](#schemasubscription)
+403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid API key|None
+
 ## Subscribe an event
 
 > Code samples
@@ -346,7 +435,7 @@ Status|Meaning|Description|Schema
 
 ```shell
 # You can also use wget
-curl -X DELETE https://api.waiverforever.com/openapi/v1/webhooks/{subscription_id} \
+curl -X DELETE https://api.waiverforever.com/openapi/v1/webhooks/{subscription_id}/ \
   -H 'Accept: application/json'
 ```
 
@@ -356,7 +445,7 @@ const headers = {
   'Accept':'application/json'
 };
 
-fetch('https://api.waiverforever.com/openapi/v1/webhooks/{subscription_id}',
+fetch('https://api.waiverforever.com/openapi/v1/webhooks/{subscription_id}/',
 {
   method: 'DELETE',
   headers: headers
@@ -376,7 +465,7 @@ headers = {
   'Accept' => 'application/json'
 }
 
-result = RestClient.delete 'https://api.waiverforever.com/openapi/v1/webhooks/{subscription_id}',
+result = RestClient.delete 'https://api.waiverforever.com/openapi/v1/webhooks/{subscription_id}/',
   params: {
   }, headers: headers
 
@@ -389,13 +478,13 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.delete('https://api.waiverforever.com/openapi/v1/webhooks/{subscription_id}', params={
+r = requests.delete('https://api.waiverforever.com/openapi/v1/webhooks/{subscription_id}/', params={
 }, headers = headers)
 
 print r.json()
 ```
 
-`DELETE /webhooks/{subscription_id}`
+`DELETE /webhooks/{subscription_id}/`
 
 *Unsubscribe an event.*
 
@@ -526,13 +615,13 @@ result|boolean|true|request success or fail
 msg|string|true|response message
 data|[[Template](#schematemplate)]|true|template list
 
-## Get Sample Waiver
+## Requeset Waiver
 
 > Code samples
 
 ```shell
 # You can also use wget
-curl -X GET https://api.waiverforever.com/openapi/v1/template/{template_id}/sampleWaiver \
+curl -X GET https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl> \
   -H 'Accept: application/json'
 ```
 
@@ -543,7 +632,7 @@ const headers = {
   'Accept':'application/json'
 };
 
-fetch('https://api.waiverforever.com/openapi/v1/template/{template_id}/sampleWaiver',
+fetch('https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>',
 {
   method: 'GET',
   headers: headers
@@ -563,7 +652,7 @@ headers = {
   'Accept' => 'application/json'
 }
 
-result = RestClient.get 'https://api.waiverforever.com/openapi/v1/template/{template_id}/sampleWaiver',
+result = RestClient.get 'https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>',
   params: {
   }, headers: headers
 
@@ -576,21 +665,141 @@ headers = {
   'Accept': 'application/json'
 }
 
-r = requests.get('https://api.waiverforever.com/openapi/v1/template/{template_id}/sampleWaiver', params={
+r = requests.get('https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>', params={
 }, headers = headers)
 
 print r.json()
 ```
 
-`GET /template/{template_id}/sampleWaiver`
+`GET /template/{template_id}/requestWaiver?ttl=<ttl>`
 
-*Get a sample waiver from specified template id*
+*Request a waiver to sign*
 
-<h3 id="getSampleWaiverById-parameters">Parameters</h3>
+<h3 id="requestWaiver-parameters">Parameters</h3>
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
 template_id|path|string|true|template id
+ttl|query|string|false|request waiver expiration time (in seconds)
+
+
+> Example responses
+
+```json
+{
+  "result": true,
+  "msg": "success",
+  "data": {
+    "tracking_id": "<tracking_id>",
+    "request_waiver_url": "<request_waiver_url>",
+    "ttl": 86400
+  }
+}
+```
+<h3 id="requestWaiver-responses">Responses</h3>
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
+403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
+404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Template not found|None
+
+<h3 id="requestWaiver-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+Name|Type|Required|Description
+---|---|---|---|---|
+result|boolean|true|request success or fail
+msg|string|true|response message
+data|object|true|data
+» tracking_id|string|true|tracking id for requested waiver
+» request_waiver_url|string|true|remote signing url for requested waiver
+» ttl|string|true|request waiver expiration time (in seconds)
+
+# Waiver Endpoints
+
+Access waiver
+
+## Waiver Resource
+
+Name|Type|Required|Description
+---|---|---|---|
+id|string|true|waiver id
+template_id|string|true|template id
+template_title|string|true|template title
+has_pdf|boolean|true|true if the PDF is available to download
+geolocation|[GeoLocation](#schemageolocation)|false|signing location
+received_at|integer|true|server received timestamp
+signed_at|integer|true|waiver signed timestamp
+pictures|[[Picture](#schemapicture)]|false|attached pictures
+data|[[Field](#schemafield)]|true|filled fields
+
+## Get Signed Waiver
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X GET https://api.waiverforever.com/openapi/v1/waiver/{waiver_id} \
+  -H 'Accept: application/json'
+```
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json'
+};
+
+fetch('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}',
+{
+  method: 'GET',
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+result = RestClient.get 'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}',
+  params: {
+  }, headers: headers
+
+p JSON.parse(result)
+```
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+r = requests.get('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}', params={
+}, headers = headers)
+
+print r.json()
+```
+
+`GET /waiver/{waiver_id}`
+
+*Get a signed waiver*
+
+<h3 id="getWaiverById-parameters">Parameters</h3>
+
+Parameter|In|Type|Required|Description
+---|---|---|---|---|
+waiver_id|path|string|true|waiver id
 
 
 > Example responses
@@ -722,7 +931,7 @@ template_id|path|string|true|template id
   }
 }
 ```
-<h3 id="getSampleWaiverById-responses">Responses</h3>
+<h3 id="getWaiverById-responses">Responses</h3>
 
 Status|Meaning|Description|Schema
 ---|---|---|---|
@@ -730,7 +939,7 @@ Status|Meaning|Description|Schema
 403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
 404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Template not found|None
 
-<h3 id="getSampleWaiverById-responseschema">Response Schema</h3>
+<h3 id="getWaiverById-responseschema">Response Schema</h3>
 
 Status Code **200**
 
@@ -738,127 +947,7 @@ Name|Type|Required|Description
 ---|---|---|---|---|
 result|boolean|true|request success or fail
 msg|string|true|response message
-data|[Waiver](#schemawaiver)|true|Tailored Waiver
-
-## Requeset Waiver
-
-> Code samples
-
-```shell
-# You can also use wget
-curl -X GET https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl> \
-  -H 'Accept: application/json'
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept':'application/json'
-};
-
-fetch('https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-```
-
-```ruby
-require 'rest-client'
-require 'json'
-
-headers = {
-  'Accept' => 'application/json'
-}
-
-result = RestClient.get 'https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>',
-  params: {
-  }, headers: headers
-
-p JSON.parse(result)
-```
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json'
-}
-
-r = requests.get('https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>', params={
-}, headers = headers)
-
-print r.json()
-```
-
-`GET /template/{template_id}/requestWaiver?ttl=<ttl>`
-
-*Request a waiver to sign*
-
-<h3 id="requestWaiver-parameters">Parameters</h3>
-
-Parameter|In|Type|Required|Description
----|---|---|---|---|
-template_id|path|string|true|template id
-ttl|query|string|false|request waiver expiration time (in seconds)
-
-
-> Example responses
-
-```json
-{
-  "result": true,
-  "msg": "success",
-  "data": {
-    "tracking_id": "<tracking_id>",
-    "request_waiver_url": "<request_waiver_url>",
-    "ttl": 86400
-  }
-}
-```
-<h3 id="requestWaiver-responses">Responses</h3>
-
-Status|Meaning|Description|Schema
----|---|---|---|
-200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
-403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
-404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Template not found|None
-
-<h3 id="requestWaiver-responseschema">Response Schema</h3>
-
-Status Code **200**
-
-Name|Type|Required|Description
----|---|---|---|---|
-result|boolean|true|request success or fail
-msg|string|true|response message
-data|object|true|data
-» tracking_id|string|true|tracking id for requested waiver
-» request_waiver_url|string|true|remote signing url for requested waiver
-» ttl|string|true|request waiver expiration time (in seconds)
-
-# Waiver Endpoints
-
-Access waiver
-
-## Waiver Resource
-
-Name|Type|Required|Description
----|---|---|---|
-id|string|true|waiver id
-template_id|string|true|template id
-template_title|string|true|template title
-has_pdf|boolean|true|true if the PDF is available to download
-geolocation|[GeoLocation](#schemageolocation)|false|signing location
-received_at|integer|true|server received timestamp
-signed_at|integer|true|waiver signed timestamp
-pictures|[[Picture](#schemapicture)]|false|attached pictures
-data|[[Field](#schemafield)]|true|filled fields
+data|[Waiver](#schemawaiver)|true|Signed Waiver
 
 ## Download Waiver PDF
 
@@ -1052,7 +1141,8 @@ msg|string|false|response message
   "data": {
     "id": "subscription id",
     "event": "event name",
-    "template_id": "template id"
+    "template_id": "template id",
+    "target_url": "target url"
   }
 }
 ```
@@ -1064,6 +1154,7 @@ Name|Type|Required|Description
 id|string|true|subscription id
 event|string|true|event name
 template_id|string|true|template id
+target_url|string|true|target url
 
 ## Template
 
