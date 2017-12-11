@@ -150,11 +150,10 @@ const headers = {
 fetch('https://api.waiverforever.com/openapi/v1/auth/userInfo', {
   method: 'GET',
   headers: headers
-})
-  .then(function(res) {
-    return res.json();
-  }).then(function(body) {
-    console.log(body);
+}).then(res => res.json())
+  .then(body => console.log(body))
+  .catch(error => {
+    console.log(error);
   });
 ```
 
