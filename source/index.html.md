@@ -136,27 +136,26 @@ You must replace <code>api_key</code> with your personal API key.
 ```shell
 # You can also use wget
 curl -X GET https://api.waiverforever.com/openapi/v1/auth/userInfo \
-  -H 'Accept: application/json'
-
+  -H 'Accept: application/json' \
+  -H 'X-Api-Key: <api_key>'
 ```
 
 ```javascript--nodejs
-const request = require('node-fetch');
+const fetch = require('node-fetch');
 
 const headers = {
   'Accept':'application/json'
 };
 
-fetch('https://api.waiverforever.com/openapi/v1/auth/userInfo',
-{
+fetch('https://api.waiverforever.com/openapi/v1/auth/userInfo', {
   method: 'GET',
   headers: headers
 })
-.then(function(res) {
+  .then(function(res) {
     return res.json();
-}).then(function(body) {
+  }).then(function(body) {
     console.log(body);
-});
+  });
 ```
 
 ```ruby
@@ -164,12 +163,11 @@ require 'rest-client'
 require 'json'
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept' => 'application/json',
+  'X-Api-Key' => '<api_key>'
 }
 
-result = RestClient.get 'https://api.waiverforever.com/openapi/v1/auth/userInfo',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api.waiverforever.com/openapi/v1/auth/userInfo', headers
 
 p JSON.parse(result)
 ```
@@ -177,13 +175,15 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'X-Api-Key': '<api_key>'
 }
 
 r = requests.get('https://api.waiverforever.com/openapi/v1/auth/userInfo', params={
-}, headers = headers)
+}, headers=headers)
 
 print r.json()
+
 ```
 
 `GET /auth/userInfo`
@@ -247,25 +247,25 @@ target_url|string|true|target url
 ```shell
 # You can also use wget
 curl -X GET https://api.waiverforever.com/openapi/v1/webhooks/ \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'X-Api-Key: <api_key>'
 ```
 
 ```javascript--nodejs
-const request = require('node-fetch');
+const fetch = require('node-fetch');
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'X-Api-Key': '<api_key>'
 };
 
-fetch('https://api.waiverforever.com/openapi/v1/webhooks/',
-{
+fetch('https://api.waiverforever.com/openapi/v1/webhooks/', {
   method: 'GET',
   headers: headers
-})
-.then(function(res) {
-  return res.json();
-}).then(function(body) {
-  console.log(body);
-});
+}).then(res => res.json())
+  .then(body => console.log(body))
+  .catch(error => {
+    console.log(error);
+  });
 ```
 
 ```ruby
@@ -273,12 +273,11 @@ require 'rest-client'
 require 'json'
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept' => 'application/json',
+  'X-Api-Key' => '<api_key>'
 }
 
-result = RestClient.get 'https://api.waiverforever.com/openapi/v1/webhooks/',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api.waiverforever.com/openapi/v1/webhooks/', headers
 
 p JSON.parse(result)
 ```
@@ -286,13 +285,15 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'X-Api-Key': '<api_key>'
 }
 
 r = requests.get('https://api.waiverforever.com/openapi/v1/webhooks/', params={
-}, headers = headers)
+}, headers=headers)
 
 print r.json()
+
 ```
 
 `GET /webhooks/`
@@ -328,32 +329,34 @@ Status|Meaning|Description|Schema
 # You can also use wget
 curl -X POST https://api.waiverforever.com/openapi/v1/webhooks/ \
   -H 'Content-Type: application/json' \
-  -H 'Accept: application/json'
-
+  -H 'Accept: application/json' \
+  -H 'X-Api-Key: <api_key>' \
+  -d $'{
+  "target_url": "",
+  "template_id": "",
+  "event": "new_waiver_signed"
+}'
 ```
 
 ```javascript--nodejs
-const request = require('node-fetch');
-const inputBody = '{
-  "event": "new_waiver_signed",
-  "target_url": "string"
-}';
+const fetch = require('node-fetch');
+const inputBody = `{
+  'target_url': '',
+  'template_id': '',
+  'event': 'new_waiver_signed'
+}`;
 const headers = {
   'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'X-Api-Key': '<api_key>'
 };
 
-fetch('https://api.waiverforever.com/openapi/v1/webhooks/',
-{
+fetch('https://api.waiverforever.com/openapi/v1/webhooks/', {
   method: 'POST',
   body: inputBody,
   headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
+}).then(res => res.json())
+  .then(body => console.log(body));
 ```
 
 ```ruby
@@ -362,12 +365,18 @@ require 'json'
 
 headers = {
   'Content-Type' => 'application/json',
-  'Accept' => 'application/json'
+  'Accept' => 'application/json',
+  'X-Api-Key' => '<api_key>'
 }
 
-result = RestClient.post 'https://api.waiverforever.com/openapi/v1/webhooks/',
-  params: {
-  }, headers: headers
+params = {
+  'event' => 'new_waiver_signed',
+  'template_id' => '',
+  'target_url' => ''
+}
+
+
+result = RestClient.post 'https://api.waiverforever.com/openapi/v1/webhooks/', params.to_json, headers
 
 p JSON.parse(result)
 ```
@@ -376,13 +385,19 @@ p JSON.parse(result)
 import requests
 headers = {
   'Content-Type': 'application/json',
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'X-Api-Key': '<api_key>'
+}
+data = {
+  'target_url': '',
+  'template_id': '',
+  'event': 'new_waiver_signed'
 }
 
-r = requests.post('https://api.waiverforever.com/openapi/v1/webhooks/', params={
-}, headers = headers)
+r = requests.post('https://api.waiverforever.com/openapi/v1/webhooks/', json=data, headers=headers)
 
 print r.json()
+
 ```
 
 `POST /webhooks/`
@@ -436,25 +451,25 @@ Status|Meaning|Description|Schema
 ```shell
 # You can also use wget
 curl -X DELETE https://api.waiverforever.com/openapi/v1/webhooks/{subscription_id}/ \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'X-Api-Key: <api_key>'
 ```
 
 ```javascript--nodejs
-const request = require('node-fetch');
+const fetch = require('node-fetch');
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'X-Api-Key': '<api_key>'
 };
 
-fetch('https://api.waiverforever.com/openapi/v1/webhooks/{subscription_id}/',
-{
+fetch('https://api.waiverforever.com/openapi/v1/webhooks/{subscription_id}/', {
   method: 'DELETE',
   headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
+}).then(res => res.json())
+  .then(body => console.log(body))
+  .catch(error => {
+    console.log(error);
+  });
 ```
 
 ```ruby
@@ -462,12 +477,11 @@ require 'rest-client'
 require 'json'
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept' => 'application/json',
+  'X-Api-Key' => '<api_key>'
 }
 
-result = RestClient.delete 'https://api.waiverforever.com/openapi/v1/webhooks/{subscription_id}/',
-  params: {
-  }, headers: headers
+result = RestClient.delete 'https://api.waiverforever.com/openapi/v1/webhooks/{subscription_id}/', headers: headers
 
 p JSON.parse(result)
 ```
@@ -475,13 +489,14 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'X-Api-Key': '<api_key>'
 }
 
-r = requests.delete('https://api.waiverforever.com/openapi/v1/webhooks/{subscription_id}/', params={
-}, headers = headers)
+r = requests.delete('https://api.waiverforever.com/openapi/v1/webhooks/{subscription_id}/', headers=headers)
 
 print r.json()
+
 ```
 
 `DELETE /webhooks/{subscription_id}/`
@@ -530,26 +545,26 @@ updated_at|integer|true|updated timestamp
 ```shell
 # You can also use wget
 curl -X GET https://api.waiverforever.com/openapi/v1/templates \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'X-Api-Key: <api_key>'
 ```
 
 ```javascript--nodejs
-const request = require('node-fetch');
+const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'X-Api-Key': '<api_key>'
 };
 
-fetch('https://api.waiverforever.com/openapi/v1/templates',
-{
+fetch('https://api.waiverforever.com/openapi/v1/templates', {
   method: 'GET',
   headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
+}).then(res => res.json())
+  .then(body => console.log(body))
+  .catch(error => {
+    console.log(error);
+  });
 ```
 
 ```ruby
@@ -557,12 +572,11 @@ require 'rest-client'
 require 'json'
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept' => 'application/json',
+  'X-Api-Key' => '<api_key>'
 }
 
-result = RestClient.get 'https://api.waiverforever.com/openapi/v1/templates',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api.waiverforever.com/openapi/v1/templates', headers
 
 p JSON.parse(result)
 ```
@@ -570,13 +584,15 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'X-Api-Key': '<api_key>'
 }
 
 r = requests.get('https://api.waiverforever.com/openapi/v1/templates', params={
-}, headers = headers)
+}, headers=headers)
 
 print r.json()
+
 ```
 
 *GET /templates*
@@ -622,26 +638,26 @@ data|[[Template](#schematemplate)]|true|template list
 ```shell
 # You can also use wget
 curl -X GET https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl> \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'X-Api-Key: <api_key>'
 ```
 
 ```javascript--nodejs
-const request = require('node-fetch');
+const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'X-Api-Key': '<api_key>'
 };
 
-fetch('https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>',
-{
+fetch('https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>', {
   method: 'GET',
   headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
+}).then(res => res.json())
+  .then(body => console.log(body))
+  .catch(error => {
+    console.log(error);
+  });
 ```
 
 ```ruby
@@ -649,12 +665,11 @@ require 'rest-client'
 require 'json'
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept' => 'application/json',
+  'X-Api-Key' => '<api_key>'
 }
 
-result = RestClient.get 'https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>', headers
 
 p JSON.parse(result)
 ```
@@ -662,13 +677,15 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'X-Api-Key': '<api_key>'
 }
 
 r = requests.get('https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>', params={
-}, headers = headers)
+}, headers=headers)
 
 print r.json()
+
 ```
 
 `GET /template/{template_id}/requestWaiver?ttl=<ttl>`
@@ -742,26 +759,26 @@ data|[[Field](#schemafield)]|true|filled fields
 ```shell
 # You can also use wget
 curl -X GET https://api.waiverforever.com/openapi/v1/waiver/{waiver_id} \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'X-Api-Key: <api_key>'
 ```
 
 ```javascript--nodejs
-const request = require('node-fetch');
+const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'application/json'
+  'Accept':'application/json',
+  'X-Api-Key': '<api_key>'
 };
 
-fetch('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}',
-{
+fetch('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}', {
   method: 'GET',
   headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
+}).then(res => res.json())
+  .then(body => console.log(body))
+  .catch(error => {
+    console.log(error);
+  });
 ```
 
 ```ruby
@@ -769,12 +786,11 @@ require 'rest-client'
 require 'json'
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept' => 'application/json',
+  'X-Api-Key' => '<api_key>'
 }
 
-result = RestClient.get 'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}', headers
 
 p JSON.parse(result)
 ```
@@ -782,13 +798,15 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'X-Api-Key': '<api_key>'
 }
 
 r = requests.get('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}', params={
-}, headers = headers)
+}, headers=headers)
 
 print r.json()
+
 ```
 
 `GET /waiver/{waiver_id}`
@@ -956,25 +974,25 @@ data|[Waiver](#schemawaiver)|true|Signed Waiver
 ```shell
 # You can also use wget
 curl -X GET https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pdf \
-  -H 'Accept: */*'
-
+  -H 'Accept: */*' \
+  -H 'X-Api-Key: <api_key>'
 ```
 
 ```javascript--nodejs
-const request = require('node-fetch');
+const fetch = require('node-fetch');
 
 const headers = {
-  'Accept':'*/*'
+  'Accept':'*/*',
+  'X-Api-Key': '<api_key>'
 };
 
-fetch('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pdf',
-{
+fetch('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pdf', {
   method: 'GET',
   headers: headers
-})
-.then(function(body) {
-    console.log(body);
-});
+}).then(body => console.log(body))
+  .catch(error => {
+    console.log(error);
+  });
 ```
 
 ```ruby
@@ -982,26 +1000,27 @@ require 'rest-client'
 require 'json'
 
 headers = {
-  'Accept' => '*/*'
+  'Accept' => '*/*',
+  'X-Api-Key' => '<api_key>'
 }
 
-result = RestClient.get 'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pdf',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pdf', headers
 
-p JSON.parse(result)
+p result
 ```
 
 ```python
 import requests
 headers = {
-  'Accept': '*/*'
+  'Accept': '*/*',
+  'X-Api-Key': '<api_key>'
 }
 
 r = requests.get('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pdf', params={
-}, headers = headers)
+}, headers=headers)
 
-print r.json()
+print r.content
+
 ```
 
 `GET /waiver/{waiver_id}/pdf`
@@ -1036,25 +1055,24 @@ We will redirect the download request to Amazon S3.
 ```shell
 # You can also use wget
 curl -X GET https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pictures/{picture_id} \
-  -H 'Accept: */*'
-
+  -H 'Accept: */*' \
+  -H 'X-Api-Key: <api_key>'
 ```
 
 ```javascript--nodejs
-const request = require('node-fetch');
+const fetch = require('node-fetch');
 
 const headers = {
   'Accept':'*/*'
 };
 
-fetch('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pictures/{picture_id}',
-{
+fetch('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pictures/{picture_id}', {
   method: 'GET',
   headers: headers
-})
-.then(function(body) {
-    console.log(body);
-});
+}).then(body => console.log(body))
+  .catch(error => {
+    console.log(error);
+  });
 ```
 
 ```ruby
@@ -1062,26 +1080,27 @@ require 'rest-client'
 require 'json'
 
 headers = {
-  'Accept' => '*/*'
+  'Accept' => '*/*',
+  'X-Api-Key' => '<api_key>'
 }
 
-result = RestClient.get 'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pictures/{picture_id}',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pictures/{picture_id}', headers: headers
 
-p JSON.parse(result)
+p result
 ```
 
 ```python
 import requests
 headers = {
-  'Accept': '*/*'
+  'Accept': '*/*',
+  'X-Api-Key': '<api_key>'
 }
 
 r = requests.get('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pictures/{picture_id}', params={
-}, headers = headers)
+}, headers=headers)
 
-print r.json()
+print r.content
+
 ```
 
 `GET /waiver/{waiver_id}/pictures/{picture_id}`
