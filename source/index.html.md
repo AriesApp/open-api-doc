@@ -939,6 +939,7 @@ waiver_id|path|string|true|waiver id
   ],
   "template_title": "Bike Rental Waiver",
   "template_id": "JwIvKHHfW81493594388",
+  "tracking_id": "D6RkEV1yUK1512568456",
   "received_at": 1510127625,
   "signed_at": 1510127615,
   "geolocation": {
@@ -957,6 +958,101 @@ Status|Meaning|Description|Schema
 404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Template not found|None
 
 <h3 id="getWaiverById-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+Name|Type|Required|Description
+---|---|---|---|---|
+result|boolean|true|request success or fail
+msg|string|true|response message
+data|[Waiver](#schemawaiver)|true|Signed Waiver
+
+## Get Tracking Waiver
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X GET https://api.waiverforever.com/openapi/v1/waiver/tracking/{tracking_id} \
+  -H 'Accept: application/json' \
+  -H 'X-Api-Key: <api_key>'
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'X-Api-Key': '<api_key>'
+};
+
+fetch('https://api.waiverforever.com/openapi/v1/waiver/tracking/{tracking_id}', {
+  method: 'GET',
+  headers: headers
+}).then(res => res.json())
+  .then(body => console.log(body))
+  .catch(error => {
+    console.log(error);
+  });
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'X-Api-Key' => '<api_key>'
+}
+
+result = RestClient.get 'https://api.waiverforever.com/openapi/v1/waiver/tracking/{tracking_id}', headers
+
+p JSON.parse(result)
+```
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'X-Api-Key': '<api_key>'
+}
+
+r = requests.get('https://api.waiverforever.com/openapi/v1/waiver/tracking/{tracking_id}', params={
+}, headers=headers)
+
+print r.json()
+
+```
+
+`GET /waiver/tracking_id/{tracking_id}`
+
+*Query signed waiver by tracking id*
+
+<h3 id="queryWaiverByTrackingId-parameters">Parameters</h3>
+
+Parameter|In|Type|Required|Description
+---|---|---|---|---|
+tracking_id|path|string|true|tracking id from [requestWaiver](#requeset-waiver)
+
+
+> Example responses
+
+```javascript
+{
+  // same as get signed waiver above
+}
+```
+
+
+<h3 id="queryWaiverByTrackingId-responses">Responses</h3>
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
+403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
+404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Template not found|None
+
+<h3 id="queryWaiverByTrackingId-responseschema">Response Schema</h3>
 
 Status Code **200**
 
@@ -1321,6 +1417,7 @@ updated_at|integer|true|updated timestamp
   ],
   "template_title": "Bike Rental Waiver",
   "template_id": "JwIvKHHfW81493594388",
+  "tracking_id": "D6RkEV1yUK1512568456",
   "received_at": 1510127625,
   "signed_at": 1510127615,
   "geolocation": {
