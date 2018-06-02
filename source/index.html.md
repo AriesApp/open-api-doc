@@ -71,6 +71,9 @@ Dynamic webhooks provide maximum flexibility to manage your events. You can subs
 
 Compared to dynamic webhooks, static webhooks are relatively easy to setup (you don't have to write code). Just go to the template settings page, specify your target URL, then we'll handle the rest for you.
 
+<aside class="notice">
+We will implement Static Webhooks in the future.
+</aside>
 
 ### 3. API
 
