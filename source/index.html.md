@@ -753,6 +753,7 @@ received_at|integer|true|server received timestamp
 signed_at|integer|true|waiver signed timestamp
 pictures|[[Picture](#schemapicture)]|false|attached pictures
 data|[[Field](#schemafield)]|true|filled fields
+device|[Device](#schemadevice)|false|signing device
 
 ## Get Signed Waiver
 
@@ -949,6 +950,13 @@ waiver_id|path|string|true|waiver id
       "accuracy": 5,
       "latitude": "137.785834",
       "longitude": "-22.406417"
+  },
+   "device": {
+      "device_model": "iPhone 5 (GSM CDMA)(9.3.5)",
+      "username": "a",
+      "id": "opZTzJP2gI1504892592",
+      "device_name": "Jing's iPhone",
+      "identifier": "0D84EB79-68F5-4BAD-9344-262D3882C830"
   }
 }
 ```
@@ -1427,6 +1435,13 @@ updated_at|integer|true|updated timestamp
       "accuracy": 5,
       "latitude": "137.785834",
       "longitude": "-22.406417"
+  },
+   "device": {
+      "device_model": "iPhone 5 (GSM CDMA)(9.3.5)",
+      "username": "a",
+      "id": "opZTzJP2gI1504892592",
+      "device_name": "Jing's iPhone",
+      "identifier": "0D84EB79-68F5-4BAD-9344-262D3882C830"
   }
 }
 ```
@@ -1776,3 +1791,28 @@ Name|Type|Required|Description
 accuracy|integer|true|location accuracy level in meters
 latitude|string|true|latitude value
 longtitude|string|true|longtitude value
+
+
+## Device
+
+<a name="schemadevice"></a>
+
+```json
+{
+    "device_model": "iPhone 5 (GSM CDMA)(9.3.5)",
+    "username": "a",
+    "id": "opZTzJP2gI1504892592",
+    "device_name": "Jing's iPhone",
+    "identifier": "0D84EB79-68F5-4BAD-9344-262D3882C830"
+}
+```
+
+### Properties
+
+Name|Type|Required|Description
+---|---|---|---|
+id|string|true|device id
+device_name|string|true|device name
+device_model|string|true|device model
+username|string|false|username
+identifier|string|true|device identifier
