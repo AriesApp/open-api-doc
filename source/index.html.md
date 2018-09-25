@@ -754,6 +754,7 @@ signed_at|integer|true|waiver signed timestamp
 pictures|[[Picture](#schemapicture)]|false|attached pictures
 data|[[Field](#schemafield)]|true|filled fields
 device|[Device](#schemadevice)|false|signing device
+ip|string|false|ip
 
 ## Get Signed Waiver
 
@@ -1235,6 +1236,184 @@ Status|Meaning|Description|Schema
 We will redirect the download request to Amazon S3.
 </aside>
 
+## Waiver Search
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X POST https://api.waiverforever.com/openapi/v1/waiver/search \
+  -H 'Accept: */*' \
+  -H 'X-Api-Key: <api_key>'
+  -d '{
+    "search_term":"query string",
+    "start_timestamp": 1400000000,
+    "end_timestamp": 1500000000,
+    "page": 1,
+    "per_page": 10,
+    "template_ids": ["kkgVVsMpGx1455624443"]
+  }'
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json',
+  'X-Api-Key': '<api_key>'
+};
+
+const inputBody = `{
+  'search_term': 'query string',
+  'start_timestamp': 1400000000,
+  'end_timestamp': 1500000000,
+  'page': 1,
+  'per_page': 10,
+  "template_ids": ["kkgVVsMpGx1455624443"]
+}`;
+
+fetch('https://api.waiverforever.com/openapi/v1/waiver/search', {
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+}).then(body => console.log(body))
+  .catch(error => {
+    console.log(error);
+  });
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => '*/*',
+  'Content-Type' => 'application/json',
+  'X-Api-Key' => '<api_key>'
+}
+
+params = {
+  'search_term' => 'query string',
+  'start_timestamp' => 1400000000,
+  'end_timestamp' => 1500000000,
+  'page' => 1,
+  'per_page' => 10,
+  "template_ids" => ["kkgVVsMpGx1455624443"]
+}
+
+result = RestClient.post 'https://api.waiverforever.com/openapi/v1/waiver/search', params.to_json, headers
+
+p result
+```
+
+```python
+import requests
+headers = {
+  'Accept': '*/*',
+  'Content-Type': 'application/json',
+  'X-Api-Key': '<api_key>'
+}
+
+data = {
+  'search_term': 'query string',
+  'start_timestamp': 1400000000,
+  'end_timestamp': 1500000000,
+  'page': 1,
+  'per_page': 10,
+  'template_ids': ['kkgVVsMpGx1455624443']
+}
+
+r = requests.post('https://api.waiverforever.com/openapi/v1/waiver/search', json=data, headers=headers)
+
+print r.content
+
+```
+
+`POST /waiver/search`
+
+*search waiver.*
+
+search waiver with keywords.
+
+> Body parameter
+
+```json
+{
+  "search_term": "<search_term>",
+  "start_timestamp": "<start timestamp>",
+  "end_timestamp": "<end timestamp>",
+  "page": "<page index>",
+  "per_page": "<results per page>",
+  "template_ids": "<template id list>"
+}
+```
+<h3 id="waiverSearch-parameters">Parameters</h3>
+
+Parameter|In|Type|Required|Description
+---|---|---|---|---|
+body|body|object|false|Event that you're interested.
+» search_term|body|string|true|search term
+» start_timestamp|body|int|false|start timestamp in seconds
+» end_timestamp|body|int|false|end timestamp in seconds
+» page|body|int|false|page index, default 1
+» per_page|body|int|false|results per page, default 10
+» template_ids|body|list[string]|false|templates id list
+
+> Example responses
+
+```json
+{
+    "data": {
+        "waivers": [
+            {
+                "signed_at": 1461130513,
+                "device": null,
+                "template_title": null,
+                "template_id": "igcJYpG2KT1381868360",
+                "tracking_id": "",
+                "has_pdf": true,
+                "id": "ChPV4IMuVm1461130523",
+                "geolocation": {},
+                "pictures": [],
+                "data": [
+                    {
+                        "city": "",
+                        "second_line": "",
+                        "country": "",
+                        "title": "Please fill in your address",
+                        "first_line": "test333",
+                        "state": "",
+                        "value": "test333",
+                        "type": "address_field",
+                        "zipcode": ""
+                    },
+                   ...
+                ],
+                "received_at": 1461130523
+            },
+            ...
+        ],
+        "per_page": 10,
+        "page": 1,
+        "total": 85
+    },
+    "result": true,
+    "msg": "success"
+}
+```
+<h3 id="waiverSearch-responses">Responses</h3>
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|[Subscription](#schemasubscription)
+403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid API key|None
+
+
+<aside class="notice">
+Waiver field `device`, `pictures` and `template_title` is not available in search waiver API.
+</aside>
+
 # Schemas
 
 ## Response
@@ -1442,7 +1621,8 @@ updated_at|integer|true|updated timestamp
       "id": "opZTzJP2gI1504892592",
       "device_name": "Jing's iPhone",
       "identifier": "0D84EB79-68F5-4BAD-9344-262D3882C830"
-  }
+  },
+  "ip": "1.1.1.1"
 }
 ```
 
@@ -1458,7 +1638,9 @@ geolocation|[GeoLocation](#schemageolocation)|false|signing location
 received_at|integer|true|server received timestamp
 signed_at|integer|true|waiver signed timestamp
 pictures|[[Picture](#schemapicture)]|false|attached pictures
-data|[[Field](#schemafield)]|true|filled fields
+tracking_id|string|false|tracking id
+data|[[Field](#schemafield)]|false|filled fields
+ip|string|false|ip
 
 #### Field Types
 
