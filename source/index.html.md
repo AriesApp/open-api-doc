@@ -1352,7 +1352,7 @@ search waiver with keywords.
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-body|body|object|false|Event that you're interested.
+body|body|object|true|search conditions.
 » search_term|body|string|true|search term
 » start_timestamp|body|int|false|start timestamp in seconds
 » end_timestamp|body|int|false|end timestamp in seconds
