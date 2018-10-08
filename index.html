@@ -292,6 +292,9 @@
                   <li>
                     <a href="#download-waiver-pictures" class="toc-h2 toc-link" data-title="Download Waiver Pictures">Download Waiver Pictures</a>
                   </li>
+                  <li>
+                    <a href="#waiver-search" class="toc-h2 toc-link" data-title="Waiver Search">Waiver Search</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -1366,6 +1369,12 @@ curl -X GET https://api.waiverforever.com/openapi/v1/template/<span class="o">{<
 <td>false</td>
 <td>signing device</td>
 </tr>
+<tr>
+<td>ip</td>
+<td>string</td>
+<td>false</td>
+<td>ip</td>
+</tr>
 </tbody></table>
 <h2 id='get-signed-waiver'>Get Signed Waiver</h2>
 <blockquote>
@@ -1991,6 +2000,238 @@ curl -X GET https://api.waiverforever.com/openapi/v1/waiver/<span class="o">{</s
 <aside class="notice">
 We will redirect the download request to Amazon S3.
 </aside>
+<h2 id='waiver-search'>Waiver Search</h2>
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl -X POST https://api.waiverforever.com/openapi/v1/waiver/search <span class="se">\</span>
+  -H <span class="s1">'Accept: */*'</span> <span class="se">\</span>
+  -H <span class="s1">'X-Api-Key: &lt;api_key&gt;'</span>
+  -d <span class="s1">'{
+    "search_term":"query string",
+    "start_timestamp": 1400000000,
+    "end_timestamp": 1500000000,
+    "page": 1,
+    "per_page": 10,
+    "template_ids": ["kkgVVsMpGx1455624443"]
+  }'</span>
+</code></pre><pre class="highlight javascript tab-javascript--nodejs"><code><span class="kr">const</span> <span class="nx">fetch</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'node-fetch'</span><span class="p">);</span>
+
+<span class="kr">const</span> <span class="nx">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Content-Type'</span><span class="p">:</span><span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'Accept'</span><span class="p">:</span><span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'X-Api-Key'</span><span class="p">:</span> <span class="s1">'&lt;api_key&gt;'</span>
+<span class="p">};</span>
+
+<span class="kr">const</span> <span class="nx">inputBody</span> <span class="o">=</span> <span class="s2">`{
+  'search_term': 'query string',
+  'start_timestamp': 1400000000,
+  'end_timestamp': 1500000000,
+  'page': 1,
+  'per_page': 10,
+  "template_ids": ["kkgVVsMpGx1455624443"]
+}`</span><span class="p">;</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="s1">'https://api.waiverforever.com/openapi/v1/waiver/search'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+  <span class="na">body</span><span class="p">:</span> <span class="nx">inputBody</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="nx">headers</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">body</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'*/*'</span><span class="p">,</span>
+  <span class="s1">'Content-Type'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'X-Api-Key'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;api_key&gt;'</span>
+<span class="p">}</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'search_term'</span> <span class="o">=&gt;</span> <span class="s1">'query string'</span><span class="p">,</span>
+  <span class="s1">'start_timestamp'</span> <span class="o">=&gt;</span> <span class="mi">1400000000</span><span class="p">,</span>
+  <span class="s1">'end_timestamp'</span> <span class="o">=&gt;</span> <span class="mi">1500000000</span><span class="p">,</span>
+  <span class="s1">'page'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s1">'per_page'</span> <span class="o">=&gt;</span> <span class="mi">10</span><span class="p">,</span>
+  <span class="s2">"template_ids"</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s2">"kkgVVsMpGx1455624443"</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">post</span> <span class="s1">'https://api.waiverforever.com/openapi/v1/waiver/search'</span><span class="p">,</span> <span class="n">params</span><span class="p">.</span><span class="nf">to_json</span><span class="p">,</span> <span class="n">headers</span>
+
+<span class="nb">p</span> <span class="n">result</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'*/*'</span><span class="p">,</span>
+  <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'X-Api-Key'</span><span class="p">:</span> <span class="s">'&lt;api_key&gt;'</span>
+<span class="p">}</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'search_term'</span><span class="p">:</span> <span class="s">'query string'</span><span class="p">,</span>
+  <span class="s">'start_timestamp'</span><span class="p">:</span> <span class="mi">1400000000</span><span class="p">,</span>
+  <span class="s">'end_timestamp'</span><span class="p">:</span> <span class="mi">1500000000</span><span class="p">,</span>
+  <span class="s">'page'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="s">'per_page'</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+  <span class="s">'template_ids'</span><span class="p">:</span> <span class="p">[</span><span class="s">'kkgVVsMpGx1455624443'</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://api.waiverforever.com/openapi/v1/waiver/search'</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">content</span>
+
+</code></pre>
+<p><code>POST /waiver/search</code></p>
+
+<p><em>search waiver.</em></p>
+
+<p>search waiver with keywords.</p>
+
+<blockquote>
+<p>Body parameter</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"search_term"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;search_term&gt;"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"start_timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;start timestamp&gt;"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"end_timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;end timestamp&gt;"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"page"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;page index&gt;"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"per_page"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;results per page&gt;"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"template_ids"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;template id list&gt;"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id="waiverSearch-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>body</td>
+<td>body</td>
+<td>object</td>
+<td>false</td>
+<td>Event that you&#39;re interested.</td>
+</tr>
+<tr>
+<td>» search_term</td>
+<td>body</td>
+<td>string</td>
+<td>true</td>
+<td>search term</td>
+</tr>
+<tr>
+<td>» start_timestamp</td>
+<td>body</td>
+<td>int</td>
+<td>false</td>
+<td>start timestamp in seconds</td>
+</tr>
+<tr>
+<td>» end_timestamp</td>
+<td>body</td>
+<td>int</td>
+<td>false</td>
+<td>end timestamp in seconds</td>
+</tr>
+<tr>
+<td>» page</td>
+<td>body</td>
+<td>int</td>
+<td>false</td>
+<td>page index, default 1</td>
+</tr>
+<tr>
+<td>» per_page</td>
+<td>body</td>
+<td>int</td>
+<td>false</td>
+<td>results per page, default 10</td>
+</tr>
+<tr>
+<td>» template_ids</td>
+<td>body</td>
+<td>list[string]</td>
+<td>false</td>
+<td>templates id list</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"waivers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"signed_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1461130513</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"device"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"template_title"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"template_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"igcJYpG2KT1381868360"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"tracking_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"has_pdf"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ChPV4IMuVm1461130523"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"geolocation"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+                </span><span class="s2">"pictures"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"second_line"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Please fill in your address"</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"first_line"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test333"</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test333"</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"address_field"</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"zipcode"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                   </span><span class="err">...</span><span class="w">
+                </span><span class="p">],</span><span class="w">
+                </span><span class="s2">"received_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1461130523</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="err">...</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="s2">"per_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="mi">85</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id="waiverSearch-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>Successful request</td>
+<td><a href="#schemasubscription">Subscription</a></td>
+</tr>
+<tr>
+<td>403</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.3">Forbidden</a></td>
+<td>Invalid API key</td>
+<td>None</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+Waiver field `device`, `pictures` and `template_title` is not available in search waiver API.
+</aside>
 <h1 id='schemas'>Schemas</h1><h2 id='response'>Response</h2>
 <p><a name="schemaresponse"></a></p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
@@ -2247,7 +2488,8 @@ We will redirect the download request to Amazon S3.
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"opZTzJP2gI1504892592"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"device_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jing's iPhone"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"identifier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0D84EB79-68F5-4BAD-9344-262D3882C830"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.1.1.1"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre><h3 id='properties-4'>Properties</h3>
 <table><thead>
@@ -2307,10 +2549,22 @@ We will redirect the download request to Amazon S3.
 <td>attached pictures</td>
 </tr>
 <tr>
+<td>tracking_id</td>
+<td>string</td>
+<td>false</td>
+<td>tracking id</td>
+</tr>
+<tr>
 <td>data</td>
 <td>[<a href="#schemafield">Field</a>]</td>
-<td>true</td>
+<td>false</td>
 <td>filled fields</td>
+</tr>
+<tr>
+<td>ip</td>
+<td>string</td>
+<td>false</td>
+<td>ip</td>
 </tr>
 </tbody></table>
 <h4 id='field-types'>Field Types</h4>
