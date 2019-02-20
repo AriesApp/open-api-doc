@@ -699,7 +699,7 @@ print r.json()
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
 template_id|path|string|true|template id
-ttl|query|string|false|request waiver expiration time (in seconds)
+ttl|query|string|false|request waiver expiration time (in seconds), default 86400
 
 
 > Example responses
@@ -1161,7 +1161,7 @@ We will redirect the download request to Amazon S3.
 
 ```shell
 # You can also use wget
-curl -X GET https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pictures/{picture_id} \
+curl -X GET https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/picture/{picture_id} \
   -H 'Accept: */*' \
   -H 'X-Api-Key: <api_key>'
 ```
@@ -1173,7 +1173,7 @@ const headers = {
   'Accept':'*/*'
 };
 
-fetch('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pictures/{picture_id}', {
+fetch('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/picture/{picture_id}', {
   method: 'GET',
   headers: headers
 }).then(body => console.log(body))
@@ -1191,7 +1191,7 @@ headers = {
   'X-Api-Key' => '<api_key>'
 }
 
-result = RestClient.get 'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pictures/{picture_id}', headers: headers
+result = RestClient.get 'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/picture/{picture_id}', headers: headers
 
 p result
 ```
@@ -1203,14 +1203,14 @@ headers = {
   'X-Api-Key': '<api_key>'
 }
 
-r = requests.get('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pictures/{picture_id}', params={
+r = requests.get('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/picture/{picture_id}', params={
 }, headers=headers)
 
 print r.content
 
 ```
 
-`GET /waiver/{waiver_id}/pictures/{picture_id}`
+`GET /waiver/{waiver_id}/picture/{picture_id}`
 
 *Download waiver pictures*
 
