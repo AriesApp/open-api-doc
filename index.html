@@ -1202,7 +1202,7 @@ curl -X GET https://api.waiverforever.com/openapi/v1/template/<span class="o">{<
 <td>query</td>
 <td>string</td>
 <td>false</td>
-<td>request waiver expiration time (in seconds)</td>
+<td>request waiver expiration time (in seconds), default 86400</td>
 </tr>
 </tbody></table>
 
@@ -1893,7 +1893,7 @@ We will redirect the download request to Amazon S3.
 <p>Code samples</p>
 </blockquote>
 <pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
-curl -X GET https://api.waiverforever.com/openapi/v1/waiver/<span class="o">{</span>waiver_id<span class="o">}</span>/pictures/<span class="o">{</span>picture_id<span class="o">}</span> <span class="se">\</span>
+curl -X GET https://api.waiverforever.com/openapi/v1/waiver/<span class="o">{</span>waiver_id<span class="o">}</span>/picture/<span class="o">{</span>picture_id<span class="o">}</span> <span class="se">\</span>
   -H <span class="s1">'Accept: */*'</span> <span class="se">\</span>
   -H <span class="s1">'X-Api-Key: &lt;api_key&gt;'</span>
 </code></pre><pre class="highlight javascript tab-javascript--nodejs"><code><span class="kr">const</span> <span class="nx">fetch</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'node-fetch'</span><span class="p">);</span>
@@ -1902,7 +1902,7 @@ curl -X GET https://api.waiverforever.com/openapi/v1/waiver/<span class="o">{</s
   <span class="s1">'Accept'</span><span class="p">:</span><span class="s1">'*/*'</span>
 <span class="p">};</span>
 
-<span class="nx">fetch</span><span class="p">(</span><span class="s1">'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pictures/{picture_id}'</span><span class="p">,</span> <span class="p">{</span>
+<span class="nx">fetch</span><span class="p">(</span><span class="s1">'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/picture/{picture_id}'</span><span class="p">,</span> <span class="p">{</span>
   <span class="na">method</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
   <span class="na">headers</span><span class="p">:</span> <span class="nx">headers</span>
 <span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">body</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">))</span>
@@ -1917,7 +1917,7 @@ curl -X GET https://api.waiverforever.com/openapi/v1/waiver/<span class="o">{</s
   <span class="s1">'X-Api-Key'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;api_key&gt;'</span>
 <span class="p">}</span>
 
-<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pictures/{picture_id}'</span><span class="p">,</span> <span class="ss">headers: </span><span class="n">headers</span>
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/picture/{picture_id}'</span><span class="p">,</span> <span class="ss">headers: </span><span class="n">headers</span>
 
 <span class="nb">p</span> <span class="n">result</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
@@ -1926,13 +1926,13 @@ curl -X GET https://api.waiverforever.com/openapi/v1/waiver/<span class="o">{</s
   <span class="s">'X-Api-Key'</span><span class="p">:</span> <span class="s">'&lt;api_key&gt;'</span>
 <span class="p">}</span>
 
-<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/pictures/{picture_id}'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/picture/{picture_id}'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
 <span class="p">},</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 
 <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">content</span>
 
 </code></pre>
-<p><code>GET /waiver/{waiver_id}/pictures/{picture_id}</code></p>
+<p><code>GET /waiver/{waiver_id}/picture/{picture_id}</code></p>
 
 <p><em>Download waiver pictures</em></p>
 
