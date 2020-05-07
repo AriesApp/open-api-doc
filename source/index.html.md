@@ -749,12 +749,13 @@ template_id|string|true|template id
 template_title|string|true|template title
 has_pdf|boolean|true|true if the PDF is available to download
 geolocation|[GeoLocation](#schemageolocation)|false|signing location
-received_at|integer|true|server received timestamp
+received_at|integer|true|server received timestamp, should be 0 if waiver status is not `approved`
 signed_at|integer|true|waiver signed timestamp
 pictures|[[Picture](#schemapicture)]|false|attached pictures
 data|[[Field](#schemafield)]|true|filled fields
 device|[Device](#schemadevice)|false|signing device
 ip|string|false|ip
+status|string|true|waiver state, possible values `pending`, `approved`, `revoked`
 
 ## Get Signed Waiver
 
@@ -829,6 +830,7 @@ waiver_id|path|string|true|waiver id
 ```json
 {
   "id": "zZ613txA741510127626",
+  "status": "approved",
   "has_pdf": true,
   "pictures": [
     {
@@ -1373,6 +1375,7 @@ body|body|object|true|search conditions.
                 "template_id": "igcJYpG2KT1381868360",
                 "tracking_id": "",
                 "has_pdf": true,
+                "status": "approved",
                 "id": "ChPV4IMuVm1461130523",
                 "geolocation": {},
                 "pictures": [],
@@ -1622,7 +1625,8 @@ updated_at|integer|true|updated timestamp
       "device_name": "Jing's iPhone",
       "identifier": "0D84EB79-68F5-4BAD-9344-262D3882C830"
   },
-  "ip": "1.1.1.1"
+  "ip": "1.1.1.1",
+  "status": "approved"
 }
 ```
 
@@ -1635,12 +1639,13 @@ template_id|string|true|template id
 template_title|string|true|template title
 has_pdf|boolean|true|true if the PDF is available to download
 geolocation|[GeoLocation](#schemageolocation)|false|signing location
-received_at|integer|true|server received timestamp
+received_at|integer|true|server received timestamp, should be 0 if waiver status is not `approved`
 signed_at|integer|true|waiver signed timestamp
 pictures|[[Picture](#schemapicture)]|false|attached pictures
 tracking_id|string|false|tracking id
 data|[[Field](#schemafield)]|false|filled fields
 ip|string|false|ip
+status|string|true|waiver state, possible values `pending`, `approved`, `revoked`
 
 #### Field Types
 
