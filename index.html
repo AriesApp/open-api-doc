@@ -1379,7 +1379,7 @@ curl -X GET https://api.waiverforever.com/openapi/v1/template/<span class="o">{<
 <td>status</td>
 <td>string</td>
 <td>true</td>
-<td>waiver state, possible values <code>pending</code>, <code>approved</code>, <code>revoked</code></td>
+<td>waiver status, possible values <code>pending</code>, <code>approved</code>, <code>revoked</code></td>
 </tr>
 </tbody></table>
 <h2 id='get-signed-waiver'>Get Signed Waiver</h2>
@@ -2183,9 +2183,7 @@ curl -X POST https://api.waiverforever.com/openapi/v1/waiver/search <span class=
                 </span><span class="s2">"template_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"igcJYpG2KT1381868360"</span><span class="p">,</span><span class="w">
                 </span><span class="s2">"tracking_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
                 </span><span class="s2">"has_pdf"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-
                 </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"approved"</span><span class="p">,</span><span class="w">
-
                 </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ChPV4IMuVm1461130523"</span><span class="p">,</span><span class="w">
                 </span><span class="s2">"geolocation"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
                 </span><span class="s2">"pictures"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
@@ -2499,7 +2497,6 @@ Waiver field `device`, `pictures` and `template_title` is not available in searc
       </span><span class="s2">"device_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jing's iPhone"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"identifier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0D84EB79-68F5-4BAD-9344-262D3882C830"</span><span class="w">
   </span><span class="p">},</span><span class="w">
-
   </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.1.1.1"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"approved"</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -2582,7 +2579,7 @@ Waiver field `device`, `pictures` and `template_title` is not available in searc
 <td>status</td>
 <td>string</td>
 <td>true</td>
-<td>waiver state, possible values <code>pending</code>, <code>approved</code>, <code>revoked</code></td>
+<td>waiver status, possible values <code>pending</code>, <code>approved</code>, <code>revoked</code></td>
 </tr>
 </tbody></table>
 <h4 id='field-types'>Field Types</h4>
