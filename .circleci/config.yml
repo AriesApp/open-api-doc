@@ -9,7 +9,7 @@ jobs:
       - run:
           name: deploy
           command: |
-            gem install bundle
+            gem install bundler
             ./deploy.sh
 
 workflows:
