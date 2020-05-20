@@ -20,7 +20,6 @@ workflows:
     open-api-doc:
       jobs:
         - deploy:
-            filters:
-                branches:
-                  only:
-                    - master
+            branches:
+              only:
+                - master
