@@ -5,6 +5,9 @@ jobs:
     docker:
       - image: circleci/ruby:2.7-node
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "d8:39:d0:0a:48:36:ac:9a:d6:e2:a8:8b:84:03:08:8f"
       - checkout
       - run:
           name: deploy
