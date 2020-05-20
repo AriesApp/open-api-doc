@@ -755,7 +755,7 @@ pictures|[[Picture](#schemapicture)]|false|attached pictures
 data|[[Field](#schemafield)]|true|filled fields
 device|[Device](#schemadevice)|false|signing device
 ip|string|false|ip
-status|string|true|waiver state, possible values `pending`, `approved`, `revoked`
+status|string|true|waiver status, possible values `pending`, `approved`, `revoked`
 
 ## Get Signed Waiver
 
@@ -1645,7 +1645,7 @@ pictures|[[Picture](#schemapicture)]|false|attached pictures
 tracking_id|string|false|tracking id
 data|[[Field](#schemafield)]|false|filled fields
 ip|string|false|ip
-status|string|true|waiver state, possible values `pending`, `approved`, `revoked`
+status|string|true|waiver status, possible values `pending`, `approved`, `revoked`
 
 #### Field Types
 

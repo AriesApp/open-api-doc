@@ -1,0 +1,22 @@
+version: 2.1
+
+jobs:
+  deploy:
+    docker:
+      - image: circleci/ruby:2.7
+    steps:
+      - checkout
+      - run:
+          name: deploy
+          command: |
+            gem install bundle
+            ./deploy.sh
+
+workflows:
+    qs3:
+      jobs:
+        - deploy:
+            filters:
+                branches:
+                  only:
+                    - master
