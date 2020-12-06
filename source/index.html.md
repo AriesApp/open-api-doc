@@ -633,7 +633,7 @@ result|boolean|true|request success or fail
 msg|string|true|response message
 data|[[Template](#schematemplate)]|true|template list
 
-## Requeset Waiver
+## Request Waiver
 
 > Code samples
 
@@ -754,6 +754,8 @@ signed_at|integer|true|waiver signed timestamp
 pictures|[[Picture](#schemapicture)]|false|attached pictures
 data|[[Field](#schemafield)]|true|filled fields
 device|[Device](#schemadevice)|false|signing device
+note|string|true|waiver note
+tags|[sting]|true|waiver tags
 ip|string|false|ip
 status|string|true|waiver status, possible values `pending`, `approved`, `revoked`
 
@@ -949,6 +951,8 @@ waiver_id|path|string|true|waiver id
   "tracking_id": "D6RkEV1yUK1512568456",
   "received_at": 1510127625,
   "signed_at": 1510127615,
+  "note": "",
+  "tags": ["tag1", "tag2"],
   "geolocation": {
       "accuracy": 5,
       "latitude": "137.785834",
@@ -959,7 +963,7 @@ waiver_id|path|string|true|waiver id
       "username": "a",
       "id": "opZTzJP2gI1504892592",
       "device_name": "Jing's iPhone",
-      "identifier": "0D84EB79-68F5-4BAD-9344-262D3882C830"
+      "identifier": ""
   }
 }
 ```
@@ -1046,7 +1050,7 @@ print r.json()
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-tracking_id|path|string|true|tracking id from [requestWaiver](#requeset-waiver)
+tracking_id|path|string|true|tracking id from [requestWaiver](#request-waiver)
 
 
 > Example responses
@@ -1075,6 +1079,106 @@ Name|Type|Required|Description
 result|boolean|true|request success or fail
 msg|string|true|response message
 data|[Waiver](#schemawaiver)|true|Signed Waiver
+
+## Update Waiver Note
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X POST https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/note' \
+  -H 'Accept: application/json' \
+  -H 'X-Api-Key: <api_key>' \
+  -d '{
+    "note":"the note"
+  }'
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'X-Api-Key': '<api_key>'
+};
+
+const inputBody = `{
+    "note": "the note"
+}`;
+
+fetch('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/note', {
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+}).then(res => res.json())
+  .then(body => console.log(body))
+  .catch(error => {
+    console.log(error);
+  });
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'X-Api-Key' => '<api_key>'
+}
+
+params ={
+    "note"=> "the note"
+}
+
+result = RestClient.post 'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/note', headers
+
+p JSON.parse(result)
+```
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'X-Api-Key': '<api_key>'
+}
+
+params = {
+    "note": "the note"
+}
+
+r = requests.post('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/note', params=params, headers=headers)
+
+print r.json()
+
+```
+
+`POST /waiver/{waiver_id}/note`
+
+*Update waiver note*
+
+<h3 id="updateWaiverNote-parameters">Parameters</h3>
+
+Parameter|In|Type|Required|Description
+---|---|---|---|---|
+waiver_id|path|string|true|waiver id
+note|body|string|true|waiver note
+
+<h3 id="updateWaiverNote-responses">Responses</h3>
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
+403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
+404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Template not found|None
+
+<h3 id="updateWaiverNote-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+Name|Type|Required|Description
+---|---|---|---|---|
+result|boolean|true|request success or fail
+msg|string|true|response message
 
 ## Download Waiver PDF
 
@@ -1347,7 +1451,11 @@ search waiver with keywords.
   "end_timestamp": "<end timestamp>",
   "page": "<page index>",
   "per_page": "<results per page>",
-  "template_ids": "<template id list>"
+  "template_ids": "<template id list>",
+  "note": "<waiver note>",
+  "tags": "<tag name list>",
+  "device_ids": "<device id list>",
+  "group_id": "<group id>"
 }
 ```
 <h3 id="waiverSearch-parameters">Parameters</h3>
@@ -1355,13 +1463,16 @@ search waiver with keywords.
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
 body|body|object|true|search conditions.
-» search_term|body|string|true|search term
-» start_timestamp|body|int|false|start timestamp in seconds
-» end_timestamp|body|int|false|end timestamp in seconds
-» page|body|int|false|page index, default 1
-» per_page|body|int|false|results per page, default 10
-» template_ids|body|list[string]|false|templates id list
-
+search_term|body|string|false|search term
+start_timestamp|body|int|false|start timestamp in seconds
+end_timestamp|body|int|false|end timestamp in seconds
+page|body|int|false|page index, default 1
+per_page|body|int|false|results per page, default 10
+template_ids|body|list[string]|false|templates id list
+note|body|string|false|waiver note
+tags|body|list[string]|false|tag name list
+device_ids|body|list[string]|false|device id list
+request_id|body|string|false|waiver request id
 > Example responses
 
 ```json
@@ -1379,6 +1490,8 @@ body|body|object|true|search conditions.
                 "id": "ChPV4IMuVm1461130523",
                 "geolocation": {},
                 "pictures": [],
+                "note": "",
+                "tags": [""],
                 "data": [
                     {
                         "city": "",
@@ -1416,6 +1529,519 @@ Status|Meaning|Description|Schema
 <aside class="notice">
 Waiver field `device`, `pictures` and `template_title` is not available in search waiver API.
 </aside>
+
+# WaiverRequest Endpoints
+
+Access waiver request
+
+## Waiver Request Resource
+
+Name|Type|Required|Description
+---|---|---|---|
+id|string|true|request id
+name|string|true|request name
+size|int|true|request size
+note|string|true|request note
+type|string|true|request type.  possible values `normal`, `anonymous`
+contact_info|string|true|contact info
+template_id|string|true|template id of waiver request
+status|string|true|request status. possible values `collecting`, `accepted`
+request_link|string|true|request share link
+datetime|int|true|created timestamp
+
+
+## Create Waiver Request
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X POST https://api.waiverforever.com/openapi/v2/waiverRequest \
+  -H 'Accept: application/json' \
+  -H 'X-Api-Key: <api_key>' \
+  -d '{
+    "name": "waiver request name",
+    "size": 1,
+    "note": "note",
+    "type": "normal",
+    "contact_info": "contact info",
+    "template_id": "TutFEMdPgR1519947925"
+}'
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'X-Api-Key': '<api_key>'
+};
+
+const inputBody = `{
+    "name": "waiver request name",
+    "size": 1,
+    "note": "note",
+    "type": "normal",
+    "contact_info": "contact info",
+    "template_id": "TutFEMdPgR1519947925"
+}`;
+
+fetch('https://api.waiverforever.com/openapi/v2/waiverRequest', {
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+}).then(res => res.json())
+  .then(body => console.log(body))
+  .catch(error => {
+    console.log(error);
+  });
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'X-Api-Key' => '<api_key>'
+}
+
+params ={
+    "name"=> "waiver request name",
+    "size"=> 1,
+    "note"=> "note",
+    "type"=> "normal",
+    "contact_info"=> "contact info",
+    "template_id"=> "TutFEMdPgR1519947925"
+}
+
+result = RestClient.post 'https://api.waiverforever.com/openapi/v2/waiverRequest', headers
+
+p JSON.parse(result)
+```
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'X-Api-Key': '<api_key>'
+}
+
+params = {
+    "name": "waiver request name",
+    "size": 1,
+    "note": "note",
+    "type": "normal",
+    "contact_info": "contact info",
+    "template_id": "TutFEMdPgR1519947925"
+}
+
+r = requests.post('https://api.waiverforever.com/openapi/v2/waiverRequest', params=params, headers=headers)
+
+print r.json()
+
+```
+
+`POST /v2/waiverRequest`
+
+*Create waiver request*
+
+<h3 id="createWaiverRequest-parameters">Parameters</h3>
+
+Parameter|In|Type|Required|Description
+---|---|---|---|---|
+name|body|string|true|request name
+size|body|int|true|request size. between 0 and 1000
+note|body|string|true|request note
+type|body|string|true|request type. possible values `normal`, `anonymous`
+contact_info|body|string|true|request contact info
+template_id|body|string|true|request template id
+
+
+> Example responses
+
+```json
+{
+  "note": "note",
+  "accepted_count": 0,
+  "size": 1,
+  "request_link": "https://app.waiverforever.com/requested_waiver_group/JM2AJFe0Gq1594865417",
+  "type": "normal",
+  "datetime": 1594865417,
+  "name": "waiver request name",
+  "contact_info": "contact info",
+  "id": "JM2AJFe0Gq1594865417",
+  "status": "collecting",
+  "template_id": "TutFEMdPgR1519947925"
+}
+```
+<h3 id="createWaiverRequest-responses">Responses</h3>
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
+403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
+404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Template not found|None
+
+<h3 id="createWaiverRequest-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+Name|Type|Required|Description
+---|---|---|---|---|
+result|boolean|true|request success or fail
+msg|string|true|response message
+data|[WaiverRequest](#schemawaiverrequest)|true|Waiver Request
+
+
+## Get Waiver Request
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X GET https://api.waiverforever.com/openapi/v2/waiverRequest/{waiver_request_id} \
+  -H 'Accept: application/json' \
+  -H 'X-Api-Key: <api_key>'
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'X-Api-Key': '<api_key>'
+};
+
+fetch('https://api.waiverforever.com/openapi/v2/waiverRequest/{waiver_request_id}', {
+  method: 'GET',
+  headers: headers
+}).then(res => res.json())
+  .then(body => console.log(body))
+  .catch(error => {
+    console.log(error);
+  });
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'X-Api-Key' => '<api_key>'
+}
+
+result = RestClient.get 'https://api.waiverforever.com/openapi/v2/waiverRequest/{waiver_request_id}', headers
+
+p JSON.parse(result)
+```
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'X-Api-Key': '<api_key>'
+}
+
+r = requests.get('https://api.waiverforever.com/openapi/v2/waiverRequest/{waiver_request_id}', params={
+}, headers=headers)
+
+print r.json()
+
+```
+
+`GET /v2/waiverRequest/{waiver_request_id}`
+
+*Get a waiver request*
+
+<h3 id="getWaiverRequest-parameters">Parameters</h3>
+
+Parameter|In|Type|Required|Description
+---|---|---|---|---|
+waiver_request_id|path|string|true|waiver request id
+
+
+> Example responses
+
+```json
+{
+  "note": "note",
+  "accepted_count": 0,
+  "size": 1,
+  "request_link": "https://app.waiverforever.com/requested_waiver_group/JM2AJFe0Gq1594865417",
+  "type": "normal",
+  "datetime": 1594865417,
+  "name": "waiver request name",
+  "contact_info": "contact info",
+  "id": "JM2AJFe0Gq1594865417",
+  "status": "collecting",
+  "template_id": "TutFEMdPgR1519947925"
+}
+```
+<h3 id="getWaiverRequest-responses">Responses</h3>
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
+403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
+404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Template not found|None
+
+<h3 id="getWaiverRequest-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+Name|Type|Required|Description
+---|---|---|---|---|
+result|boolean|true|request success or fail
+msg|string|true|response message
+data|[WaiverRequest](#schemawaiverrequest)|true|Waiver Request
+
+<aside class="notice">
+You can use search waiver API to archive waivers in the specific request with parameter `request_id`.
+</aside>
+
+## Edit Waiver Request
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X POST https://api.waiverforever.com/openapi/v2/waiverRequest/{waiver_request_id} \
+  -H 'Accept: application/json' \
+  -H 'X-Api-Key: <api_key>' \
+  -d '{
+    "name": "waiver request name new",
+    "size": 2,
+    "note": "note new",
+    "contact_info": "contact info new",
+}'
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'X-Api-Key': '<api_key>'
+};
+
+const inputBody = `{
+    "name": "waiver request name new",
+    "size": 2,
+    "note": "note new",
+    "contact_info": "contact info new"
+}`;
+
+fetch('https://api.waiverforever.com/openapi/v2/waiverRequest/{waiver_request_id}', {
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+}).then(res => res.json())
+  .then(body => console.log(body))
+  .catch(error => {
+    console.log(error);
+  });
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'X-Api-Key' => '<api_key>'
+}
+
+params ={
+    "name"=> "waiver request name new",
+    "size"=> 2,
+    "note"=> "note new",
+    "contact_info"=> "contact info new"
+}
+
+result = RestClient.post 'https://api.waiverforever.com/openapi/v2/waiverRequest/{waiver_request_id}', headers
+
+p JSON.parse(result)
+```
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'X-Api-Key': '<api_key>'
+}
+
+params = {
+    "name": "waiver request name new",
+    "size": 2,
+    "note": "note new",
+    "contact_info": "contact info new"
+}
+
+r = requests.post('https://api.waiverforever.com/openapi/v2/waiverRequest/{waiver_request_id}', params=params, headers=headers)
+
+print r.json()
+
+```
+
+`POST /v2/waiverRequest/{waiver_request_id}`
+
+*Edit waiver request*
+
+<h3 id="editWaiverRequest-parameters">Parameters</h3>
+
+Parameter|In|Type|Required|Description
+---|---|---|---|---|
+waiver_request_id|path|string|true|waiver request id
+name|body|string|true|request name
+size|body|int|true|request size. between 0 and 1000
+note|body|string|true|request note
+contact_info|body|string|true|request contact info
+
+
+> Example responses
+
+```json
+{
+  "note": "note new",
+  "accepted_count": 0,
+  "size": 2,
+  "request_link": "https://app.waiverforever.com/requested_waiver_group/JM2AJFe0Gq1594865417",
+  "type": "normal",
+  "datetime": 1594865417,
+  "name": "waiver request name new",
+  "contact_info": "contact info new",
+  "id": "JM2AJFe0Gq1594865417",
+  "status": "collecting",
+  "template_id": "TutFEMdPgR1519947925"
+}
+```
+<h3 id="editWaiverRequest-responses">Responses</h3>
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
+403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
+404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Template not found|None
+
+<h3 id="editWaiverRequest-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+Name|Type|Required|Description
+---|---|---|---|---|
+result|boolean|true|request success or fail
+msg|string|true|response message
+data|[WaiverRequest](#schemawaiverrequest)|true|Waiver Request
+
+
+## List Waiver Requests
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X GET https://api.waiverforever.com/openapi/v2/waiverRequests?template_id=TutFEMdPgR1519947925&name=open&status=collecting&start_timestamp=1593532800&end_timestamp=1595174400&page=1&per_page=5 \
+  -H 'Accept: application/json' \
+  -H 'X-Api-Key: <api_key>'
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'X-Api-Key': '<api_key>'
+};
+
+fetch('https://api.waiverforever.com/openapi/v2/waiverRequests?template_id=TutFEMdPgR1519947925&name=open&status=collecting&start_timestamp=1593532800&end_timestamp=1595174400&page=1&per_page=5', {
+  method: 'GET',
+  headers: headers
+}).then(res => res.json())
+  .then(body => console.log(body))
+  .catch(error => {
+    console.log(error);
+  });
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'X-Api-Key' => '<api_key>'
+}
+
+result = RestClient.get 'https://api.waiverforever.com/openapi/v2/waiverRequests?template_id=TutFEMdPgR1519947925&name=open&status=collecting&start_timestamp=1593532800&end_timestamp=1595174400&page=1&per_page=5', headers
+
+p JSON.parse(result)
+```
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'X-Api-Key': '<api_key>'
+}
+
+r = requests.get('https://api.waiverforever.com/openapi/v2/waiverRequests?template_id=TutFEMdPgR1519947925&name=open&status=collecting&start_timestamp=1593532800&end_timestamp=1595174400&page=1&per_page=5', params={
+}, headers=headers)
+
+print r.json()
+
+```
+
+`GET /v2/waiverRequests`
+
+*List waiver requests*
+
+<h3 id="listWaiverRequest-parameters">Parameters</h3>
+
+Parameter|In|Type|Required|Description
+---|---|---|---|---|
+template_id|query|string|true|request template id
+name|query|string|false|name search term
+status|query|string|false|request status. possible values `collecting`, `accepted`.
+start_timestamp|query|int|false|start timestamp in seconds
+end_timestamp|query|int|false|end timestamp in seconds
+page|query|int|false|page index, default 1
+per_page|query|int|false|results per page, default 10
+
+
+> Example responses
+
+```json
+{
+  "page": 1,
+  "per_page": 5,
+  "count": 7,
+  "waiver_requests": [
+    {
+      "id": "B7Z3Z5pymj1594862535",
+      "note": "note",
+      "size": 10,
+      "datetime": 1594862535,
+      "template_id": "",
+      "request_link": "https://app.waiverforever.com/requested_waiver_group/B7Z3Z5pymj1594862535",
+      "contact_info": "c info",
+      "type": "normal",
+      "status": "collecting",
+      "accepted_count": 0,
+      "name": "open api created 2"
+    },
+    ...
+  ]
+}
+```
+<h3 id="listWaiverRequest-responses">Responses</h3>
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
+403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
+
 
 # Schemas
 
@@ -1623,8 +2249,10 @@ updated_at|integer|true|updated timestamp
       "username": "a",
       "id": "opZTzJP2gI1504892592",
       "device_name": "Jing's iPhone",
-      "identifier": "0D84EB79-68F5-4BAD-9344-262D3882C830"
+      "identifier": ""
   },
+  "note": "",
+  "tags": ["tag1", "tag2"],
   "ip": "1.1.1.1",
   "status": "approved"
 }
@@ -1645,6 +2273,8 @@ pictures|[[Picture](#schemapicture)]|false|attached pictures
 tracking_id|string|false|tracking id
 data|[[Field](#schemafield)]|false|filled fields
 ip|string|false|ip
+note|string|true|waiver note
+tags|[sting]|true|waiver tags
 status|string|true|waiver status, possible values `pending`, `approved`, `revoked`
 
 #### Field Types
@@ -1990,7 +2620,7 @@ longtitude|string|true|longtitude value
     "username": "a",
     "id": "opZTzJP2gI1504892592",
     "device_name": "Jing's iPhone",
-    "identifier": "0D84EB79-68F5-4BAD-9344-262D3882C830"
+    "identifier": ""
 }
 ```
 
@@ -2002,4 +2632,39 @@ id|string|true|device id
 device_name|string|true|device name
 device_model|string|true|device model
 username|string|false|username
-identifier|string|true|device identifier
+identifier|string|true|device identifier. should always be an empty string
+
+## WaiverRequest
+
+<a name="schemawaiverrequest"></a>
+
+```json
+ {
+    "id": "B7Z3Z5pymj1594862535",
+    "note": "note",
+    "size": 10,
+    "datetime": 1594862535,
+    "template_id": "",
+    "request_link": "https://app.waiverforever.com/requested_waiver_group/B7Z3Z5pymj1594862535",
+    "contact_info": "c info",
+    "type": "normal",
+    "status": "collecting",
+    "accepted_count": 0,
+    "name": "open api created 2"
+}
+```
+
+### Properties
+
+Name|Type|Required|Description
+---|---|---|---|
+id|string|true|request id
+name|string|true|request name
+size|int|true|request size
+note|string|true|request note
+type|string|true|request type.  possible values `normal`, `anonymous`
+contact_info|string|true|contact info
+template_id|string|true|template id of waiver request
+status|string|true|request status. possible values `collecting`, `accepted`
+request_link|string|true|request share link
+datetime|int|true|created timestamp
