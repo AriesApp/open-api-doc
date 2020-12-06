@@ -270,7 +270,7 @@
                     <a href="#get-template-list" class="toc-h2 toc-link" data-title="Get Template list">Get Template list</a>
                   </li>
                   <li>
-                    <a href="#requeset-waiver" class="toc-h2 toc-link" data-title="Requeset Waiver">Requeset Waiver</a>
+                    <a href="#request-waiver" class="toc-h2 toc-link" data-title="Request Waiver">Request Waiver</a>
                   </li>
               </ul>
           </li>
@@ -287,6 +287,9 @@
                     <a href="#get-tracking-waiver" class="toc-h2 toc-link" data-title="Get Tracking Waiver">Get Tracking Waiver</a>
                   </li>
                   <li>
+                    <a href="#update-waiver-note" class="toc-h2 toc-link" data-title="Update Waiver Note">Update Waiver Note</a>
+                  </li>
+                  <li>
                     <a href="#download-waiver-pdf" class="toc-h2 toc-link" data-title="Download Waiver PDF">Download Waiver PDF</a>
                   </li>
                   <li>
@@ -294,6 +297,26 @@
                   </li>
                   <li>
                     <a href="#waiver-search" class="toc-h2 toc-link" data-title="Waiver Search">Waiver Search</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#waiverrequest-endpoints" class="toc-h1 toc-link" data-title="WaiverRequest Endpoints">WaiverRequest Endpoints</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#waiver-request-resource" class="toc-h2 toc-link" data-title="Waiver Request Resource">Waiver Request Resource</a>
+                  </li>
+                  <li>
+                    <a href="#create-waiver-request" class="toc-h2 toc-link" data-title="Create Waiver Request">Create Waiver Request</a>
+                  </li>
+                  <li>
+                    <a href="#get-waiver-request" class="toc-h2 toc-link" data-title="Get Waiver Request">Get Waiver Request</a>
+                  </li>
+                  <li>
+                    <a href="#edit-waiver-request" class="toc-h2 toc-link" data-title="Edit Waiver Request">Edit Waiver Request</a>
+                  </li>
+                  <li>
+                    <a href="#list-waiver-requests" class="toc-h2 toc-link" data-title="List Waiver Requests">List Waiver Requests</a>
                   </li>
               </ul>
           </li>
@@ -356,6 +379,9 @@
                   </li>
                   <li>
                     <a href="#device" class="toc-h2 toc-link" data-title="Device">Device</a>
+                  </li>
+                  <li>
+                    <a href="#waiverrequest" class="toc-h2 toc-link" data-title="WaiverRequest">WaiverRequest</a>
                   </li>
               </ul>
           </li>
@@ -1129,7 +1155,7 @@ curl -X GET https://api.waiverforever.com/openapi/v1/templates <span class="se">
 <td>template list</td>
 </tr>
 </tbody></table>
-<h2 id='requeset-waiver'>Requeset Waiver</h2>
+<h2 id='request-waiver'>Request Waiver</h2>
 <blockquote>
 <p>Code samples</p>
 </blockquote>
@@ -1370,6 +1396,18 @@ curl -X GET https://api.waiverforever.com/openapi/v1/template/<span class="o">{<
 <td>signing device</td>
 </tr>
 <tr>
+<td>note</td>
+<td>string</td>
+<td>true</td>
+<td>waiver note</td>
+</tr>
+<tr>
+<td>tags</td>
+<td>[sting]</td>
+<td>true</td>
+<td>waiver tags</td>
+</tr>
+<tr>
 <td>ip</td>
 <td>string</td>
 <td>false</td>
@@ -1576,6 +1614,8 @@ curl -X GET https://api.waiverforever.com/openapi/v1/waiver/<span class="o">{</s
   </span><span class="s2">"tracking_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"D6RkEV1yUK1512568456"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"received_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1510127625</span><span class="p">,</span><span class="w">
   </span><span class="s2">"signed_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1510127615</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"tag1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"tag2"</span><span class="p">],</span><span class="w">
   </span><span class="s2">"geolocation"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="s2">"accuracy"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
       </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="s2">"137.785834"</span><span class="p">,</span><span class="w">
@@ -1586,7 +1626,7 @@ curl -X GET https://api.waiverforever.com/openapi/v1/waiver/<span class="o">{</s
       </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"opZTzJP2gI1504892592"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"device_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jing's iPhone"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"identifier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0D84EB79-68F5-4BAD-9344-262D3882C830"</span><span class="w">
+      </span><span class="s2">"identifier"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -1717,7 +1757,7 @@ curl -X GET https://api.waiverforever.com/openapi/v1/waiver/tracking/<span class
 <td>path</td>
 <td>string</td>
 <td>true</td>
-<td>tracking id from <a href="#requeset-waiver">requestWaiver</a></td>
+<td>tracking id from <a href="#request-waiver">requestWaiver</a></td>
 </tr>
 </tbody></table>
 
@@ -1787,6 +1827,153 @@ curl -X GET https://api.waiverforever.com/openapi/v1/waiver/tracking/<span class
 <td><a href="#schemawaiver">Waiver</a></td>
 <td>true</td>
 <td>Signed Waiver</td>
+</tr>
+</tbody></table>
+<h2 id='update-waiver-note'>Update Waiver Note</h2>
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl -X POST https://api.waiverforever.com/openapi/v1/waiver/<span class="o">{</span>waiver_id<span class="o">}</span>/note<span class="s1">' \
+  -H '</span>Accept: application/json<span class="s1">' \
+  -H '</span>X-Api-Key: &lt;api_key&gt;<span class="s1">' \
+  -d '</span><span class="o">{</span>
+    <span class="s2">"note"</span>:<span class="s2">"the note"</span>
+  <span class="o">}</span><span class="s1">'
+</span></code></pre><pre class="highlight javascript tab-javascript--nodejs"><code><span class="kr">const</span> <span class="nx">fetch</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'node-fetch'</span><span class="p">);</span>
+
+<span class="kr">const</span> <span class="nx">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span><span class="p">:</span><span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'X-Api-Key'</span><span class="p">:</span> <span class="s1">'&lt;api_key&gt;'</span>
+<span class="p">};</span>
+
+<span class="kr">const</span> <span class="nx">inputBody</span> <span class="o">=</span> <span class="s2">`{
+    "note": "the note"
+}`</span><span class="p">;</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="s1">'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/note'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+  <span class="na">body</span><span class="p">:</span> <span class="nx">inputBody</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="nx">headers</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">body</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'X-Api-Key'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;api_key&gt;'</span>
+<span class="p">}</span>
+
+<span class="n">params</span> <span class="o">=</span><span class="p">{</span>
+    <span class="s2">"note"</span><span class="o">=&gt;</span> <span class="s2">"the note"</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">post</span> <span class="s1">'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/note'</span><span class="p">,</span> <span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'X-Api-Key'</span><span class="p">:</span> <span class="s">'&lt;api_key&gt;'</span>
+<span class="p">}</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"note"</span><span class="p">:</span> <span class="s">"the note"</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/note'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+</code></pre>
+<p><code>POST /waiver/{waiver_id}/note</code></p>
+
+<p><em>Update waiver note</em></p>
+
+<h3 id="updateWaiverNote-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>waiver_id</td>
+<td>path</td>
+<td>string</td>
+<td>true</td>
+<td>waiver id</td>
+</tr>
+<tr>
+<td>note</td>
+<td>body</td>
+<td>string</td>
+<td>true</td>
+<td>waiver note</td>
+</tr>
+</tbody></table>
+
+<h3 id="updateWaiverNote-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>Successful request</td>
+<td>Inline</td>
+</tr>
+<tr>
+<td>403</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.3">Forbidden</a></td>
+<td>Invalid api key</td>
+<td>None</td>
+</tr>
+<tr>
+<td>404</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.4">Not Found</a></td>
+<td>Template not found</td>
+<td>None</td>
+</tr>
+</tbody></table>
+
+<h3 id="updateWaiverNote-responseschema">Response Schema</h3>
+
+<p>Status Code <strong>200</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>result</td>
+<td>boolean</td>
+<td>true</td>
+<td>request success or fail</td>
+</tr>
+<tr>
+<td>msg</td>
+<td>string</td>
+<td>true</td>
+<td>response message</td>
 </tr>
 </tbody></table>
 <h2 id='download-waiver-pdf'>Download Waiver PDF</h2>
@@ -2105,7 +2292,11 @@ curl -X POST https://api.waiverforever.com/openapi/v1/waiver/search <span class=
   </span><span class="s2">"end_timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;end timestamp&gt;"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"page"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;page index&gt;"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"per_page"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;results per page&gt;"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"template_ids"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;template id list&gt;"</span><span class="w">
+  </span><span class="s2">"template_ids"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;template id list&gt;"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;waiver note&gt;"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"tags"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;tag name list&gt;"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"device_ids"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;device id list&gt;"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"group_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;group id&gt;"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <h3 id="waiverSearch-parameters">Parameters</h3>
@@ -2127,46 +2318,74 @@ curl -X POST https://api.waiverforever.com/openapi/v1/waiver/search <span class=
 <td>search conditions.</td>
 </tr>
 <tr>
-<td>» search_term</td>
+<td>search_term</td>
 <td>body</td>
 <td>string</td>
-<td>true</td>
+<td>false</td>
 <td>search term</td>
 </tr>
 <tr>
-<td>» start_timestamp</td>
+<td>start_timestamp</td>
 <td>body</td>
 <td>int</td>
 <td>false</td>
 <td>start timestamp in seconds</td>
 </tr>
 <tr>
-<td>» end_timestamp</td>
+<td>end_timestamp</td>
 <td>body</td>
 <td>int</td>
 <td>false</td>
 <td>end timestamp in seconds</td>
 </tr>
 <tr>
-<td>» page</td>
+<td>page</td>
 <td>body</td>
 <td>int</td>
 <td>false</td>
 <td>page index, default 1</td>
 </tr>
 <tr>
-<td>» per_page</td>
+<td>per_page</td>
 <td>body</td>
 <td>int</td>
 <td>false</td>
 <td>results per page, default 10</td>
 </tr>
 <tr>
-<td>» template_ids</td>
+<td>template_ids</td>
 <td>body</td>
 <td>list[string]</td>
 <td>false</td>
 <td>templates id list</td>
+</tr>
+<tr>
+<td>note</td>
+<td>body</td>
+<td>string</td>
+<td>false</td>
+<td>waiver note</td>
+</tr>
+<tr>
+<td>tags</td>
+<td>body</td>
+<td>list[string]</td>
+<td>false</td>
+<td>tag name list</td>
+</tr>
+<tr>
+<td>device_ids</td>
+<td>body</td>
+<td>list[string]</td>
+<td>false</td>
+<td>device id list</td>
+</tr>
+<tr>
+<td>request_id</td>
+<td>body</td>
+<td>string</td>
+<td>false</td>
+<td>waiver request id</td>
 </tr>
 </tbody></table>
 
@@ -2187,6 +2406,8 @@ curl -X POST https://api.waiverforever.com/openapi/v1/waiver/search <span class=
                 </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ChPV4IMuVm1461130523"</span><span class="p">,</span><span class="w">
                 </span><span class="s2">"geolocation"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
                 </span><span class="s2">"pictures"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                </span><span class="s2">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">""</span><span class="p">],</span><span class="w">
                 </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
                     </span><span class="p">{</span><span class="w">
                         </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
@@ -2240,6 +2461,811 @@ curl -X POST https://api.waiverforever.com/openapi/v1/waiver/search <span class=
 <aside class="notice">
 Waiver field `device`, `pictures` and `template_title` is not available in search waiver API.
 </aside>
+<h1 id='waiverrequest-endpoints'>WaiverRequest Endpoints</h1>
+<p>Access waiver request</p>
+<h2 id='waiver-request-resource'>Waiver Request Resource</h2>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>true</td>
+<td>request id</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>true</td>
+<td>request name</td>
+</tr>
+<tr>
+<td>size</td>
+<td>int</td>
+<td>true</td>
+<td>request size</td>
+</tr>
+<tr>
+<td>note</td>
+<td>string</td>
+<td>true</td>
+<td>request note</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>true</td>
+<td>request type.  possible values <code>normal</code>, <code>anonymous</code></td>
+</tr>
+<tr>
+<td>contact_info</td>
+<td>string</td>
+<td>true</td>
+<td>contact info</td>
+</tr>
+<tr>
+<td>template_id</td>
+<td>string</td>
+<td>true</td>
+<td>template id of waiver request</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>true</td>
+<td>request status. possible values <code>collecting</code>, <code>accepted</code></td>
+</tr>
+<tr>
+<td>request_link</td>
+<td>string</td>
+<td>true</td>
+<td>request share link</td>
+</tr>
+<tr>
+<td>datetime</td>
+<td>int</td>
+<td>true</td>
+<td>created timestamp</td>
+</tr>
+</tbody></table>
+<h2 id='create-waiver-request'>Create Waiver Request</h2>
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl -X POST https://api.waiverforever.com/openapi/v2/waiverRequest <span class="se">\</span>
+  -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'X-Api-Key: &lt;api_key&gt;'</span> <span class="se">\</span>
+  -d <span class="s1">'{
+    "name": "waiver request name",
+    "size": 1,
+    "note": "note",
+    "type": "normal",
+    "contact_info": "contact info",
+    "template_id": "TutFEMdPgR1519947925"
+}'</span>
+</code></pre><pre class="highlight javascript tab-javascript--nodejs"><code><span class="kr">const</span> <span class="nx">fetch</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'node-fetch'</span><span class="p">);</span>
+
+<span class="kr">const</span> <span class="nx">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span><span class="p">:</span><span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'X-Api-Key'</span><span class="p">:</span> <span class="s1">'&lt;api_key&gt;'</span>
+<span class="p">};</span>
+
+<span class="kr">const</span> <span class="nx">inputBody</span> <span class="o">=</span> <span class="s2">`{
+    "name": "waiver request name",
+    "size": 1,
+    "note": "note",
+    "type": "normal",
+    "contact_info": "contact info",
+    "template_id": "TutFEMdPgR1519947925"
+}`</span><span class="p">;</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="s1">'https://api.waiverforever.com/openapi/v2/waiverRequest'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+  <span class="na">body</span><span class="p">:</span> <span class="nx">inputBody</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="nx">headers</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">body</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'X-Api-Key'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;api_key&gt;'</span>
+<span class="p">}</span>
+
+<span class="n">params</span> <span class="o">=</span><span class="p">{</span>
+    <span class="s2">"name"</span><span class="o">=&gt;</span> <span class="s2">"waiver request name"</span><span class="p">,</span>
+    <span class="s2">"size"</span><span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"note"</span><span class="o">=&gt;</span> <span class="s2">"note"</span><span class="p">,</span>
+    <span class="s2">"type"</span><span class="o">=&gt;</span> <span class="s2">"normal"</span><span class="p">,</span>
+    <span class="s2">"contact_info"</span><span class="o">=&gt;</span> <span class="s2">"contact info"</span><span class="p">,</span>
+    <span class="s2">"template_id"</span><span class="o">=&gt;</span> <span class="s2">"TutFEMdPgR1519947925"</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">post</span> <span class="s1">'https://api.waiverforever.com/openapi/v2/waiverRequest'</span><span class="p">,</span> <span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'X-Api-Key'</span><span class="p">:</span> <span class="s">'&lt;api_key&gt;'</span>
+<span class="p">}</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"name"</span><span class="p">:</span> <span class="s">"waiver request name"</span><span class="p">,</span>
+    <span class="s">"size"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s">"note"</span><span class="p">:</span> <span class="s">"note"</span><span class="p">,</span>
+    <span class="s">"type"</span><span class="p">:</span> <span class="s">"normal"</span><span class="p">,</span>
+    <span class="s">"contact_info"</span><span class="p">:</span> <span class="s">"contact info"</span><span class="p">,</span>
+    <span class="s">"template_id"</span><span class="p">:</span> <span class="s">"TutFEMdPgR1519947925"</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://api.waiverforever.com/openapi/v2/waiverRequest'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+</code></pre>
+<p><code>POST /v2/waiverRequest</code></p>
+
+<p><em>Create waiver request</em></p>
+
+<h3 id="createWaiverRequest-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>body</td>
+<td>string</td>
+<td>true</td>
+<td>request name</td>
+</tr>
+<tr>
+<td>size</td>
+<td>body</td>
+<td>int</td>
+<td>true</td>
+<td>request size. between 0 and 1000</td>
+</tr>
+<tr>
+<td>note</td>
+<td>body</td>
+<td>string</td>
+<td>true</td>
+<td>request note</td>
+</tr>
+<tr>
+<td>type</td>
+<td>body</td>
+<td>string</td>
+<td>true</td>
+<td>request type. possible values <code>normal</code>, <code>anonymous</code></td>
+</tr>
+<tr>
+<td>contact_info</td>
+<td>body</td>
+<td>string</td>
+<td>true</td>
+<td>request contact info</td>
+</tr>
+<tr>
+<td>template_id</td>
+<td>body</td>
+<td>string</td>
+<td>true</td>
+<td>request template id</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">"note"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"accepted_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"request_link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://app.waiverforever.com/requested_waiver_group/JM2AJFe0Gq1594865417"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"normal"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"datetime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1594865417</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"waiver request name"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"contact_info"</span><span class="p">:</span><span class="w"> </span><span class="s2">"contact info"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JM2AJFe0Gq1594865417"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"collecting"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"template_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TutFEMdPgR1519947925"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id="createWaiverRequest-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>Successful request</td>
+<td>Inline</td>
+</tr>
+<tr>
+<td>403</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.3">Forbidden</a></td>
+<td>Invalid api key</td>
+<td>None</td>
+</tr>
+<tr>
+<td>404</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.4">Not Found</a></td>
+<td>Template not found</td>
+<td>None</td>
+</tr>
+</tbody></table>
+
+<h3 id="createWaiverRequest-responseschema">Response Schema</h3>
+
+<p>Status Code <strong>200</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>result</td>
+<td>boolean</td>
+<td>true</td>
+<td>request success or fail</td>
+</tr>
+<tr>
+<td>msg</td>
+<td>string</td>
+<td>true</td>
+<td>response message</td>
+</tr>
+<tr>
+<td>data</td>
+<td><a href="#schemawaiverrequest">WaiverRequest</a></td>
+<td>true</td>
+<td>Waiver Request</td>
+</tr>
+</tbody></table>
+<h2 id='get-waiver-request'>Get Waiver Request</h2>
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl -X GET https://api.waiverforever.com/openapi/v2/waiverRequest/<span class="o">{</span>waiver_request_id<span class="o">}</span> <span class="se">\</span>
+  -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'X-Api-Key: &lt;api_key&gt;'</span>
+</code></pre><pre class="highlight javascript tab-javascript--nodejs"><code><span class="kr">const</span> <span class="nx">fetch</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'node-fetch'</span><span class="p">);</span>
+
+<span class="kr">const</span> <span class="nx">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span><span class="p">:</span><span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'X-Api-Key'</span><span class="p">:</span> <span class="s1">'&lt;api_key&gt;'</span>
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="s1">'https://api.waiverforever.com/openapi/v2/waiverRequest/{waiver_request_id}'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="nx">headers</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">body</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'X-Api-Key'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;api_key&gt;'</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.waiverforever.com/openapi/v2/waiverRequest/{waiver_request_id}'</span><span class="p">,</span> <span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'X-Api-Key'</span><span class="p">:</span> <span class="s">'&lt;api_key&gt;'</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.waiverforever.com/openapi/v2/waiverRequest/{waiver_request_id}'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+<span class="p">},</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+</code></pre>
+<p><code>GET /v2/waiverRequest/{waiver_request_id}</code></p>
+
+<p><em>Get a waiver request</em></p>
+
+<h3 id="getWaiverRequest-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>waiver_request_id</td>
+<td>path</td>
+<td>string</td>
+<td>true</td>
+<td>waiver request id</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">"note"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"accepted_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"request_link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://app.waiverforever.com/requested_waiver_group/JM2AJFe0Gq1594865417"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"normal"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"datetime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1594865417</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"waiver request name"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"contact_info"</span><span class="p">:</span><span class="w"> </span><span class="s2">"contact info"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JM2AJFe0Gq1594865417"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"collecting"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"template_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TutFEMdPgR1519947925"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id="getWaiverRequest-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>Successful request</td>
+<td>Inline</td>
+</tr>
+<tr>
+<td>403</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.3">Forbidden</a></td>
+<td>Invalid api key</td>
+<td>None</td>
+</tr>
+<tr>
+<td>404</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.4">Not Found</a></td>
+<td>Template not found</td>
+<td>None</td>
+</tr>
+</tbody></table>
+
+<h3 id="getWaiverRequest-responseschema">Response Schema</h3>
+
+<p>Status Code <strong>200</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>result</td>
+<td>boolean</td>
+<td>true</td>
+<td>request success or fail</td>
+</tr>
+<tr>
+<td>msg</td>
+<td>string</td>
+<td>true</td>
+<td>response message</td>
+</tr>
+<tr>
+<td>data</td>
+<td><a href="#schemawaiverrequest">WaiverRequest</a></td>
+<td>true</td>
+<td>Waiver Request</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+You can use search waiver API to archive waivers in the specific request with parameter `request_id`.
+</aside>
+<h2 id='edit-waiver-request'>Edit Waiver Request</h2>
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl -X POST https://api.waiverforever.com/openapi/v2/waiverRequest/<span class="o">{</span>waiver_request_id<span class="o">}</span> <span class="se">\</span>
+  -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'X-Api-Key: &lt;api_key&gt;'</span> <span class="se">\</span>
+  -d <span class="s1">'{
+    "name": "waiver request name new",
+    "size": 2,
+    "note": "note new",
+    "contact_info": "contact info new",
+}'</span>
+</code></pre><pre class="highlight javascript tab-javascript--nodejs"><code><span class="kr">const</span> <span class="nx">fetch</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'node-fetch'</span><span class="p">);</span>
+
+<span class="kr">const</span> <span class="nx">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span><span class="p">:</span><span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'X-Api-Key'</span><span class="p">:</span> <span class="s1">'&lt;api_key&gt;'</span>
+<span class="p">};</span>
+
+<span class="kr">const</span> <span class="nx">inputBody</span> <span class="o">=</span> <span class="s2">`{
+    "name": "waiver request name new",
+    "size": 2,
+    "note": "note new",
+    "contact_info": "contact info new"
+}`</span><span class="p">;</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="s1">'https://api.waiverforever.com/openapi/v2/waiverRequest/{waiver_request_id}'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
+  <span class="na">body</span><span class="p">:</span> <span class="nx">inputBody</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="nx">headers</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">body</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'X-Api-Key'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;api_key&gt;'</span>
+<span class="p">}</span>
+
+<span class="n">params</span> <span class="o">=</span><span class="p">{</span>
+    <span class="s2">"name"</span><span class="o">=&gt;</span> <span class="s2">"waiver request name new"</span><span class="p">,</span>
+    <span class="s2">"size"</span><span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">"note"</span><span class="o">=&gt;</span> <span class="s2">"note new"</span><span class="p">,</span>
+    <span class="s2">"contact_info"</span><span class="o">=&gt;</span> <span class="s2">"contact info new"</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">post</span> <span class="s1">'https://api.waiverforever.com/openapi/v2/waiverRequest/{waiver_request_id}'</span><span class="p">,</span> <span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'X-Api-Key'</span><span class="p">:</span> <span class="s">'&lt;api_key&gt;'</span>
+<span class="p">}</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"name"</span><span class="p">:</span> <span class="s">"waiver request name new"</span><span class="p">,</span>
+    <span class="s">"size"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s">"note"</span><span class="p">:</span> <span class="s">"note new"</span><span class="p">,</span>
+    <span class="s">"contact_info"</span><span class="p">:</span> <span class="s">"contact info new"</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://api.waiverforever.com/openapi/v2/waiverRequest/{waiver_request_id}'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+</code></pre>
+<p><code>POST /v2/waiverRequest/{waiver_request_id}</code></p>
+
+<p><em>Edit waiver request</em></p>
+
+<h3 id="editWaiverRequest-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>waiver_request_id</td>
+<td>path</td>
+<td>string</td>
+<td>true</td>
+<td>waiver request id</td>
+</tr>
+<tr>
+<td>name</td>
+<td>body</td>
+<td>string</td>
+<td>true</td>
+<td>request name</td>
+</tr>
+<tr>
+<td>size</td>
+<td>body</td>
+<td>int</td>
+<td>true</td>
+<td>request size. between 0 and 1000</td>
+</tr>
+<tr>
+<td>note</td>
+<td>body</td>
+<td>string</td>
+<td>true</td>
+<td>request note</td>
+</tr>
+<tr>
+<td>contact_info</td>
+<td>body</td>
+<td>string</td>
+<td>true</td>
+<td>request contact info</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">"note new"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"accepted_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"request_link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://app.waiverforever.com/requested_waiver_group/JM2AJFe0Gq1594865417"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"normal"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"datetime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1594865417</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"waiver request name new"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"contact_info"</span><span class="p">:</span><span class="w"> </span><span class="s2">"contact info new"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JM2AJFe0Gq1594865417"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"collecting"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"template_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TutFEMdPgR1519947925"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id="editWaiverRequest-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>Successful request</td>
+<td>Inline</td>
+</tr>
+<tr>
+<td>403</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.3">Forbidden</a></td>
+<td>Invalid api key</td>
+<td>None</td>
+</tr>
+<tr>
+<td>404</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.4">Not Found</a></td>
+<td>Template not found</td>
+<td>None</td>
+</tr>
+</tbody></table>
+
+<h3 id="editWaiverRequest-responseschema">Response Schema</h3>
+
+<p>Status Code <strong>200</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>result</td>
+<td>boolean</td>
+<td>true</td>
+<td>request success or fail</td>
+</tr>
+<tr>
+<td>msg</td>
+<td>string</td>
+<td>true</td>
+<td>response message</td>
+</tr>
+<tr>
+<td>data</td>
+<td><a href="#schemawaiverrequest">WaiverRequest</a></td>
+<td>true</td>
+<td>Waiver Request</td>
+</tr>
+</tbody></table>
+<h2 id='list-waiver-requests'>List Waiver Requests</h2>
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl -X GET https://api.waiverforever.com/openapi/v2/waiverRequests?template_id<span class="o">=</span>TutFEMdPgR1519947925&amp;name<span class="o">=</span>open&amp;status<span class="o">=</span>collecting&amp;start_timestamp<span class="o">=</span>1593532800&amp;end_timestamp<span class="o">=</span>1595174400&amp;page<span class="o">=</span>1&amp;per_page<span class="o">=</span>5 <span class="se">\</span>
+  -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+  -H <span class="s1">'X-Api-Key: &lt;api_key&gt;'</span>
+</code></pre><pre class="highlight javascript tab-javascript--nodejs"><code><span class="kr">const</span> <span class="nx">fetch</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'node-fetch'</span><span class="p">);</span>
+
+<span class="kr">const</span> <span class="nx">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span><span class="p">:</span><span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'X-Api-Key'</span><span class="p">:</span> <span class="s1">'&lt;api_key&gt;'</span>
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="s1">'https://api.waiverforever.com/openapi/v2/waiverRequests?template_id=TutFEMdPgR1519947925&amp;name=open&amp;status=collecting&amp;start_timestamp=1593532800&amp;end_timestamp=1595174400&amp;page=1&amp;per_page=5'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="nx">headers</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">body</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'X-Api-Key'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;api_key&gt;'</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.waiverforever.com/openapi/v2/waiverRequests?template_id=TutFEMdPgR1519947925&amp;name=open&amp;status=collecting&amp;start_timestamp=1593532800&amp;end_timestamp=1595174400&amp;page=1&amp;per_page=5'</span><span class="p">,</span> <span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'X-Api-Key'</span><span class="p">:</span> <span class="s">'&lt;api_key&gt;'</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.waiverforever.com/openapi/v2/waiverRequests?template_id=TutFEMdPgR1519947925&amp;name=open&amp;status=collecting&amp;start_timestamp=1593532800&amp;end_timestamp=1595174400&amp;page=1&amp;per_page=5'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+<span class="p">},</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+</code></pre>
+<p><code>GET /v2/waiverRequests</code></p>
+
+<p><em>List waiver requests</em></p>
+
+<h3 id="listWaiverRequest-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>template_id</td>
+<td>query</td>
+<td>string</td>
+<td>true</td>
+<td>request template id</td>
+</tr>
+<tr>
+<td>name</td>
+<td>query</td>
+<td>string</td>
+<td>false</td>
+<td>name search term</td>
+</tr>
+<tr>
+<td>status</td>
+<td>query</td>
+<td>string</td>
+<td>false</td>
+<td>request status. possible values <code>collecting</code>, <code>accepted</code>.</td>
+</tr>
+<tr>
+<td>start_timestamp</td>
+<td>query</td>
+<td>int</td>
+<td>false</td>
+<td>start timestamp in seconds</td>
+</tr>
+<tr>
+<td>end_timestamp</td>
+<td>query</td>
+<td>int</td>
+<td>false</td>
+<td>end timestamp in seconds</td>
+</tr>
+<tr>
+<td>page</td>
+<td>query</td>
+<td>int</td>
+<td>false</td>
+<td>page index, default 1</td>
+</tr>
+<tr>
+<td>per_page</td>
+<td>query</td>
+<td>int</td>
+<td>false</td>
+<td>results per page, default 10</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"per_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"waiver_requests"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"B7Z3Z5pymj1594862535"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">"note"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"datetime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1594862535</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"template_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"request_link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://app.waiverforever.com/requested_waiver_group/B7Z3Z5pymj1594862535"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"contact_info"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c info"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"normal"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"collecting"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"accepted_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open api created 2"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<h3 id="listWaiverRequest-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>Successful request</td>
+<td>Inline</td>
+</tr>
+<tr>
+<td>403</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.3">Forbidden</a></td>
+<td>Invalid api key</td>
+<td>None</td>
+</tr>
+</tbody></table>
 <h1 id='schemas'>Schemas</h1><h2 id='response'>Response</h2>
 <p><a name="schemaresponse"></a></p>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
@@ -2495,8 +3521,10 @@ Waiver field `device`, `pictures` and `template_title` is not available in searc
       </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"opZTzJP2gI1504892592"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"device_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jing's iPhone"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"identifier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0D84EB79-68F5-4BAD-9344-262D3882C830"</span><span class="w">
+      </span><span class="s2">"identifier"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
   </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"tag1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"tag2"</span><span class="p">],</span><span class="w">
   </span><span class="s2">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.1.1.1"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"approved"</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -2574,6 +3602,18 @@ Waiver field `device`, `pictures` and `template_title` is not available in searc
 <td>string</td>
 <td>false</td>
 <td>ip</td>
+</tr>
+<tr>
+<td>note</td>
+<td>string</td>
+<td>true</td>
+<td>waiver note</td>
+</tr>
+<tr>
+<td>tags</td>
+<td>[sting]</td>
+<td>true</td>
+<td>waiver tags</td>
 </tr>
 <tr>
 <td>status</td>
@@ -3230,7 +4270,7 @@ Waiver field `device`, `pictures` and `template_title` is not available in searc
     </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"opZTzJP2gI1504892592"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"device_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jing's iPhone"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"identifier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0D84EB79-68F5-4BAD-9344-262D3882C830"</span><span class="w">
+    </span><span class="s2">"identifier"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre><h3 id='properties-19'>Properties</h3>
 <table><thead>
@@ -3269,7 +4309,92 @@ Waiver field `device`, `pictures` and `template_title` is not available in searc
 <td>identifier</td>
 <td>string</td>
 <td>true</td>
-<td>device identifier</td>
+<td>device identifier. should always be an empty string</td>
+</tr>
+</tbody></table>
+<h2 id='waiverrequest'>WaiverRequest</h2>
+<p><a name="schemawaiverrequest"></a></p>
+<pre class="highlight json tab-json"><code><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"B7Z3Z5pymj1594862535"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">"note"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"datetime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1594862535</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"template_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"request_link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://app.waiverforever.com/requested_waiver_group/B7Z3Z5pymj1594862535"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"contact_info"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c info"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"normal"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"collecting"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"accepted_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open api created 2"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='properties-20'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>true</td>
+<td>request id</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>true</td>
+<td>request name</td>
+</tr>
+<tr>
+<td>size</td>
+<td>int</td>
+<td>true</td>
+<td>request size</td>
+</tr>
+<tr>
+<td>note</td>
+<td>string</td>
+<td>true</td>
+<td>request note</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>true</td>
+<td>request type.  possible values <code>normal</code>, <code>anonymous</code></td>
+</tr>
+<tr>
+<td>contact_info</td>
+<td>string</td>
+<td>true</td>
+<td>contact info</td>
+</tr>
+<tr>
+<td>template_id</td>
+<td>string</td>
+<td>true</td>
+<td>template id of waiver request</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>true</td>
+<td>request status. possible values <code>collecting</code>, <code>accepted</code></td>
+</tr>
+<tr>
+<td>request_link</td>
+<td>string</td>
+<td>true</td>
+<td>request share link</td>
+</tr>
+<tr>
+<td>datetime</td>
+<td>int</td>
+<td>true</td>
+<td>created timestamp</td>
 </tr>
 </tbody></table>
 
