@@ -1,7 +1,7 @@
 ---
 title: WavierForever Open API v1.0.0
 language_tabs:
-  - shell: curl
+  - shell: cURL
   - javascript--nodejs: Node.js
   - ruby: Ruby
   - python: Python
