@@ -184,11 +184,11 @@ headers = {
 r = requests.get('https://api.waiverforever.com/openapi/v1/auth/userInfo', params={
 }, headers=headers)
 
-print r.json()
+print(r.json())
 
 ```
 
-`GET /auth/userInfo`
+`GET /openapi/v1/auth/userInfo`
 
 *Get user info for the API key*
 
@@ -294,11 +294,11 @@ headers = {
 r = requests.get('https://api.waiverforever.com/openapi/v1/webhooks/', params={
 }, headers=headers)
 
-print r.json()
+print(r.json())
 
 ```
 
-`GET /webhooks/`
+`GET /openapi/v1/webhooks/`
 
 *Get all webhooks subscriptions.*
 
@@ -333,7 +333,7 @@ curl -X POST https://api.waiverforever.com/openapi/v1/webhooks/ \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'X-Api-Key: <api_key>' \
-  -d $'{
+  -d '{
   "target_url": "",
   "template_id": "",
   "event": "new_waiver_signed"
@@ -358,7 +358,10 @@ fetch('https://api.waiverforever.com/openapi/v1/webhooks/', {
   body: inputBody,
   headers: headers
 }).then(res => res.json())
-  .then(body => console.log(body));
+  .then(body => console.log(body))
+  .catch(error => {
+    console.log(error);
+  })
 ```
 
 ```ruby
@@ -371,14 +374,14 @@ headers = {
   'X-Api-Key' => '<api_key>'
 }
 
-params = {
+payload = {
   'event' => 'new_waiver_signed',
   'template_id' => '',
   'target_url' => ''
 }
 
 
-result = RestClient.post 'https://api.waiverforever.com/openapi/v1/webhooks/', params.to_json, headers
+result = RestClient.post 'https://api.waiverforever.com/openapi/v1/webhooks/', payload.to_json, headers
 
 p JSON.parse(result)
 ```
@@ -398,11 +401,11 @@ data = {
 
 r = requests.post('https://api.waiverforever.com/openapi/v1/webhooks/', json=data, headers=headers)
 
-print r.json()
+print(r.json())
 
 ```
 
-`POST /webhooks/`
+`POST /openapi/v1/webhooks/`
 
 *Subscribe an event.*
 
@@ -497,11 +500,11 @@ headers = {
 
 r = requests.delete('https://api.waiverforever.com/openapi/v1/webhooks/{subscription_id}/', headers=headers)
 
-print r.json()
+print(r.json())
 
 ```
 
-`DELETE /webhooks/{subscription_id}/`
+`DELETE /openapi/v1/webhooks/{subscription_id}/`
 
 *Unsubscribe an event.*
 
@@ -593,11 +596,11 @@ headers = {
 r = requests.get('https://api.waiverforever.com/openapi/v1/templates', params={
 }, headers=headers)
 
-print r.json()
+print(r.json())
 
 ```
 
-*GET /templates*
+`GET /openapi/v1/templates`
 
 > Example responses
 
@@ -686,11 +689,11 @@ headers = {
 r = requests.get('https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>', params={
 }, headers=headers)
 
-print r.json()
+print(r.json())
 
 ```
 
-`GET /template/{template_id}/requestWaiver?ttl=<ttl>`
+`GET /openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>`
 
 *Request a waiver to sign*
 
@@ -812,11 +815,11 @@ headers = {
 r = requests.get('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}', params={
 }, headers=headers)
 
-print r.json()
+print(r.json())
 
 ```
 
-`GET /waiver/{waiver_id}`
+`GET /openapi/v1/waiver/{waiver_id}`
 
 *Get a signed waiver*
 
@@ -1038,11 +1041,11 @@ headers = {
 r = requests.get('https://api.waiverforever.com/openapi/v1/waiver/tracking/{tracking_id}', params={
 }, headers=headers)
 
-print r.json()
+print(r.json())
 
 ```
 
-`GET /waiver/tracking_id/{tracking_id}`
+`GET /openapi/v1/waiver/tracking_id/{tracking_id}`
 
 *Query signed waiver by tracking id*
 
@@ -1089,6 +1092,7 @@ data|[Waiver](#schemawaiver)|true|Signed Waiver
 curl -X POST https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/note' \
   -H 'Accept: application/json' \
   -H 'X-Api-Key: <api_key>' \
+  -H 'Content-Type': 'application/json' \
   -d '{
     "note":"the note"
   }'
@@ -1099,6 +1103,7 @@ const fetch = require('node-fetch');
 
 const headers = {
   'Accept':'application/json',
+  'Content-Type': 'application/json',
   'X-Api-Key': '<api_key>'
 };
 
@@ -1123,14 +1128,15 @@ require 'json'
 
 headers = {
   'Accept' => 'application/json',
+  'Content-Type' => 'application/json',
   'X-Api-Key' => '<api_key>'
 }
 
-params ={
+payload ={
     "note"=> "the note"
 }
 
-result = RestClient.post 'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/note', headers
+result = RestClient.post 'https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/note', payload.to_json, headers
 
 p JSON.parse(result)
 ```
@@ -1139,20 +1145,21 @@ p JSON.parse(result)
 import requests
 headers = {
   'Accept': 'application/json',
+  'Content-Type': 'application/json',
   'X-Api-Key': '<api_key>'
 }
 
-params = {
+data = {
     "note": "the note"
 }
 
-r = requests.post('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/note', params=params, headers=headers)
+r = requests.post('https://api.waiverforever.com/openapi/v1/waiver/{waiver_id}/note', json=data, headers=headers)
 
-print r.json()
+print(r.json())
 
 ```
 
-`POST /waiver/{waiver_id}/note`
+`POST /openapi/v1/waiver/{waiver_id}/note`
 
 *Update waiver note*
 
@@ -1236,7 +1243,7 @@ print r.content
 
 ```
 
-`GET /waiver/{waiver_id}/pdf`
+`GET /openapi/v1/waiver/{waiver_id}/pdf`
 
 *Download waiver in pdf*
 
@@ -1399,7 +1406,7 @@ headers = {
   'X-Api-Key' => '<api_key>'
 }
 
-params = {
+payload = {
   'search_term' => 'query string',
   'start_timestamp' => 1400000000,
   'end_timestamp' => 1500000000,
@@ -1408,7 +1415,7 @@ params = {
   "template_ids" => ["kkgVVsMpGx1455624443"]
 }
 
-result = RestClient.post 'https://api.waiverforever.com/openapi/v1/waiver/search', params.to_json, headers
+result = RestClient.post 'https://api.waiverforever.com/openapi/v1/waiver/search', payload.to_json, headers
 
 p result
 ```
@@ -1436,7 +1443,7 @@ print r.content
 
 ```
 
-`POST /waiver/search`
+`POST /openapi/v1/waiver/search`
 
 *search waiver.*
 
@@ -1558,6 +1565,7 @@ datetime|int|true|created timestamp
 # You can also use wget
 curl -X POST https://api.waiverforever.com/openapi/v2/waiverRequest \
   -H 'Accept: application/json' \
+  -H 'Content-Type': 'application/json' \
   -H 'X-Api-Key: <api_key>' \
   -d '{
     "name": "waiver request name",
@@ -1574,6 +1582,7 @@ const fetch = require('node-fetch');
 
 const headers = {
   'Accept':'application/json',
+  'Content-Type': 'application/json',
   'X-Api-Key': '<api_key>'
 };
 
@@ -1603,10 +1612,11 @@ require 'json'
 
 headers = {
   'Accept' => 'application/json',
+  'Content-Type' => 'application/json',
   'X-Api-Key' => '<api_key>'
 }
 
-params ={
+payload ={
     "name"=> "waiver request name",
     "size"=> 1,
     "note"=> "note",
@@ -1615,7 +1625,7 @@ params ={
     "template_id"=> "TutFEMdPgR1519947925"
 }
 
-result = RestClient.post 'https://api.waiverforever.com/openapi/v2/waiverRequest', headers
+result = RestClient.post 'https://api.waiverforever.com/openapi/v2/waiverRequest',payload.to_json, headers
 
 p JSON.parse(result)
 ```
@@ -1624,10 +1634,11 @@ p JSON.parse(result)
 import requests
 headers = {
   'Accept': 'application/json',
+  'Content-Type': 'application/json',
   'X-Api-Key': '<api_key>'
 }
 
-params = {
+data = {
     "name": "waiver request name",
     "size": 1,
     "note": "note",
@@ -1636,13 +1647,13 @@ params = {
     "template_id": "TutFEMdPgR1519947925"
 }
 
-r = requests.post('https://api.waiverforever.com/openapi/v2/waiverRequest', params=params, headers=headers)
+r = requests.post('https://api.waiverforever.com/openapi/v2/waiverRequest', json=data, headers=headers)
 
-print r.json()
+print(r.json())
 
 ```
 
-`POST /v2/waiverRequest`
+`POST /openapi/v2/waiverRequest`
 
 *Create waiver request*
 
@@ -1747,11 +1758,11 @@ headers = {
 r = requests.get('https://api.waiverforever.com/openapi/v2/waiverRequest/{waiver_request_id}', params={
 }, headers=headers)
 
-print r.json()
+print(r.json())
 
 ```
 
-`GET /v2/waiverRequest/{waiver_request_id}`
+`GET /openapi/v2/waiverRequest/{waiver_request_id}`
 
 *Get a waiver request*
 
@@ -1809,6 +1820,7 @@ You can use search waiver API to archive waivers in the specific request with pa
 # You can also use wget
 curl -X POST https://api.waiverforever.com/openapi/v2/waiverRequest/{waiver_request_id} \
   -H 'Accept: application/json' \
+  -H 'Content-Type': 'application/json' \
   -H 'X-Api-Key: <api_key>' \
   -d '{
     "name": "waiver request name new",
@@ -1823,6 +1835,7 @@ const fetch = require('node-fetch');
 
 const headers = {
   'Accept':'application/json',
+  'Content-Type': 'application/json',
   'X-Api-Key': '<api_key>'
 };
 
@@ -1850,17 +1863,18 @@ require 'json'
 
 headers = {
   'Accept' => 'application/json',
+  'Content-Type' => 'application/json',
   'X-Api-Key' => '<api_key>'
 }
 
-params ={
+payload ={
     "name"=> "waiver request name new",
     "size"=> 2,
     "note"=> "note new",
     "contact_info"=> "contact info new"
 }
 
-result = RestClient.post 'https://api.waiverforever.com/openapi/v2/waiverRequest/{waiver_request_id}', headers
+result = RestClient.post 'https://api.waiverforever.com/openapi/v2/waiverRequest/{waiver_request_id}',payload.to_json, headers
 
 p JSON.parse(result)
 ```
@@ -1869,23 +1883,24 @@ p JSON.parse(result)
 import requests
 headers = {
   'Accept': 'application/json',
+  'Content-Type': 'application/json',
   'X-Api-Key': '<api_key>'
 }
 
-params = {
+data = {
     "name": "waiver request name new",
     "size": 2,
     "note": "note new",
     "contact_info": "contact info new"
 }
 
-r = requests.post('https://api.waiverforever.com/openapi/v2/waiverRequest/{waiver_request_id}', params=params, headers=headers)
+r = requests.post('https://api.waiverforever.com/openapi/v2/waiverRequest/{waiver_request_id}', json=data, headers=headers)
 
-print r.json()
+print(r.json())
 
 ```
 
-`POST /v2/waiverRequest/{waiver_request_id}`
+`POST /openapi/v2/waiverRequest/{waiver_request_id}`
 
 *Edit waiver request*
 
@@ -1989,11 +2004,11 @@ headers = {
 r = requests.get('https://api.waiverforever.com/openapi/v2/waiverRequests?template_id=TutFEMdPgR1519947925&name=open&status=collecting&start_timestamp=1593532800&end_timestamp=1595174400&page=1&per_page=5', params={
 }, headers=headers)
 
-print r.json()
+print(r.json())
 
 ```
 
-`GET /v2/waiverRequests`
+`GET /openapi/v2/waiverRequests`
 
 *List waiver requests*
 
