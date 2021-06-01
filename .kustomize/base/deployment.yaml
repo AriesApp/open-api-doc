@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: open-api-doc
+spec:
+  selector:
+    matchLabels:
+      app: open-api-doc
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: open-api-doc
+    spec:
+      containers:
+      - name: qs3
+        image: 288298902208.dkr.ecr.us-east-1.amazonaws.com/ariesapp/open-api-doc
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: 200m
+            memory: 500Mi
+          requests:
+            cpu: 50m
+            memory: 200Mi
+        ports:
+        - containerPort: 80
+          name: http

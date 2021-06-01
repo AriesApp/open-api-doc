@@ -1,0 +1,17 @@
+apiVersion: skaffold/v2beta10
+kind: Config
+build:
+  artifacts:
+  - image: 288298902208.dkr.ecr.us-east-1.amazonaws.com/ariesapp/open-api-doc
+  tagPolicy:
+    envTemplate:
+      template: "{{.VERSION}}"
+  local:
+    useDockerCLI: true
+    useBuildkit: true
+profiles:
+- name: dev
+  deploy:
+    kustomize:
+      paths:
+        - .kustomize/overlays/development

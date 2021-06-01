@@ -79,7 +79,7 @@ We will implement Static Webhooks in the future.
 
 Base URLs:
 
-* <a href="https://api.waiverforever.com/openapi/v1">https://api.waiverforever.com/openapi/v1</a>
+* <a href="https://api.waiverforever.com">https://api.waiverforever.com</a>
 
 The whole flow is dead simple ->
 

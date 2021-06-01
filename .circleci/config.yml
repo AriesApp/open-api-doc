@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  deploy:
+  deploy-to-prod:
     docker:
       - image: circleci/ruby:2.7-node
     steps:
@@ -15,12 +15,106 @@ jobs:
             gem install bundler:1.17.0
             bundle install
             ./deploy.sh
+  build:
+    parameters:
+      aws-access-key-id:
+        type: env_var_name
+        default: AWS_ACCESS_KEY_ID
+      aws-secret-access-key:
+        type: env_var_name
+        default: AWS_SECRET_ACCESS_KEY
+      version:
+        type: string
+        default: ${CIRCLE_BRANCH}-${CIRCLE_SHA1:0:7}
+    docker:
+      - image: 288298902208.dkr.ecr.us-east-1.amazonaws.com/ariesapp/wf-builder:v1.1.0
+        aws_auth:
+          aws_access_key_id: $AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+    steps:
+      - setup_remote_docker:
+          version: 19.03.13
+          docker_layer_caching: true
+      - checkout
+      - run:
+          name: aws auth
+          command: $(aws ecr get-login --no-include-email --region us-east-1)
+      - run:
+          name: skaffold build
+          command: version=<<parameters.version>> && export VERSION=${version/\//-} && skaffold build
+  deploy-to-k8s-dev:
+    parameters:
+      aws-access-key-id:
+        type: env_var_name
+        default: AWS_ACCESS_KEY_ID
+      aws-secret-access-key:
+        type: env_var_name
+        default: AWS_SECRET_ACCESS_KEY
+      k8s-server-ca:
+        type: env_var_name
+        default: K8S_SERVER_CA
+      k8s-client-ca:
+        type: env_var_name
+        default: K8S_CLIENT_CA
+      k8s-client-key:
+        type: env_var_name
+        default: K8S_CLIENT_KEY
+      k8s-cluster-nick:
+        type: env_var_name
+        default: K8S_CLUSTER_NICK
+      k8s-server:
+        type: env_var_name
+        default: K8S_SERVER
+      k8s-user-nick:
+        type: env_var_name
+        default: K8S_USER_NICK
+      k8s-username:
+        type: env_var_name
+        default: K8S_USERNAME
+      k8s-password:
+        type: env_var_name
+        default: K8S_PASSWORD
+      k8s-context-name:
+        type: env_var_name
+        default: K8S_CONTEXT_NAME
+      version:
+        type: string
+        default: ${CIRCLE_BRANCH}-${CIRCLE_SHA1:0:7}
+    docker:
+      - image: 288298902208.dkr.ecr.us-east-1.amazonaws.com/ariesapp/wf-builder:v1.1.0
+        aws_auth:
+          aws_access_key_id: $AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+    steps:
+      - checkout
+      - run:
+          name: aws auth
+          command: $(aws ecr get-login --no-include-email --region us-east-1)
+      - run:
+          name: skaffold deploy
+          command: |
+            envsubst < /root/k8s_config.tmp > /root/k8s_config
+            export KUBECONFIG=/root/k8s_config
+            kubectl config use-context $K8S_CONTEXT_NAME
+            version=<<parameters.version>>
+            export VERSION=${version/\//-}
+            skaffold deploy -i 288298902208.dkr.ecr.us-east-1.amazonaws.com/ariesapp/open-api-doc:$VERSION -p dev -n development
 
 workflows:
     open-api-doc:
       jobs:
-        - deploy:
+        - deploy-to-prod:
             filters:
               branches:
                 only:
                   - master
+        - build:
+            context: wf-build-base
+        - deploy-to-k8s-dev:
+            context: wf-build-base
+            requires:
+              - hold-deploy-to-k8s-dev
+        - hold-deploy-to-k8s-dev:
+            type: approval
+            requires:
+              - build

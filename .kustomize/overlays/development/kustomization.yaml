@@ -1,0 +1,6 @@
+commonLabels:
+  variant: dev
+bases:
+  - ../../base
+resources:
+  - ingress.yaml
