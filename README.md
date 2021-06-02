@@ -8,7 +8,7 @@
 
 ### Install
 
-1. Install [Ruby 2.3.1 or newer](https://www.ruby-lang.org/)
+1. Install [Ruby 2.5 or newer](https://www.ruby-lang.org/)
 2. `gem install bundler`
 2. Clone repo and `cd`
     + Run `bundle install`

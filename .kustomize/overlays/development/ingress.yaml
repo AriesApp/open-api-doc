@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: open-api-doc
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: open-api-doc.dev-waiverforeverk8s.com
+    http:
+      paths:
+      - backend:
+          serviceName: open-api-doc
+          servicePort: 80

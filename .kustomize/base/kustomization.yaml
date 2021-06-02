@@ -1,0 +1,5 @@
+commonLabels:
+  app: open-api-doc
+resources:
+  - deployment.yaml
+  - service.yaml
