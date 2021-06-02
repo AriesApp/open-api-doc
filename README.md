@@ -1,8 +1,10 @@
-# WaiverForever OpenAPI spec
+# WaiverForever OpenAPI SPEC
 
 ## Links
 
 - Documentation: https://ariesapp.github.io/open-api-doc/
+- PROD: https://open-api-doc.dev-waiverforeverk8s.com
+- DEV: https://open-api-doc.dev-waiverforeverk8s.com
 
 ## Working on specification
 
