@@ -2,9 +2,7 @@
 
 ## Links
 
-- Documentation: https://ariesapp.github.io/open-api-doc/
-- PROD: https://open-api-doc.dev-waiverforeverk8s.com
-- DEV: https://open-api-doc.dev-waiverforeverk8s.com
+- Documentation: https://docs.waiverforever.com/
 
 ## Working on specification
 
