@@ -7,7 +7,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "d8:39:d0:0a:48:36:ac:9a:d6:e2:a8:8b:84:03:08:8f"
+            - "SHA256:Bz5mcHdT1W3YtCMiHXV0s9zx11DYTViu+iMd6It2oKk plucury@waiverforever.com"
       - checkout
       - run:
           name: deploy
