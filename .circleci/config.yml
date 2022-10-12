@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   deploy-to-prod:
     docker:
-      - image: circleci/ruby:2.7-node
+      - image: cimg/ruby:2.7-node
     steps:
       - add_ssh_keys:
           fingerprints:
