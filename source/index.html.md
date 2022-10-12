@@ -1045,7 +1045,7 @@ print(r.json())
 
 ```
 
-`GET /openapi/v1/waiver/tracking_id/{tracking_id}`
+`GET /openapi/v1/waiver/tracking/{tracking_id}`
 
 *Query signed waiver by tracking id*
 
