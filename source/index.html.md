@@ -760,8 +760,8 @@ device|[Device](#schemadevice)|false|signing device
 note|string|true|waiver note
 tags|[sting]|true|waiver tags
 ip|string|false|ip
-request_id|string|false|waiver request id, should be `''` if not existing
-tracking_id|string|false|waiver tracking id, should be `''` if not existing
+request_id|string|false|waiver request id, should be `''` if not exists
+tracking_id|string|false|waiver tracking id, should be `''` if not exists
 status|string|true|waiver status, possible values `pending`, `approved`, `revoked`
 
 ## Get Signed Waiver
@@ -2290,6 +2290,7 @@ received_at|integer|true|server received timestamp, should be 0 if waiver status
 signed_at|integer|true|waiver signed timestamp
 pictures|[[Picture](#schemapicture)]|false|attached pictures
 tracking_id|string|false|tracking id
+request_id|string|false|request id
 data|[[Field](#schemafield)]|false|filled fields
 ip|string|false|ip
 note|string|true|waiver note
