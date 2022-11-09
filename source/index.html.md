@@ -760,6 +760,8 @@ device|[Device](#schemadevice)|false|signing device
 note|string|true|waiver note
 tags|[sting]|true|waiver tags
 ip|string|false|ip
+request_id|string|false|waiver request id, should be `''` if not exists
+tracking_id|string|false|waiver tracking id, should be `''` if not exists
 status|string|true|waiver status, possible values `pending`, `approved`, `revoked`
 
 ## Get Signed Waiver
@@ -952,6 +954,7 @@ waiver_id|path|string|true|waiver id
   "template_title": "Bike Rental Waiver",
   "template_id": "JwIvKHHfW81493594388",
   "tracking_id": "D6RkEV1yUK1512568456",
+  "request_id": "P4g4R0nmkY1652897359",
   "received_at": 1510127625,
   "signed_at": 1510127615,
   "note": "",
@@ -1492,6 +1495,7 @@ request_id|body|string|false|waiver request id
                 "template_title": null,
                 "template_id": "igcJYpG2KT1381868360",
                 "tracking_id": "",
+                "request_id": "",
                 "has_pdf": true,
                 "status": "approved",
                 "id": "ChPV4IMuVm1461130523",
@@ -2286,6 +2290,7 @@ received_at|integer|true|server received timestamp, should be 0 if waiver status
 signed_at|integer|true|waiver signed timestamp
 pictures|[[Picture](#schemapicture)]|false|attached pictures
 tracking_id|string|false|tracking id
+request_id|string|false|request id
 data|[[Field](#schemafield)]|false|filled fields
 ip|string|false|ip
 note|string|true|waiver note
