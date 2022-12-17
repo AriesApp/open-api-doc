@@ -93,9 +93,9 @@ def webhook():
     app_secret = "<your app_secret>"
     body = request.get_data()
     signed_payload = "{},{},{}".format(t, body.decode(), app_secret)
-    my_sign = hashlib.sha256(s.encode("utf-8")).hexdigest()
+    my_signature = hashlib.sha256(s.encode("utf-8")).hexdigest()
 
-    if my_sign == signature_in_header:
+    if signature == signature_in_header:
         # do something
         return {}
     else:
