@@ -281,6 +281,7 @@ id|string|true|subscription id
 event|string|true|event name
 template_id|string|true|template id
 target_url|string|true|target url
+secret_key|string|true|secret key
 
 ## Get All Subscriptions
 
@@ -352,7 +353,8 @@ print(r.json())
     "id": "subscription id",
     "event": "event name",
     "template_id": "template id",
-    "target_url": "target url"
+    "target_url": "target url",
+    "secret_key": "secret_key"
   }]
 }
 ```
@@ -2147,6 +2149,7 @@ id|string|true|subscription id
 event|string|true|event name
 template_id|string|true|template id
 target_url|string|true|target url
+secret_key|string|true|secret key
 
 ## Template
 
