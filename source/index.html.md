@@ -63,6 +63,46 @@ Please note that webhooks work on the template/waiver level.
 
 We'll support more webhook events in the future.
 
+#### Check the webhook signatures
+
+Verify the events that sends to your webhook endpoints.
+
+We sign the webhook events it sends to your endpoints by including a signature in each event’s `X-WaiverForever-Signature` header. This allows you to verify that the events were sent by us, not by a third party. You can verify signatures manually using your own solution.
+Before you can verify signatures, you need to retrieve your endpoint’s app_secret from your Dashboard’s Webhooks settings.
+
+**Verifying signatures manually**
+
+The Signature header included in each signed event contains a timestamp and one signature. The timestamp is prefixed by `t=`, and signature is prefixed by `signature=`. so the whole header looks like this: `X-Waiverforever-Signature: t=1671097440,signature=81e018cc8b10a4c7c46790d088c81445bc77861cc4f9b1d4dcd72f734289b837`
+
+In short,the steps are:
+
+1. Extract the timestamp and signatures from the header
+2. Prepare the signed_payload string
+3. Generate a signature using your app_secret and the signed_payload string
+4. Compare the generated signature with the signature from the header
+
+we provide a sample python flask code for you to verify the signature
+
+```python
+@app.route("/api/v1/webhook", methods=["POST"])
+def webhook():
+    header = request.headers.get("X-Waiverforever-Signature")
+    t = header.split(",")[0].removeprefix("t=")
+    signature_in_header = header.split(",")[1].removeprefix("signature=")
+
+    app_secret = "<your app_secret>"
+    body = request.get_data()
+    signed_payload = "{},{},{}".format(t, body.decode(), app_secret)
+    my_signature = hashlib.sha256(s.encode("utf-8")).hexdigest()
+
+    if signature == signature_in_header:
+        # do something
+        return {}
+    else:
+        raise Exception("signature not match")
+    return {}
+```
+
 #### Dynamic Webhooks
 
 Dynamic webhooks provide maximum flexibility to manage your events. You can subscribe/unsubscribe to dynamic webhooks at any time.
@@ -241,6 +281,7 @@ id|string|true|subscription id
 event|string|true|event name
 template_id|string|true|template id
 target_url|string|true|target url
+secret_key|string|true|secret key
 
 ## Get All Subscriptions
 
@@ -312,7 +353,8 @@ print(r.json())
     "id": "subscription id",
     "event": "event name",
     "template_id": "template id",
-    "target_url": "target url"
+    "target_url": "target url",
+    "secret_key": "secret_key"
   }]
 }
 ```
@@ -2107,6 +2149,7 @@ id|string|true|subscription id
 event|string|true|event name
 template_id|string|true|template id
 target_url|string|true|target url
+secret_key|string|true|secret key
 
 ## Template
 
