@@ -57,7 +57,7 @@ Second, we use webhooks to communicate with you.
 
 Webhook is a commonly used technique that allows you to build or set up apps which subscribe to certain events on WaiverForever.
 
-For example, when a `new_waiver_signed` event is triggered, aka a new waiver is signed, we'll send an HTTP POST payload with the waiver data to the webhook's target URL.
+For example, when a `new_waiver_submitted` event is triggered, aka a new waiver is signed, we'll send an HTTP POST payload with the waiver data to the webhook's target URL.
 
 Please note that webhooks work on the template/waiver level.
 
@@ -136,7 +136,7 @@ Your App                     WavierForever                             User
 |---------------------------------->|
 |3) Subscribe template event        |                                   |
 | with your target url.             |
-| e.g. `new_waiver_signed`          |                                   |
+| e.g. `new_waiver_submitted`          |                                   |
 |                                   |<----------------------------------|
 |                                   |4) Sign and upload a waiver        |
 |<----------------------------------|                                   |
@@ -271,7 +271,13 @@ Current support events:
 
 Event|Payload Schema|Description
 ---|---|---|
-`new_waiver_signed`|[Waiver](#schemawaiver)|a new waiver is signed
+`new_waiver_submitted`|[Event](#schemaevent)|a new waiver is submitted
+`new_waiver_accepted`|[Event](#schemaevent)|a new waiver is accepted
+`pdf_generated`|[Event](#schemaevent)|a new waiver is signed and waiver pdf is generated
+
+<aside class="notice">
+  Event `new_waiver_signed` is deprecated. You can still using old webhooks with `new_waiver_signed` event, which is equal to event `pdf_generated`.
+</aside>
 
 ## Subscription Resource
 
@@ -378,7 +384,7 @@ curl -X POST https://api.waiverforever.com/openapi/v1/webhooks/ \
   -d '{
   "target_url": "",
   "template_id": "",
-  "event": "new_waiver_signed"
+  "event": "new_waiver_submitted"
 }'
 ```
 
@@ -387,7 +393,7 @@ const fetch = require('node-fetch');
 const inputBody = `{
   'target_url': '',
   'template_id': '',
-  'event': 'new_waiver_signed'
+  'event': 'new_waiver_submitted'
 }`;
 const headers = {
   'Content-Type':'application/json',
@@ -417,7 +423,7 @@ headers = {
 }
 
 payload = {
-  'event' => 'new_waiver_signed',
+  'event' => 'new_waiver_submitted',
   'template_id' => '',
   'target_url' => ''
 }
@@ -438,7 +444,7 @@ headers = {
 data = {
   'target_url': '',
   'template_id': '',
-  'event': 'new_waiver_signed'
+  'event': 'new_waiver_submitted'
 }
 
 r = requests.post('https://api.waiverforever.com/openapi/v1/webhooks/', json=data, headers=headers)
@@ -1232,6 +1238,78 @@ Name|Type|Required|Description
 result|boolean|true|request success or fail
 msg|string|true|response message
 
+## Accept Waiver
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X POST https://api.waiverforever.com/openapi/v2/waiver/{waiver_id}/accept \
+  -H 'Accept: */*' \
+  -H 'X-Api-Key: <api_key>'
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'*/*',
+  'X-Api-Key': '<api_key>'
+};
+
+fetch('https://api.waiverforever.com/openapi/v2/waiver/{waiver_id}/accept', {
+  method: 'POST',
+  headers: headers
+}).then(body => console.log(body))
+  .catch(error => {
+    console.log(error);
+  });
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => '*/*',
+  'X-Api-Key' => '<api_key>'
+}
+
+result = RestClient.post 'https://api.waiverforever.com/openapi/v2/waiver/{waiver_id}/accept', headers
+
+p result
+```
+
+```python
+import requests
+headers = {
+  'Accept': '*/*',
+  'X-Api-Key': '<api_key>'
+}
+
+r = requests.post('https://api.waiverforever.com/openapi/v2/waiver/{waiver_id}/accept', params={
+}, headers=headers)
+
+print r.content
+
+```
+
+`POST https://api.waiverforever.com/openapi/v2/waiver/{waiver_id}/accept`
+
+*Accept waiver*
+
+<h3 id="acceptWaiver-responses">Responses</h3>
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|binary
+403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
+404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Wavier not found|None
+
+<aside class="notice">
+  only waiver in pending status can be accepted.
+</aside>
+
 ## Download Waiver PDF
 
 > Code samples
@@ -1507,7 +1585,8 @@ search waiver with keywords.
   "note": "<waiver note>",
   "tags": "<tag name list>",
   "device_ids": "<device id list>",
-  "group_id": "<group id>"
+  "group_id": "<group id>",
+  "status": "<waiver status>"
 }
 ```
 <h3 id="waiverSearch-parameters">Parameters</h3>
@@ -1525,6 +1604,7 @@ note|body|string|false|waiver note
 tags|body|list[string]|false|tag name list
 device_ids|body|list[string]|false|device id list
 request_id|body|string|false|waiver request id
+status|body|string|false|waiver status (approved, pending, revoked)
 > Example responses
 
 ```json
@@ -2339,6 +2419,163 @@ ip|string|false|ip
 note|string|true|waiver note
 tags|[sting]|true|waiver tags
 status|string|true|waiver status, possible values `pending`, `approved`, `revoked`
+
+## Event
+
+<a name="schemaevent"></a>
+
+```json
+{
+  "type": "pdf_generated",
+  "content_type": "waiver",
+  "content": {
+  "id": "zZ613txA741510127626",
+  "has_pdf": true,
+  "pictures": [
+    {
+      "id": "picture id",
+      "title": "Your Photo",
+      "timestamp": 1510127609
+    }
+  ],
+  "data": [
+    {
+      "value": "HF",
+      "type": "initial_field",
+      "title": "please input your initials"
+    },
+    {
+      "first_name": "first",
+      "middle_name": "",
+      "last_name": "",
+      "value": "first m last",
+      "title": "Please fill in your name",
+      "type": "name_field"
+    },
+    {
+      "title": "Please fill in your email",
+      "value": "gh@me.com",
+      "type": "email_field"
+    },
+    {
+      "value": "1 851-234-5678",
+      "title": "Please fill in your phone number",
+      "type": "phone_field"
+    },
+    {
+      "state": "TX",
+      "first_line": "No 123",
+      "value": "No 123 TX, USA",
+      "type": "address_field",
+      "country": "USA",
+      "title": "Please fill in your address",
+      "zipcode": "123456",
+      "second_line": "",
+      "city": ""
+    },
+    {
+      "value": "18",
+      "title": "Please fill in your age",
+      "type": "age_field"
+    },
+    {
+      "type": "date_field",
+      "title": "Please fill date",
+      "value": "2017-11-8",
+      "year": "2017",
+      "month": "11",
+      "day": "8"
+    },
+    {
+      "type": "checkbox_field",
+      "title": "Text to agree on",
+      "value": "checked"
+    },
+    {
+      "value": "Ghosts ",
+      "title": "Your fav team",
+      "type": "short_answer_field"
+    },
+    {
+      "value": "Femal",
+      "title": "Male or Female",
+      "type": "single_choice_field"
+    },
+    {
+      "value": ["Magazine", "Trip advisor"],
+      "title": "Where did you hear about us? (Gain market insight!)",
+      "type": "multiple_choice_field"
+    },
+    {
+      "type": "container_field",
+      "title": "please enter your minors' information",
+      "result_list": [
+        [
+          {
+            "first_name": "first",
+            "middle_name": "",
+            "last_name": "",
+            "value": "C1 first m last",
+            "title": "Please fill in your name",
+            "type": "name_field"
+          },
+          {
+            "title": "Please fill in your email",
+            "value": "C1 gh@me.com",
+            "type": "email_field"
+          }
+        ],
+        [
+          {
+            "first_name": "first",
+            "middle_name": "",
+            "last_name": "",
+            "value": "C2 first m last",
+            "title": "Please fill in your name",
+            "type": "name_field"
+          },
+          {
+            "title": "Please fill in your email",
+            "value": "C2 gh@me.com",
+            "type": "email_field"
+          }
+        ]
+      ]
+    }
+  ],
+  "template_title": "Bike Rental Waiver",
+  "template_id": "JwIvKHHfW81493594388",
+  "tracking_id": "D6RkEV1yUK1512568456",
+  "received_at": 1510127625,
+  "signed_at": 1510127615,
+  "geolocation": {
+      "accuracy": 5,
+      "latitude": "137.785834",
+      "longitude": "-22.406417"
+  },
+   "device": {
+      "device_model": "iPhone 5 (GSM CDMA)(9.3.5)",
+      "username": "a",
+      "id": "opZTzJP2gI1504892592",
+      "device_name": "Jing's iPhone",
+      "identifier": ""
+  },
+  "note": "",
+  "tags": ["tag1", "tag2"],
+  "ip": "1.1.1.1",
+  "status": "approved"
+}
+}
+```
+
+### Properties
+
+Name|Type|Required|Description
+---|---|---|---|
+type|string|true|event type
+content_type|string|true|content type. only support `waiver` now.
+content|[Waiver](#schemawaiver)|true| waiver content
+
 
 #### Field Types
 
