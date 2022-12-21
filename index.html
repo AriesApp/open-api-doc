@@ -518,7 +518,44 @@ License: <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a
 <p>Please note that webhooks work on the template/waiver level.</p>
 
 <p>We&#39;ll support more webhook events in the future.</p>
-<h4 id='dynamic-webhooks'>Dynamic Webhooks</h4>
+<h4 id='check-the-webhook-signatures'>Check the webhook signatures</h4>
+<p>Verify the events that sends to your webhook endpoints.</p>
+
+<p>We sign the webhook events it sends to your endpoints by including a signature in each event’s <code>X-WaiverForever-Signature</code> header. This allows you to verify that the events were sent by us, not by a third party. You can verify signatures manually using your own solution.
+Before you can verify signatures, you need to retrieve your endpoint’s app_secret from your Dashboard’s Webhooks settings.</p>
+
+<p><strong>Verifying signatures manually</strong></p>
+
+<p>The Signature header included in each signed event contains a timestamp and one signature. The timestamp is prefixed by <code>t=</code>, and signature is prefixed by <code>signature=</code>. so the whole header looks like this: <code>X-Waiverforever-Signature: t=1671097440,signature=81e018cc8b10a4c7c46790d088c81445bc77861cc4f9b1d4dcd72f734289b837</code></p>
+
+<p>In short,the steps are:</p>
+
+<ol>
+<li>Extract the timestamp and signatures from the header</li>
+<li>Prepare the signed_payload string</li>
+<li>Generate a signature using your app_secret and the signed_payload string</li>
+<li>Compare the generated signature with the signature from the header</li>
+</ol>
+
+<p>we provide a sample python flask code for you to verify the signature</p>
+<div class="highlight"><pre class="highlight python tab-python"><code><span class="o">@</span><span class="n">app</span><span class="p">.</span><span class="n">route</span><span class="p">(</span><span class="s">"/api/v1/webhook"</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s">"POST"</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">webhook</span><span class="p">():</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">headers</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">"X-Waiverforever-Signature"</span><span class="p">)</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">header</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">","</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="n">removeprefix</span><span class="p">(</span><span class="s">"t="</span><span class="p">)</span>
+    <span class="n">signature_in_header</span> <span class="o">=</span> <span class="n">header</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">","</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="n">removeprefix</span><span class="p">(</span><span class="s">"signature="</span><span class="p">)</span>
+
+    <span class="n">app_secret</span> <span class="o">=</span> <span class="s">"&lt;your app_secret&gt;"</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">get_data</span><span class="p">()</span>
+    <span class="n">signed_payload</span> <span class="o">=</span> <span class="s">"{},{},{}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">body</span><span class="p">.</span><span class="n">decode</span><span class="p">(),</span> <span class="n">app_secret</span><span class="p">)</span>
+    <span class="n">my_signature</span> <span class="o">=</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">)).</span><span class="n">hexdigest</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">signature</span> <span class="o">==</span> <span class="n">signature_in_header</span><span class="p">:</span>
+        <span class="c1"># do something
+</span>        <span class="k">return</span> <span class="p">{}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="nb">Exception</span><span class="p">(</span><span class="s">"signature not match"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{}</span>
+</code></pre></div><h4 id='dynamic-webhooks'>Dynamic Webhooks</h4>
 <p>Dynamic webhooks provide maximum flexibility to manage your events. You can subscribe/unsubscribe to dynamic webhooks at any time.</p>
 <h4 id='static-webhooks'>Static Webhooks</h4>
 <p>Compared to dynamic webhooks, static webhooks are relatively easy to setup (you don&#39;t have to write code). Just go to the template settings page, specify your target URL, then we&#39;ll handle the rest for you.</p>
@@ -734,6 +771,12 @@ Use this API to test your API key.
 <td>true</td>
 <td>target url</td>
 </tr>
+<tr>
+<td>secret_key</td>
+<td>string</td>
+<td>true</td>
+<td>secret key</td>
+</tr>
 </tbody></table>
 <h2 id='get-all-subscriptions'>Get All Subscriptions</h2>
 <blockquote>
@@ -794,7 +837,8 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v1/web
     </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subscription id"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"event name"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"template_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"template id"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"target_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"target url"</span><span class="w">
+    </span><span class="nl">"target_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"target url"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"secret_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"secret_key"</span><span class="w">
   </span><span class="p">}]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
@@ -3454,6 +3498,12 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v2/wai
 <td>string</td>
 <td>true</td>
 <td>target url</td>
+</tr>
+<tr>
+<td>secret_key</td>
+<td>string</td>
+<td>true</td>
+<td>secret key</td>
 </tr>
 </tbody></table>
 <h2 id='template'>Template</h2>
