@@ -2183,6 +2183,274 @@ Status|Meaning|Description|Schema
 200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
 403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
 
+## Send Group Emails
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X POST https://api.waiverforever.com/openapi/v2/waiverRequests/sendGroupEmail \
+  -H 'Accept: application/json' \
+  -H 'Content-Type': 'application/json' \
+  -H 'X-Api-Key: <api_key>' \
+  -d '{
+    "group_id": "AboljiXtzg1672625614",
+    "template_id": "sgMbm2RMWo1670977664",
+    "recipient_list": "xx1@gmail.com<xx1@gmail.com>",
+    "expired_in": "null",
+    "email_note": "email node",
+    "enable_secondary_distribution": "false"
+    "reply_to": "xx2@gmail.com",
+}'
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'Content-Type': 'application/json',
+  'X-Api-Key': '<api_key>'
+};
+
+const inputBody = `{
+    "group_id": "AboljiXtzg1672625614",
+    "template_id": "sgMbm2RMWo1670977664",
+    "recipient_list": "xx1@gmail.com<xx1@gmail.com>",
+    "expired_in": "null",
+    "email_note": "email node",
+    "enable_secondary_distribution": "false"
+    "reply_to": "xx2@gmail.com",
+}`;
+
+fetch('https://api.waiverforever.com/openapi/v2/waiverRequests/sendGroupEmail', {
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+}).then(res => res.json())
+  .then(body => console.log(body))
+  .catch(error => {
+    console.log(error);
+  });
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'Content-Type' => 'application/json',
+  'X-Api-Key' => '<api_key>'
+}
+
+payload ={
+    "group_id"=> "AboljiXtzg1672625614",
+    "template_id"=> "sgMbm2RMWo1670977664",
+    "recipient_list"=> "xx1@gmail.com<xx1@gmail.com>",
+    "expired_in"=> "null",
+    "email_note"=> "email node",
+    "enable_secondary_distribution"=> false
+    "reply_to"=> "xx2@gmail.com",
+}
+
+result = RestClient.post 'https://api.waiverforever.com/openapi/v2/waiverRequests/sendGroupEmail',payload.to_json, headers
+
+p JSON.parse(result)
+```
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+  'X-Api-Key': '<api_key>'
+}
+
+data = {
+    "group_id": "AboljiXtzg1672625614",
+    "template_id": "sgMbm2RMWo1670977664",
+    "recipient_list": "xx1@gmail.com<xx1@gmail.com>",
+    "expired_in": None,
+    "email_note": "email node",
+    "enable_secondary_distribution": "false"
+    "reply_to": "xx2@gmail.com",
+}
+
+r = requests.post('https://api.waiverforever.com/openapi/v2/waiverRequests/sendGroupEmail', json=data, headers=headers)
+
+print(r.json())
+
+```
+
+`POST /openapi/v2/waiverRequests/sendGroupEmail`
+
+*SendGroupEmail*
+
+<h3 id="sendGroupEmail-parameters">Parameters</h3>
+
+Parameter|In|Type|Required|Description
+---|---|---|---|---|
+group_id|body|string|true|request group id
+template_id|body|string|true|request template id
+reply_to|body|string|true|request reply_to
+recipient_list|body|string|true|request email list
+email_note|body|string|true|request email note
+expired_in|body|int|true|request expired timestamp
+
+> Example responses
+
+```json
+{
+  "tracks": [
+            {
+                "tracking_id": "9SfrMTYPtO1672625614",
+                "email": "xx@gmail.com",
+                "human_name": "xx@gmail.com",
+                "status": "open",
+                "send_result": false
+            },
+            {
+                "tracking_id": "oB40y1XQlM1672625614",
+                "email": "xx2@163.com",
+                "human_name": "xx2@163.com",
+                "status": "open",
+                "send_result": false
+            }
+        ]
+}
+```
+<h3 id="sendGroupEmail-responses">Responses</h3>
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
+403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
+404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Template not found|None
+
+<h3 id="sendGroupEmail-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+Name|Type|Required|Description
+---|---|---|---|---|
+result|boolean|true|request success or fail
+msg|string|true|response message
+data|[WaiverTrack](#schemawaivertrack)|true|Waiver Request
+
+
+## Get Group Tracks
+
+> Code samples
+
+```shell
+# You can also use wget
+curl https://api.waiverforever.com/openapi/v2/waiverRequests/groupTrackings?group_id=oVMlLtxIZL1673829942&page=1&per_page=10 \
+  -H 'Accept: application/json' \
+  -H 'Content-Type': 'application/json' \
+  -H 'X-Api-Key: <api_key>'
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'Content-Type': 'application/json',
+  'X-Api-Key': '<api_key>'
+};
+
+fetch('https://api.waiverforever.com/openapi/v2/waiverRequests/groupTrackings?group_id=oVMlLtxIZL1673829942&page=1&per_page=10 ', {
+  method: 'GET',
+  headers: headers
+}).then(res => res.json())
+  .then(body => console.log(body))
+  .catch(error => {
+    console.log(error);
+  });
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'Content-Type' => 'application/json',
+  'X-Api-Key' => '<api_key>'
+}
+
+result = RestClient.post 'https://api.waiverforever.com/openapi/v2/waiverRequests/groupTrackings?group_id=oVMlLtxIZL1673829942&page=1&per_page=10', headers
+
+p JSON.parse(result)
+```
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+  'X-Api-Key': '<api_key>'
+}
+
+r = requests.get('https://api.waiverforever.com/openapi/v2/waiverRequests/groupTrackings?group_id=oVMlLtxIZL1673829942&page=1&per_page=10', headers=headers)
+
+print(r.json())
+
+```
+
+`GET /openapi/v2/waiverRequests/groupTrackings`
+
+*GetGroupTrackings*
+
+<h3 id="groupTrackings-parameters">Parameters</h3>
+
+Parameter|In|Type|Required|Description
+---|---|---|---|---|
+tracking_id|string|true|tracking id
+page|int|true|page
+per_page|int|true|per page
+
+> Example responses
+
+```json
+{
+  "data": [
+            {
+                "tracking_id": "9SfrMTYPtO1672625614",
+                "email": "xx@gmail.com",
+                "human_name": "xx@gmail.com",
+                "status": "open",
+                "send_result": false
+            },
+            {
+                "tracking_id": "oB40y1XQlM1672625614",
+                "email": "xx2@163.com",
+                "human_name": "xx2@163.com",
+                "status": "open",
+                "send_result": false
+            }
+        ]
+}
+```
+<h3 id="groupTrackings-responses">Responses</h3>
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
+403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
+404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Template not found|None
+
+<h3 id="groupTrackings-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+Name|Type|Required|Description
+---|---|---|---|---|
+result|boolean|true|request success or fail
+msg|string|true|response message
+data|[WaiverTrackPageData](#schemaWaiverTrackPageData)|true|paged data
+
 
 # Schemas
 
@@ -2968,3 +3236,63 @@ template_id|string|true|template id of waiver request
 status|string|true|request status. possible values `collecting`, `accepted`
 request_link|string|true|request share link
 datetime|int|true|created timestamp
+
+## WaiverTrackPageData
+
+<a name="schemaWaiverTrackPageData"></a>
+
+```json
+{
+  "page": 1,
+  "per_page": 10,
+  "count": 2,
+  "trackings": [
+    {
+      "human_name": "xx@xx.com",
+      "status": "open",
+      "tracking_id": "t0QmIZCMeY1673829942",
+      "send_result": True,
+      "email": "xx@xx.com"
+    },
+    {
+      "human_name": "",
+      "status": "open",
+      "tracking_id": "nWOEDdxyZI1673831842",
+      "send_result": True,
+      "email": "xx@xx.com"
+    }
+  ]
+}
+```
+
+### Properties
+
+Name|Type|Required|Description
+---|---|---|---|---|
+count|int|true|count
+per_page|int|true|per page
+data|[WaiverTrack](#schemawaivertrack)|true|track list
+
+## WaiverTrack
+
+<a name="schemawaivertrack"></a>
+
+```json
+ {
+    "tracking_id": "B7Z3Z5pymj1594862535",
+    "status": "normal",
+    "email": "xx@gmail.com",
+    "human_name": "name",
+    "send_result": True,
+}
+```
+
+### Properties
+
+Name|Type|Required|Description
+---|---|---|---|
+tracking_id|string|true|tracking id
+status|string|true|status
+email|string|true|email
+human_name|string|true|human_name
+send_result|boolean|true|send_result
