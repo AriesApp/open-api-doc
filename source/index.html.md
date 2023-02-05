@@ -2183,7 +2183,7 @@ Status|Meaning|Description|Schema
 200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
 403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
 
-## Send Group Emails
+## Send Requests via Email
 
 > Code samples
 
@@ -2285,7 +2285,7 @@ print(r.json())
 
 `POST /openapi/v2/waiverRequests/sendGroupEmail`
 
-*SendGroupEmail*
+*Once a waiver request has been created, you should use this API to send email requests to your customers asking them to sign the waiver.*
 
 <h3 id="sendGroupEmail-parameters">Parameters</h3>
 
@@ -2339,7 +2339,7 @@ msg|string|true|response message
 data|[WaiverTrack](#schemawaivertrack)|true|Waiver Request
 
 
-## Get Group Tracks
+## Get Waiver Request Tracking Info
 
 > Code samples
 
@@ -2401,7 +2401,7 @@ print(r.json())
 
 `GET /openapi/v2/waiverRequests/groupTrackings`
 
-*GetGroupTrackings*
+*Retrieve the status of the email requests sent for a particular waiver request*
 
 <h3 id="groupTrackings-parameters">Parameters</h3>
 
