@@ -408,6 +408,12 @@
                   <li>
                     <a href="#list-waiver-requests" class="toc-h2 toc-link" data-title="List Waiver Requests">List Waiver Requests</a>
                   </li>
+                  <li>
+                    <a href="#send-requests-via-email" class="toc-h2 toc-link" data-title="Send Requests via Email">Send Requests via Email</a>
+                  </li>
+                  <li>
+                    <a href="#get-waiver-request-tracking-info" class="toc-h2 toc-link" data-title="Get Waiver Request Tracking Info">Get Waiver Request Tracking Info</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -475,6 +481,12 @@
                   </li>
                   <li>
                     <a href="#waiverrequest" class="toc-h2 toc-link" data-title="WaiverRequest">WaiverRequest</a>
+                  </li>
+                  <li>
+                    <a href="#waivertrackpagedata" class="toc-h2 toc-link" data-title="WaiverTrackPageData">WaiverTrackPageData</a>
+                  </li>
+                  <li>
+                    <a href="#waivertrack" class="toc-h2 toc-link" data-title="WaiverTrack">WaiverTrack</a>
                   </li>
               </ul>
           </li>
@@ -3536,6 +3548,407 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v2/wai
 <td>None</td>
 </tr>
 </tbody></table>
+<h2 id='send-requests-via-email'>Send Requests via Email</h2>
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/waiverRequests/sendGroupEmail <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Content-Type'</span>: <span class="s1">'application/json'</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'X-Api-Key: &lt;api_key&gt;'</span> <span class="se">\</span>
+  <span class="nt">-d</span> <span class="s1">'{
+    "group_id": "AboljiXtzg1672625614",
+    "template_id": "sgMbm2RMWo1670977664",
+    "recipient_list": "xx1@gmail.com&lt;xx1@gmail.com&gt;",
+    "expired_in": "null",
+    "email_note": "email node",
+    "enable_secondary_distribution": "false"
+    "reply_to": "xx2@gmail.com",
+}'</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript--nodejs"><code><span class="kd">const</span> <span class="nx">fetch</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">node-fetch</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="dl">'</span><span class="s1">Accept</span><span class="dl">'</span><span class="p">:</span><span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">X-Api-Key</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;api_key&gt;</span><span class="dl">'</span>
+<span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">inputBody</span> <span class="o">=</span> <span class="s2">`{
+    "group_id": "AboljiXtzg1672625614",
+    "template_id": "sgMbm2RMWo1670977664",
+    "recipient_list": "xx1@gmail.com&lt;xx1@gmail.com&gt;",
+    "expired_in": "null",
+    "email_note": "email node",
+    "enable_secondary_distribution": "false"
+    "reply_to": "xx2@gmail.com",
+}`</span><span class="p">;</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="dl">'</span><span class="s1">https://api.waiverforever.com/openapi/v2/waiverRequests/sendGroupEmail</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">body</span><span class="p">:</span> <span class="nx">inputBody</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="nx">headers</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">body</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'Content-Type'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'X-Api-Key'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;api_key&gt;'</span>
+<span class="p">}</span>
+
+<span class="n">payload</span> <span class="o">=</span><span class="p">{</span>
+    <span class="s2">"group_id"</span><span class="o">=&gt;</span> <span class="s2">"AboljiXtzg1672625614"</span><span class="p">,</span>
+    <span class="s2">"template_id"</span><span class="o">=&gt;</span> <span class="s2">"sgMbm2RMWo1670977664"</span><span class="p">,</span>
+    <span class="s2">"recipient_list"</span><span class="o">=&gt;</span> <span class="s2">"xx1@gmail.com&lt;xx1@gmail.com&gt;"</span><span class="p">,</span>
+    <span class="s2">"expired_in"</span><span class="o">=&gt;</span> <span class="s2">"null"</span><span class="p">,</span>
+    <span class="s2">"email_note"</span><span class="o">=&gt;</span> <span class="s2">"email node"</span><span class="p">,</span>
+    <span class="s2">"enable_secondary_distribution"</span><span class="o">=&gt;</span> <span class="kp">false</span>
+    <span class="s2">"reply_to"</span><span class="o">=&gt;</span> <span class="s2">"xx2@gmail.com"</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">post</span> <span class="s1">'https://api.waiverforever.com/openapi/v2/waiverRequests/sendGroupEmail'</span><span class="p">,</span><span class="n">payload</span><span class="p">.</span><span class="nf">to_json</span><span class="p">,</span> <span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'X-Api-Key'</span><span class="p">:</span> <span class="s">'&lt;api_key&gt;'</span>
+<span class="p">}</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"group_id"</span><span class="p">:</span> <span class="s">"AboljiXtzg1672625614"</span><span class="p">,</span>
+    <span class="s">"template_id"</span><span class="p">:</span> <span class="s">"sgMbm2RMWo1670977664"</span><span class="p">,</span>
+    <span class="s">"recipient_list"</span><span class="p">:</span> <span class="s">"xx1@gmail.com&lt;xx1@gmail.com&gt;"</span><span class="p">,</span>
+    <span class="s">"expired_in"</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+    <span class="s">"email_note"</span><span class="p">:</span> <span class="s">"email node"</span><span class="p">,</span>
+    <span class="s">"enable_secondary_distribution"</span><span class="p">:</span> <span class="s">"false"</span>
+    <span class="s">"reply_to"</span><span class="p">:</span> <span class="s">"xx2@gmail.com"</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://api.waiverforever.com/openapi/v2/waiverRequests/sendGroupEmail'</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">json</span><span class="p">())</span>
+
+</code></pre></div>
+<p><code>POST /openapi/v2/waiverRequests/sendGroupEmail</code></p>
+
+<p><em>Once a waiver request has been created, you should use this API to send email requests to your customers asking them to sign the waiver.</em></p>
+
+<h3 id="sendGroupEmail-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>group_id</td>
+<td>body</td>
+<td>string</td>
+<td>true</td>
+<td>request group id</td>
+</tr>
+<tr>
+<td>template_id</td>
+<td>body</td>
+<td>string</td>
+<td>true</td>
+<td>request template id</td>
+</tr>
+<tr>
+<td>reply_to</td>
+<td>body</td>
+<td>string</td>
+<td>true</td>
+<td>request reply_to</td>
+</tr>
+<tr>
+<td>recipient_list</td>
+<td>body</td>
+<td>string</td>
+<td>true</td>
+<td>request email list</td>
+</tr>
+<tr>
+<td>email_note</td>
+<td>body</td>
+<td>string</td>
+<td>true</td>
+<td>request email note</td>
+</tr>
+<tr>
+<td>expired_in</td>
+<td>body</td>
+<td>int</td>
+<td>true</td>
+<td>request expired timestamp</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"tracks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"tracking_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9SfrMTYPtO1672625614"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xx@gmail.com"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"human_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xx@gmail.com"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"send_result"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"tracking_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"oB40y1XQlM1672625614"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xx2@163.com"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"human_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xx2@163.com"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"send_result"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<h3 id="sendGroupEmail-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>Successful request</td>
+<td>Inline</td>
+</tr>
+<tr>
+<td>403</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.3">Forbidden</a></td>
+<td>Invalid api key</td>
+<td>None</td>
+</tr>
+<tr>
+<td>404</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.4">Not Found</a></td>
+<td>Template not found</td>
+<td>None</td>
+</tr>
+</tbody></table>
+
+<h3 id="sendGroupEmail-responseschema">Response Schema</h3>
+
+<p>Status Code <strong>200</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>result</td>
+<td>boolean</td>
+<td>true</td>
+<td>request success or fail</td>
+</tr>
+<tr>
+<td>msg</td>
+<td>string</td>
+<td>true</td>
+<td>response message</td>
+</tr>
+<tr>
+<td>data</td>
+<td><a href="#schemawaivertrack">WaiverTrack</a></td>
+<td>true</td>
+<td>Waiver Request</td>
+</tr>
+</tbody></table>
+<h2 id='get-waiver-request-tracking-info'>Get Waiver Request Tracking Info</h2>
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
+curl https://api.waiverforever.com/openapi/v2/waiverRequests/groupTrackings?group_id<span class="o">=</span>oVMlLtxIZL1673829942&amp;page<span class="o">=</span>1&amp;per_page<span class="o">=</span>10 <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Content-Type'</span>: <span class="s1">'application/json'</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'X-Api-Key: &lt;api_key&gt;'</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript--nodejs"><code><span class="kd">const</span> <span class="nx">fetch</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">node-fetch</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="dl">'</span><span class="s1">Accept</span><span class="dl">'</span><span class="p">:</span><span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">X-Api-Key</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;api_key&gt;</span><span class="dl">'</span>
+<span class="p">};</span>
+
+<span class="nx">fetch</span><span class="p">(</span><span class="dl">'</span><span class="s1">https://api.waiverforever.com/openapi/v2/waiverRequests/groupTrackings?group_id=oVMlLtxIZL1673829942&amp;page=1&amp;per_page=10 </span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">GET</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="nx">headers</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">body</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">});</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'rest-client'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'Accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'Content-Type'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'X-Api-Key'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;api_key&gt;'</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">post</span> <span class="s1">'https://api.waiverforever.com/openapi/v2/waiverRequests/groupTrackings?group_id=oVMlLtxIZL1673829942&amp;page=1&amp;per_page=10'</span><span class="p">,</span> <span class="n">headers</span>
+
+<span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'X-Api-Key'</span><span class="p">:</span> <span class="s">'&lt;api_key&gt;'</span>
+<span class="p">}</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.waiverforever.com/openapi/v2/waiverRequests/groupTrackings?group_id=oVMlLtxIZL1673829942&amp;page=1&amp;per_page=10'</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">json</span><span class="p">())</span>
+
+</code></pre></div>
+<p><code>GET /openapi/v2/waiverRequests/groupTrackings</code></p>
+
+<p><em>Retrieve the status of the email requests sent for a particular waiver request</em></p>
+
+<h3 id="groupTrackings-parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>tracking_id</td>
+<td>string</td>
+<td>true</td>
+<td>tracking id</td>
+<td></td>
+</tr>
+<tr>
+<td>page</td>
+<td>int</td>
+<td>true</td>
+<td>page</td>
+<td></td>
+</tr>
+<tr>
+<td>per_page</td>
+<td>int</td>
+<td>true</td>
+<td>per page</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"tracking_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9SfrMTYPtO1672625614"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xx@gmail.com"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"human_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xx@gmail.com"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"send_result"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"tracking_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"oB40y1XQlM1672625614"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xx2@163.com"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"human_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xx2@163.com"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"send_result"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<h3 id="groupTrackings-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
+<td>Successful request</td>
+<td>Inline</td>
+</tr>
+<tr>
+<td>403</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.3">Forbidden</a></td>
+<td>Invalid api key</td>
+<td>None</td>
+</tr>
+<tr>
+<td>404</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.4">Not Found</a></td>
+<td>Template not found</td>
+<td>None</td>
+</tr>
+</tbody></table>
+
+<h3 id="groupTrackings-responseschema">Response Schema</h3>
+
+<p>Status Code <strong>200</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>result</td>
+<td>boolean</td>
+<td>true</td>
+<td>request success or fail</td>
+</tr>
+<tr>
+<td>msg</td>
+<td>string</td>
+<td>true</td>
+<td>response message</td>
+</tr>
+<tr>
+<td>data</td>
+<td><a href="#schemaWaiverTrackPageData">WaiverTrackPageData</a></td>
+<td>true</td>
+<td>paged data</td>
+</tr>
+</tbody></table>
 <h1 id='schemas'>Schemas</h1><h2 id='response'>Response</h2>
 <p><a name="schemaresponse"></a></p>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
@@ -4848,6 +5261,106 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v2/wai
 <td>int</td>
 <td>true</td>
 <td>created timestamp</td>
+</tr>
+</tbody></table>
+<h2 id='waivertrackpagedata'>WaiverTrackPageData</h2>
+<p><a name="schemaWaiverTrackPageData"></a></p>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"per_page"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"trackings"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"human_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xx@xx.com"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"tracking_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"t0QmIZCMeY1673829942"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"send_result"</span><span class="p">:</span><span class="w"> </span><span class="err">True</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xx@xx.com"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"human_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"tracking_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nWOEDdxyZI1673831842"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"send_result"</span><span class="p">:</span><span class="w"> </span><span class="err">True</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xx@xx.com"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='properties-22'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>count</td>
+<td>int</td>
+<td>true</td>
+<td>count</td>
+</tr>
+<tr>
+<td>per_page</td>
+<td>int</td>
+<td>true</td>
+<td>per page</td>
+</tr>
+<tr>
+<td>data</td>
+<td><a href="#schemawaivertrack">WaiverTrack</a></td>
+<td>true</td>
+<td>track list</td>
+</tr>
+</tbody></table>
+<h2 id='waivertrack'>WaiverTrack</h2>
+<p><a name="schemawaivertrack"></a></p>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"tracking_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"B7Z3Z5pymj1594862535"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"normal"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xx@gmail.com"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"human_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"name"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"send_result"</span><span class="p">:</span><span class="w"> </span><span class="err">True</span><span class="p">,</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='properties-23'>Properties</h3>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>tracking_id</td>
+<td>string</td>
+<td>true</td>
+<td>tracking id</td>
+</tr>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>true</td>
+<td>status</td>
+</tr>
+<tr>
+<td>email</td>
+<td>string</td>
+<td>true</td>
+<td>email</td>
+</tr>
+<tr>
+<td>human_name</td>
+<td>string</td>
+<td>true</td>
+<td>human_name</td>
+</tr>
+<tr>
+<td>send_result</td>
+<td>boolean</td>
+<td>true</td>
+<td>send_result</td>
 </tr>
 </tbody></table>
 
