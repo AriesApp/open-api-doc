@@ -274,6 +274,7 @@ Event|Payload Schema|Description
 `new_waiver_submitted`|[Event](#schemaevent)|a new waiver is submitted
 `new_waiver_accepted`|[Event](#schemaevent)|a new waiver is accepted
 `pdf_generated`|[Event](#schemaevent)|a new waiver is signed and waiver pdf is generated
+`waiver_checkin`|[Event](#schemaevent)|a waiver is checked in
 
 <aside class="notice">
   Event `new_waiver_signed` is deprecated. You can still using old webhooks with `new_waiver_signed` event, which is equal to event `pdf_generated`.
