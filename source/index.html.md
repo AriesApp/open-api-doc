@@ -2198,7 +2198,7 @@ curl -X POST https://api.waiverforever.com/openapi/v2/waiverRequests/sendGroupEm
     "group_id": "AboljiXtzg1672625614",
     "template_id": "sgMbm2RMWo1670977664",
     "recipient_list": "xx1@gmail.com<xx1@gmail.com>",
-    "expired_in": "null",
+    "expired_in": 1672502400,
     "email_note": "email node",
     "enable_secondary_distribution": "false"
     "reply_to": "xx2@gmail.com",
@@ -2218,7 +2218,7 @@ const inputBody = `{
     "group_id": "AboljiXtzg1672625614",
     "template_id": "sgMbm2RMWo1670977664",
     "recipient_list": "xx1@gmail.com<xx1@gmail.com>",
-    "expired_in": "null",
+    "expired_in": 1672502400,
     "email_note": "email node",
     "enable_secondary_distribution": "false"
     "reply_to": "xx2@gmail.com",
@@ -2249,7 +2249,7 @@ payload ={
     "group_id"=> "AboljiXtzg1672625614",
     "template_id"=> "sgMbm2RMWo1670977664",
     "recipient_list"=> "xx1@gmail.com<xx1@gmail.com>",
-    "expired_in"=> "null",
+    "expired_in"=> 1672502400,
     "email_note"=> "email node",
     "enable_secondary_distribution"=> false
     "reply_to"=> "xx2@gmail.com",
