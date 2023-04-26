@@ -1538,7 +1538,7 @@ print r.content
 
 ```
 
-`POST https://api.waiverforever.com/openapi/v2/waiver/{waiver_id}/accept`
+`POST /openapi/v2/waiver/{waiver_id}/accept`
 
 *Accept waiver*
 
