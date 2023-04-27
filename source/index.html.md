@@ -788,6 +788,249 @@ data|object|true|data
 » request_waiver_url|string|true|remote signing url for requested waiver
 » ttl|string|true|request waiver expiration time (in seconds)
 
+## Get Sample Waiver
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X GET https://api.waiverforever.com/openapi/v1/template/{template_id}/getSampleWaiver \
+  -H 'Accept: application/json' \
+  -H 'X-Api-Key: <api_key>'
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'X-Api-Key': '<api_key>'
+};
+
+fetch('https://api.waiverforever.com/openapi/v1/template/{template_id}/getSampleWaiver', {
+  method: 'GET',
+  headers: headers
+}).then(res => res.json())
+  .then(body => console.log(body))
+  .catch(error => {
+    console.log(error);
+  });
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'X-Api-Key' => '<api_key>'
+}
+
+result = RestClient.get 'https://api.waiverforever.com/openapi/v1/template/{template_id}/getSampleWaiver', headers
+
+p JSON.parse(result)
+```
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'X-Api-Key': '<api_key>'
+}
+
+r = requests.get('https://api.waiverforever.com/openapi/v1/template/{template_id}/getSampleWaiver', params={
+}, headers=headers)
+
+print(r.json())
+
+```
+
+`GET /openapi/v1/template/{template_id}/getSampleWaiver`
+
+*get a sample waiver of template*
+
+<h3 id="getSampleWaiver-parameters">Parameters</h3>
+
+Parameter|In|Type|Required|Description
+---|---|---|---|---|
+template_id|path|string|true|template id
+
+> Example responses
+
+```json
+{
+  "id": "zZ613txA741510127626",
+  "status": "approved",
+  "has_pdf": true,
+  "pictures": [
+    {
+      "id": "picture id",
+      "title": "Your Photo",
+      "timestamp": 1510127609
+    }
+  ],
+  "data": [
+    {
+      "id": 1,
+      "value": "HF",
+      "type": "initial_field",
+      "title": "please input your initials"
+    },
+    {
+      "id": 2,
+      "first_name": "first",
+      "middle_name": "",
+      "last_name": "",
+      "value": "first m last",
+      "title": "Please fill in your name",
+      "type": "name_field"
+    },
+    {
+      "id": 3,
+      "title": "Please fill in your email",
+      "value": "gh@me.com",
+      "type": "email_field"
+    },
+    {
+      "id": 4,
+      "value": "1 851-234-5678",
+      "title": "Please fill in your phone number",
+      "type": "phone_field"
+    },
+    {
+      "id": 5,
+      "state": "TX",
+      "first_line": "No 123",
+      "value": "No 123 TX, USA",
+      "type": "address_field",
+      "country": "USA",
+      "title": "Please fill in your address",
+      "zipcode": "123456",
+      "second_line": "",
+      "city": ""
+    },
+    {
+      "id": 6,
+      "value": "18",
+      "title": "Please fill in your age",
+      "type": "age_field"
+    },
+    {
+      "id": 7,
+      "type": "date_field",
+      "title": "Please fill date",
+      "value": "2017-11-8",
+      "year": "2017",
+      "month": "11",
+      "day": "8"
+    },
+    {
+      "id": 8,
+      "type": "checkbox_field",
+      "title": "Text to agree on",
+      "value": "checked"
+    },
+    {
+      "id": 9,
+      "value": "Ghosts ",
+      "title": "Your fav team",
+      "type": "short_answer_field"
+    },
+    {
+      "id": 10,
+      "value": "Femal",
+      "title": "Male or Female",
+      "type": "single_choice_field"
+    },
+    {
+      "id": 11,
+      "value": ["Magazine", "Trip advisor"],
+      "title": "Where did you hear about us? (Gain market insight!)",
+      "type": "multiple_choice_field"
+    },
+    {
+      "id": 12,
+      "type": "container_field",
+      "title": "please enter your minors' information",
+      "result_list": [
+        [
+          {
+            "id": 1,
+            "first_name": "first",
+            "middle_name": "",
+            "last_name": "",
+            "value": "C1 first m last",
+            "title": "Please fill in your name",
+            "type": "name_field"
+          },
+          {
+            "id": 2,
+            "title": "Please fill in your email",
+            "value": "C1 gh@me.com",
+            "type": "email_field"
+          }
+        ],
+        [
+          {
+            "id": 1,
+            "first_name": "first",
+            "middle_name": "",
+            "last_name": "",
+            "value": "C2 first m last",
+            "title": "Please fill in your name",
+            "type": "name_field"
+          },
+          {
+            "id": 2,
+            "title": "Please fill in your email",
+            "value": "C2 gh@me.com",
+            "type": "email_field"
+          }
+        ]
+      ]
+    }
+  ],
+  "template_title": "Bike Rental Waiver",
+  "template_id": "JwIvKHHfW81493594388",
+  "tracking_id": "D6RkEV1yUK1512568456",
+  "request_id": "P4g4R0nmkY1652897359",
+  "received_at": 1510127625,
+  "signed_at": 1510127615,
+  "note": "",
+  "tags": ["tag1", "tag2"],
+  "geolocation": {
+      "accuracy": 5,
+      "latitude": "137.785834",
+      "longitude": "-22.406417"
+  },
+   "device": {
+      "device_model": "iPhone 5 (GSM CDMA)(9.3.5)",
+      "username": "a",
+      "id": "opZTzJP2gI1504892592",
+      "device_name": "Jing's iPhone",
+      "identifier": ""
+  }
+}
+```
+<h3 id="getSampleWaiver-responses">Responses</h3>
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
+403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
+404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Template not found|None
+
+<h3 id="getWaigetSampleWaiververById-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+Name|Type|Required|Description
+---|---|---|---|---|
+result|boolean|true|request success or fail
+msg|string|true|response message
+data|[Waiver](#schemawaiver)|true|Signed Waiver
+
+
 # Waiver Endpoints
 
 Access waiver
@@ -1295,7 +1538,7 @@ print r.content
 
 ```
 
-`POST https://api.waiverforever.com/openapi/v2/waiver/{waiver_id}/accept`
+`POST /openapi/v2/waiver/{waiver_id}/accept`
 
 *Accept waiver*
 
@@ -1447,7 +1690,7 @@ print r.content
 
 ```
 
-`GET /waiver/{waiver_id}/picture/{picture_id}`
+`GET /openapi/v1/waiver/{waiver_id}/picture/{picture_id}`
 
 *Download waiver pictures*
 
@@ -2871,6 +3114,7 @@ content|[Waiver](#schemawaiver)|true| waiver content
 
 ```json
 {
+  "id": 1,
   "first_name": "first",
   "middle_name": "m",
   "last_name": "last",
@@ -2884,6 +3128,7 @@ content|[Waiver](#schemawaiver)|true| waiver content
 
 Name|Type|Required|Description
 ---|---|---|---|
+id|integer|true|field id
 title|string|true|name field title
 value|string|true|display value
 type|string|true|always "name_field"
@@ -2898,6 +3143,7 @@ middle_name|string|false|middle name (optional)
 
 ```json
 {
+  "id": 1,
   "title": "Please fill in your email",
   "value": "demo@example.com",
   "type": "email_field"
@@ -2908,6 +3154,7 @@ middle_name|string|false|middle name (optional)
 
 Name|Type|Required|Description
 ---|---|---|---|
+id|integer|true|field id
 title|string|true|email field title
 value|string|true|filled email
 type|string|true|always "email_field"
@@ -2919,6 +3166,7 @@ type|string|true|always "email_field"
 
 ```json
 {
+  "id": 1,
   "value": "1 408-123-5678",
   "title": "Please fill in your phone number",
   "type": "phone_field"
@@ -2929,6 +3177,7 @@ type|string|true|always "email_field"
 
 Name|Type|Required|Description
 ---|---|---|---|
+id|integer|true|field id
 title|string|true|phone field title
 value|string|true|filled phone
 type|string|true|always "phone_field"
@@ -2939,6 +3188,7 @@ type|string|true|always "phone_field"
 
 ```json
 {
+  "id": 1,
   "value": "HF",
   "type": "initial_field",
   "title": "please input your initials"
@@ -2949,6 +3199,7 @@ type|string|true|always "phone_field"
 
 Name|Type|Required|Description
 ---|---|---|---|
+id|integer|true|field id
 title|string|true|initial field
 value|string|true|initialed value
 type|string|true|always "initial_field"
@@ -2959,6 +3210,7 @@ type|string|true|always "initial_field"
 
 ```json
 {
+  "id": 1,
   "title": "Please fill in your age",
   "value": "17",
   "type": "age_field"
@@ -2969,6 +3221,7 @@ type|string|true|always "initial_field"
 
 Name|Type|Required|Description
 ---|---|---|---|
+id|integer|true|field id
 title|string|true|age field title
 value|string|true|filled age
 type|string|true|always "age_field"
@@ -2980,6 +3233,7 @@ type|string|true|always "age_field"
 
 ```json
 {
+  "id": 1,
   "title": "Text to agree on",
   "value": "checked",
   "checked": true,
@@ -2991,6 +3245,7 @@ type|string|true|always "age_field"
 
 Name|Type|Required|Description
 ---|---|---|---|
+id|integer|true|field id
 title|string|true|checkbox field
 value|string|true|checked value
 checked|boolean|true|true / false
@@ -3002,6 +3257,7 @@ type|string|true|always "checkbox_field"
 
 ```json
 {
+  "id": 1,
   "title": "Your fav team",
   "value": "Mavericks",
   "type": "short_answer_field"
@@ -3012,6 +3268,7 @@ type|string|true|always "checkbox_field"
 
 Name|Type|Required|Description
 ---|---|---|---|
+id|integer|true|field id
 title|string|true|short answer field title
 value|string|true|filled answer
 type|string|true|always "short_answer_field"
@@ -3022,6 +3279,7 @@ type|string|true|always "short_answer_field"
 
 ```json
 {
+  "id": 1,
   "state": "TX",
   "first_line": "No 123",
   "value": "No 123 TX, USA",
@@ -3038,6 +3296,7 @@ type|string|true|always "short_answer_field"
 
 Name|Type|Required|Description
 ---|---|---|---|
+id|integer|true|field id
 title|string|true|address field title
 value|string|true|display value
 type|string|true|always "address_field"
@@ -3054,6 +3313,7 @@ zipcode|string|true|zipcode or postal code
 
 ```json
 {
+  "id": 1,
   "type": "date_field",
   "title": "Please fill date",
   "value": "2017-11-8",
@@ -3067,6 +3327,7 @@ zipcode|string|true|zipcode or postal code
 
 Name|Type|Required|Description
 ---|---|---|---|
+id|integer|true|field id
 title|string|true|date field
 value|string|true|selected date
 type|string|true|always "date_field"
@@ -3081,6 +3342,7 @@ day|string|true|day of the date
 
 ```json
 {
+  "id": 1,
   "value": "Femal",
   "title": "Male or Female",
   "type": "single_choice_field"
@@ -3091,6 +3353,7 @@ day|string|true|day of the date
 
 Name|Type|Required|Description
 ---|---|---|---|
+id|integer|true|field id
 title|string|true|choice field title
 value|string|true|selected choice
 type|string|true|always "single_choice_field"
@@ -3101,6 +3364,7 @@ type|string|true|always "single_choice_field"
 
 ```json
 {
+  "id": 1,
   "value": ["Magazine", "Trip advisor"],
   "title": "Where did you hear about us? (Gain market insight!)",
   "type": "multiple_choice_field"
@@ -3111,6 +3375,7 @@ type|string|true|always "single_choice_field"
 
 Name|Type|Required|Description
 ---|---|---|---|
+id|integer|true|field id
 title|string|true|choice field title
 value|[string]|true|selected choices
 type|string|true|always "multiple_choice_field"
@@ -3121,6 +3386,7 @@ type|string|true|always "multiple_choice_field"
 
 ```json
 {
+  "id": 1,
   "title": "string",
   "type": "container_field",
   "result_list": [
@@ -3133,6 +3399,7 @@ type|string|true|always "multiple_choice_field"
 
 Name|Type|Required|Description
 ---|---|---|---|
+id|integer|true|field id
 title|string|true|container field title
 type|string|true|always "container_field"
 result_list|[[Field](#schemafield)]|true|a list of ordinary fields set
