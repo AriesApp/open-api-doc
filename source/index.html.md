@@ -991,6 +991,7 @@ template_id|path|string|true|template id
     }
   ],
   "template_title": "Bike Rental Waiver",
+  "template_version": "D6RkEV1yUK1512568456",
   "template_id": "JwIvKHHfW81493594388",
   "tracking_id": "D6RkEV1yUK1512568456",
   "request_id": "P4g4R0nmkY1652897359",
@@ -1042,6 +1043,7 @@ Name|Type|Required|Description
 id|string|true|waiver id
 template_id|string|true|template id
 template_title|string|true|template title
+template_version|string|true|template version
 has_pdf|boolean|true|true if the PDF is available to download
 geolocation|[GeoLocation](#schemageolocation)|false|signing location
 received_at|integer|true|server received timestamp, should be 0 if waiver status is not `approved`
@@ -1244,6 +1246,7 @@ waiver_id|path|string|true|waiver id
     }
   ],
   "template_title": "Bike Rental Waiver",
+  "template_version": "D6RkEV1yUK1512568456",
   "template_id": "JwIvKHHfW81493594388",
   "tracking_id": "D6RkEV1yUK1512568456",
   "request_id": "P4g4R0nmkY1652897359",
@@ -1860,6 +1863,7 @@ status|body|string|false|waiver status (approved, pending, revoked)
                 "device": null,
                 "template_title": null,
                 "template_id": "igcJYpG2KT1381868360",
+                "template_version": "D6RkEV1yUK1512568456",
                 "tracking_id": "",
                 "request_id": "",
                 "has_pdf": true,
@@ -2045,6 +2049,7 @@ template_id|body|string|true|request template id
 {
   "note": "note",
   "accepted_count": 0,
+  "submitted_count": 0,
   "size": 1,
   "request_link": "https://app.waiverforever.com/requested_waiver_group/JM2AJFe0Gq1594865417",
   "type": "normal",
@@ -2149,6 +2154,7 @@ waiver_request_id|path|string|true|waiver request id
 {
   "note": "note",
   "accepted_count": 0,
+  "submitted_count": 0,
   "size": 1,
   "request_link": "https://app.waiverforever.com/requested_waiver_group/JM2AJFe0Gq1594865417",
   "type": "normal",
@@ -2291,6 +2297,7 @@ contact_info|body|string|true|request contact info
 {
   "note": "note new",
   "accepted_count": 0,
+  "submitted_count": 0,
   "size": 2,
   "request_link": "https://app.waiverforever.com/requested_waiver_group/JM2AJFe0Gq1594865417",
   "type": "normal",
@@ -2414,6 +2421,7 @@ per_page|query|int|false|results per page, default 10
       "type": "normal",
       "status": "collecting",
       "accepted_count": 0,
+      "submitted_count": 0,
       "name": "open api created 2"
     },
     ...
@@ -2890,6 +2898,7 @@ updated_at|integer|true|updated timestamp
   ],
   "template_title": "Bike Rental Waiver",
   "template_id": "JwIvKHHfW81493594388",
+  "template_version": "D6RkEV1yUK1512568456",
   "tracking_id": "D6RkEV1yUK1512568456",
   "received_at": 1510127625,
   "signed_at": 1510127615,
@@ -2931,6 +2940,7 @@ ip|string|false|ip
 note|string|true|waiver note
 tags|[sting]|true|waiver tags
 status|string|true|waiver status, possible values `pending`, `approved`, `revoked`
+template_version|[sting]|true|waiver template version
 
 ## Event
 
@@ -3486,6 +3496,7 @@ identifier|string|true|device identifier. should always be an empty string
     "type": "normal",
     "status": "collecting",
     "accepted_count": 0,
+    "submitted_count": 0,
     "name": "open api created 2"
 }
 ```
@@ -3504,6 +3515,8 @@ template_id|string|true|template id of waiver request
 status|string|true|request status. possible values `collecting`, `accepted`
 request_link|string|true|request share link
 datetime|int|true|created timestamp
+accepted_count|int|true| user accepted count
+submitted_count|int|true| user submitted count
 
 ## WaiverTrackPageData
 
