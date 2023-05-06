@@ -1704,6 +1704,7 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v1/tem
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
   </span><span class="nl">"template_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bike Rental Waiver"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"template_version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"D6RkEV1yUK1512568456"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"template_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JwIvKHHfW81493594388"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"tracking_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"D6RkEV1yUK1512568456"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"request_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"P4g4R0nmkY1652897359"</span><span class="p">,</span><span class="w">
@@ -1814,6 +1815,12 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v1/tem
 <td>string</td>
 <td>true</td>
 <td>template title</td>
+</tr>
+<tr>
+<td>template_version</td>
+<td>string</td>
+<td>true</td>
+<td>template version</td>
 </tr>
 <tr>
 <td>has_pdf</td>
@@ -2084,6 +2091,7 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v1/wai
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
   </span><span class="nl">"template_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bike Rental Waiver"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"template_version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"D6RkEV1yUK1512568456"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"template_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JwIvKHHfW81493594388"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"tracking_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"D6RkEV1yUK1512568456"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"request_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"P4g4R0nmkY1652897359"</span><span class="p">,</span><span class="w">
@@ -2969,6 +2977,7 @@ curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v1/wa
                 </span><span class="nl">"device"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
                 </span><span class="nl">"template_title"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
                 </span><span class="nl">"template_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"igcJYpG2KT1381868360"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"template_version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"D6RkEV1yUK1512568456"</span><span class="p">,</span><span class="w">
                 </span><span class="nl">"tracking_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
                 </span><span class="nl">"request_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
                 </span><span class="nl">"has_pdf"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
@@ -3253,6 +3262,7 @@ curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/wa
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">"note"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"accepted_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"submitted_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="nl">"request_link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://app.waiverforever.com/requested_waiver_group/JM2AJFe0Gq1594865417"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"normal"</span><span class="p">,</span><span class="w">
@@ -3401,6 +3411,7 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v2/wai
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">"note"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"accepted_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"submitted_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="nl">"request_link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://app.waiverforever.com/requested_waiver_group/JM2AJFe0Gq1594865417"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"normal"</span><span class="p">,</span><span class="w">
@@ -3612,6 +3623,7 @@ curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/wa
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"note"</span><span class="p">:</span><span class="w"> </span><span class="s2">"note new"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"accepted_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"submitted_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
   </span><span class="nl">"request_link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://app.waiverforever.com/requested_waiver_group/JM2AJFe0Gq1594865417"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"normal"</span><span class="p">,</span><span class="w">
@@ -3815,6 +3827,7 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v2/wai
       </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"normal"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"collecting"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"accepted_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"submitted_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open api created 2"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="err">...</span><span class="w">
@@ -4493,6 +4506,7 @@ curl https://api.waiverforever.com/openapi/v2/waiverRequests/groupTrackings?grou
   </span><span class="p">],</span><span class="w">
   </span><span class="nl">"template_title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bike Rental Waiver"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"template_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JwIvKHHfW81493594388"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"template_version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"D6RkEV1yUK1512568456"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"tracking_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"D6RkEV1yUK1512568456"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"received_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1510127625</span><span class="p">,</span><span class="w">
   </span><span class="nl">"signed_at"</span><span class="p">:</span><span class="w"> </span><span class="mi">1510127615</span><span class="p">,</span><span class="w">
@@ -4611,6 +4625,12 @@ curl https://api.waiverforever.com/openapi/v2/waiverRequests/groupTrackings?grou
 <td>string</td>
 <td>true</td>
 <td>waiver status, possible values <code>pending</code>, <code>approved</code>, <code>revoked</code></td>
+</tr>
+<tr>
+<td>template_version</td>
+<td>[sting]</td>
+<td>true</td>
+<td>waiver template version</td>
 </tr>
 </tbody></table>
 <h2 id='event'>Event</h2>
@@ -5571,6 +5591,7 @@ curl https://api.waiverforever.com/openapi/v2/waiverRequests/groupTrackings?grou
     </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"normal"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"collecting"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"accepted_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"submitted_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"open api created 2"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h3 id='properties-21'>Properties</h3>
@@ -5641,6 +5662,18 @@ curl https://api.waiverforever.com/openapi/v2/waiverRequests/groupTrackings?grou
 <td>int</td>
 <td>true</td>
 <td>created timestamp</td>
+</tr>
+<tr>
+<td>accepted_count</td>
+<td>int</td>
+<td>true</td>
+<td>user accepted count</td>
+</tr>
+<tr>
+<td>submitted_count</td>
+<td>int</td>
+<td>true</td>
+<td>user submitted count</td>
 </tr>
 </tbody></table>
 <h2 id='waivertrackpagedata'>WaiverTrackPageData</h2>
