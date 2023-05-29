@@ -992,6 +992,7 @@ template_id|path|string|true|template id
   ],
   "template_title": "Bike Rental Waiver",
   "template_version": "D6RkEV1yUK1512568456",
+  "s3_pdf_download_url": "https://s3.amazonaws.com/xxx/xxxxx.pdf",
   "template_id": "JwIvKHHfW81493594388",
   "tracking_id": "D6RkEV1yUK1512568456",
   "request_id": "P4g4R0nmkY1652897359",
@@ -1247,6 +1248,7 @@ waiver_id|path|string|true|waiver id
   ],
   "template_title": "Bike Rental Waiver",
   "template_version": "D6RkEV1yUK1512568456",
+  "s3_pdf_download_url": "https://s3.amazonaws.com/xxx/xxxxx.pdf",
   "template_id": "JwIvKHHfW81493594388",
   "tracking_id": "D6RkEV1yUK1512568456",
   "request_id": "P4g4R0nmkY1652897359",
@@ -1864,6 +1866,7 @@ status|body|string|false|waiver status (approved, pending, revoked)
                 "template_title": null,
                 "template_id": "igcJYpG2KT1381868360",
                 "template_version": "D6RkEV1yUK1512568456",
+                "s3_pdf_download_url": "https://s3.amazonaws.com/xxx/xxxxx.pdf",
                 "tracking_id": "",
                 "request_id": "",
                 "has_pdf": true,
@@ -2899,6 +2902,7 @@ updated_at|integer|true|updated timestamp
   "template_title": "Bike Rental Waiver",
   "template_id": "JwIvKHHfW81493594388",
   "template_version": "D6RkEV1yUK1512568456",
+  "s3_pdf_download_url": "https://s3.amazonaws.com/xxx/xxxxx.pdf",
   "tracking_id": "D6RkEV1yUK1512568456",
   "received_at": 1510127625,
   "signed_at": 1510127615,
@@ -2941,6 +2945,7 @@ note|string|true|waiver note
 tags|[sting]|true|waiver tags
 status|string|true|waiver status, possible values `pending`, `approved`, `revoked`
 template_version|[sting]|true|waiver template version
+s3_pdf_download_url|[sting]|true|waiver pdf download url
 
 ## Event
 
