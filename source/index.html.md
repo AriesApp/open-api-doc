@@ -992,6 +992,7 @@ template_id|path|string|true|template id
   ],
   "template_title": "Bike Rental Waiver",
   "template_version": "D6RkEV1yUK1512568456",
+  "s3_pdf_download_url": "https://s3.amazonaws.com/xxx/xxxxx.pdf",
   "template_id": "JwIvKHHfW81493594388",
   "tracking_id": "D6RkEV1yUK1512568456",
   "request_id": "P4g4R0nmkY1652897359",
@@ -1052,7 +1053,7 @@ pictures|[[Picture](#schemapicture)]|false|attached pictures
 data|[[Field](#schemafield)]|true|filled fields
 device|[Device](#schemadevice)|false|signing device
 note|string|true|waiver note
-tags|[sting]|true|waiver tags
+tags|[string]|true|waiver tags
 ip|string|false|ip
 request_id|string|false|waiver request id, should be `''` if not exists
 tracking_id|string|false|waiver tracking id, should be `''` if not exists
@@ -1142,11 +1143,13 @@ waiver_id|path|string|true|waiver id
   ],
   "data": [
     {
+      "id": 1,
       "value": "HF",
       "type": "initial_field",
       "title": "please input your initials"
     },
     {
+      "id": 2,
       "first_name": "first",
       "middle_name": "",
       "last_name": "",
@@ -1155,16 +1158,19 @@ waiver_id|path|string|true|waiver id
       "type": "name_field"
     },
     {
+      "id": 3,
       "title": "Please fill in your email",
       "value": "gh@me.com",
       "type": "email_field"
     },
     {
+      "id": 4,
       "value": "1 851-234-5678",
       "title": "Please fill in your phone number",
       "type": "phone_field"
     },
     {
+      "id": 5,
       "state": "TX",
       "first_line": "No 123",
       "value": "No 123 TX, USA",
@@ -1176,11 +1182,13 @@ waiver_id|path|string|true|waiver id
       "city": ""
     },
     {
+      "id": 6,
       "value": "18",
       "title": "Please fill in your age",
       "type": "age_field"
     },
     {
+      "id": 7,
       "type": "date_field",
       "title": "Please fill date",
       "value": "2017-11-8",
@@ -1189,31 +1197,37 @@ waiver_id|path|string|true|waiver id
       "day": "8"
     },
     {
+      "id": 8,
       "type": "checkbox_field",
       "title": "Text to agree on",
       "value": "checked"
     },
     {
+      "id": 9,
       "value": "Ghosts ",
       "title": "Your fav team",
       "type": "short_answer_field"
     },
     {
+      "id": 10,
       "value": "Femal",
       "title": "Male or Female",
       "type": "single_choice_field"
     },
     {
+      "id": 11,
       "value": ["Magazine", "Trip advisor"],
       "title": "Where did you hear about us? (Gain market insight!)",
       "type": "multiple_choice_field"
     },
     {
+      "id": 12,
       "type": "container_field",
       "title": "please enter your minors' information",
       "result_list": [
         [
           {
+            "id": 1,
             "first_name": "first",
             "middle_name": "",
             "last_name": "",
@@ -1222,6 +1236,7 @@ waiver_id|path|string|true|waiver id
             "type": "name_field"
           },
           {
+            "id": 2,
             "title": "Please fill in your email",
             "value": "C1 gh@me.com",
             "type": "email_field"
@@ -1229,6 +1244,7 @@ waiver_id|path|string|true|waiver id
         ],
         [
           {
+            "id": 1,
             "first_name": "first",
             "middle_name": "",
             "last_name": "",
@@ -1237,6 +1253,7 @@ waiver_id|path|string|true|waiver id
             "type": "name_field"
           },
           {
+            "id": 2,
             "title": "Please fill in your email",
             "value": "C2 gh@me.com",
             "type": "email_field"
@@ -1247,6 +1264,7 @@ waiver_id|path|string|true|waiver id
   ],
   "template_title": "Bike Rental Waiver",
   "template_version": "D6RkEV1yUK1512568456",
+  "s3_pdf_download_url": "https://s3.amazonaws.com/xxx/xxxxx.pdf",
   "template_id": "JwIvKHHfW81493594388",
   "tracking_id": "D6RkEV1yUK1512568456",
   "request_id": "P4g4R0nmkY1652897359",
@@ -1864,6 +1882,7 @@ status|body|string|false|waiver status (approved, pending, revoked)
                 "template_title": null,
                 "template_id": "igcJYpG2KT1381868360",
                 "template_version": "D6RkEV1yUK1512568456",
+                "s3_pdf_download_url": "https://s3.amazonaws.com/xxx/xxxxx.pdf",
                 "tracking_id": "",
                 "request_id": "",
                 "has_pdf": true,
@@ -2588,7 +2607,7 @@ Name|Type|Required|Description
 ---|---|---|---|---|
 result|boolean|true|request success or fail
 msg|string|true|response message
-data|[WaiverTrack](#schemawaivertrack)|true|Waiver Request
+data|[WaiverTracking](#schemawaivertracking)|true|Waiver Request
 
 
 ## Get Waiver Request Tracking Info
@@ -2701,7 +2720,7 @@ Name|Type|Required|Description
 ---|---|---|---|---|
 result|boolean|true|request success or fail
 msg|string|true|response message
-data|[WaiverTrackPageData](#schemaWaiverTrackPageData)|true|paged data
+data|[WaiverTrackingResponse](#schemaWaiverTrackingResponse)|true|paged data
 
 
 # Schemas
@@ -2793,11 +2812,13 @@ updated_at|integer|true|updated timestamp
   ],
   "data": [
     {
+      "id": 1,
       "value": "HF",
       "type": "initial_field",
       "title": "please input your initials"
     },
     {
+      "id": 2,
       "first_name": "first",
       "middle_name": "",
       "last_name": "",
@@ -2806,16 +2827,19 @@ updated_at|integer|true|updated timestamp
       "type": "name_field"
     },
     {
+      "id": 3,
       "title": "Please fill in your email",
       "value": "gh@me.com",
       "type": "email_field"
     },
     {
+      "id": 4,
       "value": "1 851-234-5678",
       "title": "Please fill in your phone number",
       "type": "phone_field"
     },
     {
+      "id": 5,
       "state": "TX",
       "first_line": "No 123",
       "value": "No 123 TX, USA",
@@ -2827,11 +2851,13 @@ updated_at|integer|true|updated timestamp
       "city": ""
     },
     {
+      "id": 6,
       "value": "18",
       "title": "Please fill in your age",
       "type": "age_field"
     },
     {
+      "id": 7,
       "type": "date_field",
       "title": "Please fill date",
       "value": "2017-11-8",
@@ -2840,31 +2866,37 @@ updated_at|integer|true|updated timestamp
       "day": "8"
     },
     {
+      "id": 8,
       "type": "checkbox_field",
       "title": "Text to agree on",
       "value": "checked"
     },
     {
+      "id": 9,
       "value": "Ghosts ",
       "title": "Your fav team",
       "type": "short_answer_field"
     },
     {
+      "id": 10,
       "value": "Femal",
       "title": "Male or Female",
       "type": "single_choice_field"
     },
     {
+      "id": 11,
       "value": ["Magazine", "Trip advisor"],
       "title": "Where did you hear about us? (Gain market insight!)",
       "type": "multiple_choice_field"
     },
     {
+      "id": 12,
       "type": "container_field",
       "title": "please enter your minors' information",
       "result_list": [
         [
           {
+            "id": 1,
             "first_name": "first",
             "middle_name": "",
             "last_name": "",
@@ -2873,6 +2905,7 @@ updated_at|integer|true|updated timestamp
             "type": "name_field"
           },
           {
+            "id": 2,
             "title": "Please fill in your email",
             "value": "C1 gh@me.com",
             "type": "email_field"
@@ -2880,6 +2913,7 @@ updated_at|integer|true|updated timestamp
         ],
         [
           {
+            "id": 1,
             "first_name": "first",
             "middle_name": "",
             "last_name": "",
@@ -2888,6 +2922,7 @@ updated_at|integer|true|updated timestamp
             "type": "name_field"
           },
           {
+            "id": 2,
             "title": "Please fill in your email",
             "value": "C2 gh@me.com",
             "type": "email_field"
@@ -2899,6 +2934,7 @@ updated_at|integer|true|updated timestamp
   "template_title": "Bike Rental Waiver",
   "template_id": "JwIvKHHfW81493594388",
   "template_version": "D6RkEV1yUK1512568456",
+  "s3_pdf_download_url": "https://s3.amazonaws.com/xxx/xxxxx.pdf",
   "tracking_id": "D6RkEV1yUK1512568456",
   "received_at": 1510127625,
   "signed_at": 1510127615,
@@ -2938,9 +2974,10 @@ request_id|string|false|request id
 data|[[Field](#schemafield)]|false|filled fields
 ip|string|false|ip
 note|string|true|waiver note
-tags|[sting]|true|waiver tags
+tags|[string]|true|waiver tags
 status|string|true|waiver status, possible values `pending`, `approved`, `revoked`
-template_version|[sting]|true|waiver template version
+template_version|[string]|true|waiver template version
+s3_pdf_download_url|[string]|true|waiver pdf download url, this url only valid for 30 seconds
 
 ## Event
 
@@ -2962,11 +2999,13 @@ template_version|[sting]|true|waiver template version
   ],
   "data": [
     {
+      "id": 1,
       "value": "HF",
       "type": "initial_field",
       "title": "please input your initials"
     },
     {
+      "id": 2,
       "first_name": "first",
       "middle_name": "",
       "last_name": "",
@@ -2975,16 +3014,19 @@ template_version|[sting]|true|waiver template version
       "type": "name_field"
     },
     {
+      "id": 3,
       "title": "Please fill in your email",
       "value": "gh@me.com",
       "type": "email_field"
     },
     {
+      "id": 4,
       "value": "1 851-234-5678",
       "title": "Please fill in your phone number",
       "type": "phone_field"
     },
     {
+      "id": 5,
       "state": "TX",
       "first_line": "No 123",
       "value": "No 123 TX, USA",
@@ -2996,11 +3038,13 @@ template_version|[sting]|true|waiver template version
       "city": ""
     },
     {
+      "id": 6,
       "value": "18",
       "title": "Please fill in your age",
       "type": "age_field"
     },
     {
+      "id": 7,
       "type": "date_field",
       "title": "Please fill date",
       "value": "2017-11-8",
@@ -3009,31 +3053,37 @@ template_version|[sting]|true|waiver template version
       "day": "8"
     },
     {
+      "id": 8,
       "type": "checkbox_field",
       "title": "Text to agree on",
       "value": "checked"
     },
     {
+      "id": 9,
       "value": "Ghosts ",
       "title": "Your fav team",
       "type": "short_answer_field"
     },
     {
+      "id": 10,
       "value": "Femal",
       "title": "Male or Female",
       "type": "single_choice_field"
     },
     {
+      "id": 11,
       "value": ["Magazine", "Trip advisor"],
       "title": "Where did you hear about us? (Gain market insight!)",
       "type": "multiple_choice_field"
     },
     {
+      "id": 12,
       "type": "container_field",
       "title": "please enter your minors' information",
       "result_list": [
         [
           {
+            "id": 1,
             "first_name": "first",
             "middle_name": "",
             "last_name": "",
@@ -3042,6 +3092,7 @@ template_version|[sting]|true|waiver template version
             "type": "name_field"
           },
           {
+            "id": 2,
             "title": "Please fill in your email",
             "value": "C1 gh@me.com",
             "type": "email_field"
@@ -3049,6 +3100,7 @@ template_version|[sting]|true|waiver template version
         ],
         [
           {
+            "id": 1,
             "first_name": "first",
             "middle_name": "",
             "last_name": "",
@@ -3057,6 +3109,7 @@ template_version|[sting]|true|waiver template version
             "type": "name_field"
           },
           {
+            "id": 2,
             "title": "Please fill in your email",
             "value": "C2 gh@me.com",
             "type": "email_field"
@@ -3518,9 +3571,9 @@ datetime|int|true|created timestamp
 accepted_count|int|true| user accepted count
 submitted_count|int|true| user submitted count
 
-## WaiverTrackPageData
+## WaiverTrackingResponse
 
-<a name="schemaWaiverTrackPageData"></a>
+<a name="schemaWaiverTrackingResponse"></a>
 
 ```json
 {
@@ -3552,11 +3605,11 @@ Name|Type|Required|Description
 ---|---|---|---|---|
 count|int|true|count
 per_page|int|true|per page
-data|[WaiverTrack](#schemawaivertrack)|true|track list
+data|[WaiverTracking](#schemawaivertracking)|true|track list
 
-## WaiverTrack
+## WaiverTracking
 
-<a name="schemawaivertrack"></a>
+<a name="schemawaivertracking"></a>
 
 ```json
  {
