@@ -2802,6 +2802,7 @@ updated_at|integer|true|updated timestamp
 ```json
 {
   "id": "zZ613txA741510127626",
+  "status": "approved",
   "has_pdf": true,
   "pictures": [
     {
@@ -2932,12 +2933,15 @@ updated_at|integer|true|updated timestamp
     }
   ],
   "template_title": "Bike Rental Waiver",
-  "template_id": "JwIvKHHfW81493594388",
   "template_version": "D6RkEV1yUK1512568456",
   "s3_pdf_download_url": "https://s3.amazonaws.com/xxx/xxxxx.pdf",
+  "template_id": "JwIvKHHfW81493594388",
   "tracking_id": "D6RkEV1yUK1512568456",
+  "request_id": "P4g4R0nmkY1652897359",
   "received_at": 1510127625,
   "signed_at": 1510127615,
+  "note": "",
+  "tags": ["tag1", "tag2"],
   "geolocation": {
       "accuracy": 5,
       "latitude": "137.785834",
@@ -2949,11 +2953,7 @@ updated_at|integer|true|updated timestamp
       "id": "opZTzJP2gI1504892592",
       "device_name": "Jing's iPhone",
       "identifier": ""
-  },
-  "note": "",
-  "tags": ["tag1", "tag2"],
-  "ip": "1.1.1.1",
-  "status": "approved"
+  }
 }
 ```
 
@@ -2964,20 +2964,20 @@ Name|Type|Required|Description
 id|string|true|waiver id
 template_id|string|true|template id
 template_title|string|true|template title
+template_version|string|true|template version
 has_pdf|boolean|true|true if the PDF is available to download
 geolocation|[GeoLocation](#schemageolocation)|false|signing location
 received_at|integer|true|server received timestamp, should be 0 if waiver status is not `approved`
 signed_at|integer|true|waiver signed timestamp
 pictures|[[Picture](#schemapicture)]|false|attached pictures
-tracking_id|string|false|tracking id
-request_id|string|false|request id
-data|[[Field](#schemafield)]|false|filled fields
-ip|string|false|ip
+data|[[Field](#schemafield)]|true|filled fields
+device|[Device](#schemadevice)|false|signing device
 note|string|true|waiver note
 tags|[string]|true|waiver tags
+ip|string|false|ip
+request_id|string|false|waiver request id, should be `''` if not exists
+tracking_id|string|false|waiver tracking id, should be `''` if not exists
 status|string|true|waiver status, possible values `pending`, `approved`, `revoked`
-template_version|[string]|true|waiver template version
-s3_pdf_download_url|[string]|true|waiver pdf download url, this url only valid for 30 seconds
 
 ## Event
 
