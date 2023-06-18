@@ -123,7 +123,6 @@ Base URLs:
 
 The whole flow is dead simple ->
 
-
 ```
 Your App                     WavierForever                             User
 |                                   |                                   |
@@ -244,6 +243,7 @@ print(r.json())
 }
 
 ```
+
 <h3 id="authPing-responses">Responses</h3>
 
 Status|Meaning|Description|Schema
@@ -365,6 +365,7 @@ print(r.json())
   }]
 }
 ```
+
 <h3 id="subscribeEvent-responses">Responses</h3>
 
 Status|Meaning|Description|Schema
@@ -469,6 +470,7 @@ Subscribe an event you care about, and WaiverForever will call you back when cer
   "template_id": "<template_id>"
 }
 ```
+
 <h3 id="subscribeEvent-parameters">Parameters</h3>
 
 Parameter|In|Type|Required|Description
@@ -491,6 +493,7 @@ body|body|object|false|Event that you're interested.
   }
 }
 ```
+
 <h3 id="subscribeEvent-responses">Responses</h3>
 
 Status|Meaning|Description|Schema
@@ -498,7 +501,7 @@ Status|Meaning|Description|Schema
 200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|[Subscription](#schemasubscription)
 403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid API key|None
 
-## Unsubscribe an event.
+## Unsubscribe an event
 
 > Code samples
 
@@ -571,6 +574,7 @@ subscription_id|path|string|true|subscription id
   "msg": "success"
 }
 ```
+
 <h3 id="unsubscribeEvent-responses">Responses</h3>
 
 Status|Meaning|Description|Schema
@@ -668,6 +672,7 @@ print(r.json())
   ]
 }
 ```
+
 <h3 id="GET-/template-responses">Responses</h3>
 
 Status|Meaning|Description|Schema
@@ -753,7 +758,6 @@ Parameter|In|Type|Required|Description
 template_id|path|string|true|template id
 ttl|query|string|false|request waiver expiration time (in seconds), default 86400
 
-
 > Example responses
 
 ```json
@@ -767,6 +771,7 @@ ttl|query|string|false|request waiver expiration time (in seconds), default 8640
   }
 }
 ```
+
 <h3 id="requestWaiver-responses">Responses</h3>
 
 Status|Meaning|Description|Schema
@@ -1014,6 +1019,7 @@ template_id|path|string|true|template id
   }
 }
 ```
+
 <h3 id="getSampleWaiver-responses">Responses</h3>
 
 Status|Meaning|Description|Schema
@@ -1031,7 +1037,6 @@ Name|Type|Required|Description
 result|boolean|true|request success or fail
 msg|string|true|response message
 data|[Waiver](#schemawaiver)|true|Signed Waiver
-
 
 # Waiver Endpoints
 
@@ -1125,7 +1130,6 @@ print(r.json())
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
 waiver_id|path|string|true|waiver id
-
 
 > Example responses
 
@@ -1286,6 +1290,7 @@ waiver_id|path|string|true|waiver id
   }
 }
 ```
+
 <h3 id="getWaiverById-responses">Responses</h3>
 
 Status|Meaning|Description|Schema
@@ -1371,7 +1376,6 @@ Parameter|In|Type|Required|Description
 ---|---|---|---|---|
 tracking_id|path|string|true|tracking id from [requestWaiver](#request-waiver)
 
-
 > Example responses
 
 ```javascript
@@ -1379,7 +1383,6 @@ tracking_id|path|string|true|tracking id from [requestWaiver](#request-waiver)
   // same as get signed waiver above
 }
 ```
-
 
 <h3 id="queryWaiverByTrackingId-responses">Responses</h3>
 
@@ -1641,7 +1644,6 @@ Parameter|In|Type|Required|Description
 ---|---|---|---|---|
 waiver_id|path|string|true|waiver id
 
-
 > Example responses
 
 <h3 id="downloadWaiverPdf-responses">Responses</h3>
@@ -1721,7 +1723,6 @@ Parameter|In|Type|Required|Description
 ---|---|---|---|---|
 waiver_id|path|string|true|waiver id
 picture_id|path|string|true|picture id
-
 
 > Example responses
 
@@ -1854,6 +1855,7 @@ search waiver with keywords.
   "status": "<waiver status>"
 }
 ```
+
 <h3 id="waiverSearch-parameters">Parameters</h3>
 
 Parameter|In|Type|Required|Description
@@ -1918,13 +1920,13 @@ status|body|string|false|waiver status (approved, pending, revoked)
     "msg": "success"
 }
 ```
+
 <h3 id="waiverSearch-responses">Responses</h3>
 
 Status|Meaning|Description|Schema
 ---|---|---|---|
 200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|[Subscription](#schemasubscription)
 403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid API key|None
-
 
 <aside class="notice">
 Waiver field `device`, `pictures` and `template_title` is not available in search waiver API.
@@ -1948,7 +1950,6 @@ template_id|string|true|template id of waiver request
 status|string|true|request status. possible values `collecting`, `accepted`
 request_link|string|true|request share link
 datetime|int|true|created timestamp
-
 
 ## Create Waiver Request
 
@@ -2061,7 +2062,6 @@ type|body|string|true|request type. possible values `normal`, `anonymous`
 contact_info|body|string|true|request contact info
 template_id|body|string|true|request template id
 
-
 > Example responses
 
 ```json
@@ -2080,6 +2080,7 @@ template_id|body|string|true|request template id
   "template_id": "TutFEMdPgR1519947925"
 }
 ```
+
 <h3 id="createWaiverRequest-responses">Responses</h3>
 
 Status|Meaning|Description|Schema
@@ -2097,7 +2098,6 @@ Name|Type|Required|Description
 result|boolean|true|request success or fail
 msg|string|true|response message
 data|[WaiverRequest](#schemawaiverrequest)|true|Waiver Request
-
 
 ## Get Waiver Request
 
@@ -2166,7 +2166,6 @@ Parameter|In|Type|Required|Description
 ---|---|---|---|---|
 waiver_request_id|path|string|true|waiver request id
 
-
 > Example responses
 
 ```json
@@ -2185,6 +2184,7 @@ waiver_request_id|path|string|true|waiver request id
   "template_id": "TutFEMdPgR1519947925"
 }
 ```
+
 <h3 id="getWaiverRequest-responses">Responses</h3>
 
 Status|Meaning|Description|Schema
@@ -2309,7 +2309,6 @@ size|body|int|true|request size. between 0 and 1000
 note|body|string|true|request note
 contact_info|body|string|true|request contact info
 
-
 > Example responses
 
 ```json
@@ -2328,6 +2327,7 @@ contact_info|body|string|true|request contact info
   "template_id": "TutFEMdPgR1519947925"
 }
 ```
+
 <h3 id="editWaiverRequest-responses">Responses</h3>
 
 Status|Meaning|Description|Schema
@@ -2345,7 +2345,6 @@ Name|Type|Required|Description
 result|boolean|true|request success or fail
 msg|string|true|response message
 data|[WaiverRequest](#schemawaiverrequest)|true|Waiver Request
-
 
 ## List Waiver Requests
 
@@ -2420,7 +2419,6 @@ end_timestamp|query|int|false|end timestamp in seconds
 page|query|int|false|page index, default 1
 per_page|query|int|false|results per page, default 10
 
-
 > Example responses
 
 ```json
@@ -2447,6 +2445,7 @@ per_page|query|int|false|results per page, default 10
   ]
 }
 ```
+
 <h3 id="listWaiverRequest-responses">Responses</h3>
 
 Status|Meaning|Description|Schema
@@ -2591,6 +2590,7 @@ expired_in|body|int|true|request expired timestamp
         ]
 }
 ```
+
 <h3 id="sendGroupEmail-responses">Responses</h3>
 
 Status|Meaning|Description|Schema
@@ -2608,7 +2608,6 @@ Name|Type|Required|Description
 result|boolean|true|request success or fail
 msg|string|true|response message
 data|[WaiverTracking](#schemawaivertracking)|true|Waiver Request
-
 
 ## Get Waiver Request Tracking Info
 
@@ -2704,6 +2703,7 @@ per_page|int|true|per page
         ]
 }
 ```
+
 <h3 id="groupTrackings-responses">Responses</h3>
 
 Status|Meaning|Description|Schema
@@ -2721,7 +2721,6 @@ Name|Type|Required|Description
 result|boolean|true|request success or fail
 msg|string|true|response message
 data|[WaiverTrackingResponse](#schemaWaiverTrackingResponse)|true|paged data
-
 
 # Schemas
 
@@ -2793,7 +2792,6 @@ title|string|true|template title
 disabled|boolean|true|true if disabled by user
 created_at|integer|true|created timestamp
 updated_at|integer|true|updated timestamp
-
 
 ## Waiver
 
@@ -3151,7 +3149,6 @@ type|string|true|event type
 content_type|string|true|content type. only support `waiver` now.
 content|[Waiver](#schemawaiver)|true| waiver content
 
-
 #### Field Types
 
 <a name="schemafield"></a>
@@ -3199,7 +3196,6 @@ first_name|string|true|first name
 last_name|string|true|last name
 middle_name|string|false|middle name (optional)
 
-
 ## EmailField
 
 <a name="schemaemailfield"></a>
@@ -3221,7 +3217,6 @@ id|integer|true|field id
 title|string|true|email field title
 value|string|true|filled email
 type|string|true|always "email_field"
-
 
 ## PhoneField
 
@@ -3288,7 +3283,6 @@ id|integer|true|field id
 title|string|true|age field title
 value|string|true|filled age
 type|string|true|always "age_field"
-
 
 ## CheckBoxField
 
@@ -3398,7 +3392,6 @@ year|string|true|year of the date
 month|string|true|month of the date
 day|string|true|day of the date
 
-
 ## SingleChoiceField
 
 <a name="schemasinglechoicefield"></a>
@@ -3487,7 +3480,6 @@ title|string|true|picture title
 id|string|true|picture id
 timestamp|integer|true|created timestamp
 
-
 ## GeoLocation
 
 <a name="schemageolocation"></a>
@@ -3507,7 +3499,6 @@ Name|Type|Required|Description
 accuracy|integer|true|location accuracy level in meters
 latitude|string|true|latitude value
 longtitude|string|true|longtitude value
-
 
 ## Device
 
