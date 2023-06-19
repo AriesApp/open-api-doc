@@ -1063,7 +1063,7 @@ ip|string|false|ip
 request_id|string|false|waiver request id, should be `''` if not exists
 tracking_id|string|false|waiver tracking id, should be `''` if not exists
 status|string|true|waiver status, possible values `pending`, `approved`, `revoked`
-s3_pdf_download_url|[string]|true|waiver pdf download url, this url only valid for 30 seconds
+s3_pdf_download_url|string|true|waiver pdf download url, this url only valid for 30 seconds
 
 ## Get Signed Waiver
 
@@ -2977,7 +2977,7 @@ ip|string|false|ip
 request_id|string|false|waiver request id, should be `''` if not exists
 tracking_id|string|false|waiver tracking id, should be `''` if not exists
 status|string|true|waiver status, possible values `pending`, `approved`, `revoked`
-s3_pdf_download_url|[string]|true|waiver pdf download url, this url only valid for 30 seconds
+s3_pdf_download_url|string|true|waiver pdf download url, this url only valid for 30 seconds
 
 ## Event
 
