@@ -1277,6 +1277,7 @@ waiver_id|path|string|true|waiver id
   "signed_at": 1510127615,
   "note": "",
   "tags": ["tag1", "tag2"],
+  "ip": "1.1.1.1",
   "geolocation": {
       "accuracy": 5,
       "latitude": "137.785834",
@@ -2940,6 +2941,7 @@ updated_at|integer|true|updated timestamp
   "received_at": 1510127625,
   "signed_at": 1510127615,
   "note": "",
+  "ip": "1.1.1.1",
   "tags": ["tag1", "tag2"],
   "geolocation": {
       "accuracy": 5,
