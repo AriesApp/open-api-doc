@@ -1874,6 +1874,7 @@ tags|body|list[string]|false|tag name list
 device_ids|body|list[string]|false|device id list
 request_id|body|string|false|waiver request id
 status|body|string|false|waiver status (approved, pending, revoked)
+reference_number|body|string|false|waiver reference number
 > Example responses
 
 ```json
@@ -2943,6 +2944,7 @@ updated_at|integer|true|updated timestamp
   "note": "",
   "ip": "1.1.1.1",
   "tags": ["tag1", "tag2"],
+  "reference_number": "168915918B",
   "geolocation": {
       "accuracy": 5,
       "latitude": "137.785834",
@@ -2980,6 +2982,7 @@ request_id|string|false|waiver request id, should be `''` if not exists
 tracking_id|string|false|waiver tracking id, should be `''` if not exists
 status|string|true|waiver status, possible values `pending`, `approved`, `revoked`
 s3_pdf_download_url|string|true|waiver pdf download url, this url only valid for 30 seconds
+reference_number|string|false|waiver reference number
 
 ## Event
 
