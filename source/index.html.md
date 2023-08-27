@@ -1853,7 +1853,8 @@ search waiver with keywords.
   "note": "<waiver note>",
   "tags": "<tag name list>",
   "device_ids": "<device id list>",
-  "group_id": "<group id>",
+  "request_id": "<request id>",
+  "request_ids": "<request id list>",
   "status": "<waiver status>"
 }
 ```
@@ -1873,6 +1874,7 @@ note|body|string|false|waiver note
 tags|body|list[string]|false|tag name list
 device_ids|body|list[string]|false|device id list
 request_id|body|string|false|waiver request id
+request_ids|body|list[string]|false|waiver request id list
 status|body|string|false|waiver status (approved, pending, revoked)
 reference_number|body|string|false|waiver reference number
 > Example responses
@@ -2159,7 +2161,7 @@ print(r.json())
 
 ```
 
-`GET /openapi/v2/waiverRequest/{waiver_request_id}`
+`GET /openapi/v2/waiverRequest/{waiver_request_id}?include_waivers=true`
 
 *Get a waiver request*
 
@@ -2168,23 +2170,188 @@ print(r.json())
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
 waiver_request_id|path|string|true|waiver request id
+include_waivers|query|bool|false|include waivers in the response
 
 > Example responses
 
 ```json
 {
-  "note": "note",
-  "accepted_count": 0,
-  "submitted_count": 0,
-  "size": 1,
-  "request_link": "https://app.waiverforever.com/requested_waiver_group/JM2AJFe0Gq1594865417",
-  "type": "normal",
-  "datetime": 1594865417,
-  "name": "waiver request name",
-  "contact_info": "contact info",
-  "id": "JM2AJFe0Gq1594865417",
-  "status": "collecting",
-  "template_id": "TutFEMdPgR1519947925"
+    "note": "note",
+    "accepted_count": 0,
+    "submitted_count": 0,
+    "size": 1,
+    "request_link": "https://app.waiverforever.com/requested_waiver_group/JM2AJFe0Gq1594865417",
+    "type": "normal",
+    "datetime": 1594865417,
+    "name": "waiver request name",
+    "contact_info": "contact info",
+    "id": "JM2AJFe0Gq1594865417",
+    "status": "collecting",
+    "template_id": "TutFEMdPgR1519947925",
+    "waivers": [
+        {
+            "id": "zZ613txA741510127626",
+            "status": "approved",
+            "has_pdf": true,
+            "pictures": [
+                {
+                    "id": "picture id",
+                    "title": "Your Photo",
+                    "timestamp": 1510127609
+                }
+            ],
+            "data": [
+                {
+                    "id": 1,
+                    "value": "HF",
+                    "type": "initial_field",
+                    "title": "please input your initials"
+                },
+                {
+                    "id": 2,
+                    "first_name": "first",
+                    "middle_name": "",
+                    "last_name": "",
+                    "value": "first m last",
+                    "title": "Please fill in your name",
+                    "type": "name_field"
+                },
+                {
+                    "id": 3,
+                    "title": "Please fill in your email",
+                    "value": "gh@me.com",
+                    "type": "email_field"
+                },
+                {
+                    "id": 4,
+                    "value": "1 851-234-5678",
+                    "title": "Please fill in your phone number",
+                    "type": "phone_field"
+                },
+                {
+                    "id": 5,
+                    "state": "TX",
+                    "first_line": "No 123",
+                    "value": "No 123 TX, USA",
+                    "type": "address_field",
+                    "country": "USA",
+                    "title": "Please fill in your address",
+                    "zipcode": "123456",
+                    "second_line": "",
+                    "city": ""
+                },
+                {
+                    "id": 6,
+                    "value": "18",
+                    "title": "Please fill in your age",
+                    "type": "age_field"
+                },
+                {
+                    "id": 7,
+                    "type": "date_field",
+                    "title": "Please fill date",
+                    "value": "2017-11-8",
+                    "year": "2017",
+                    "month": "11",
+                    "day": "8"
+                },
+                {
+                    "id": 8,
+                    "type": "checkbox_field",
+                    "title": "Text to agree on",
+                    "value": "checked"
+                },
+                {
+                    "id": 9,
+                    "value": "Ghosts ",
+                    "title": "Your fav team",
+                    "type": "short_answer_field"
+                },
+                {
+                    "id": 10,
+                    "value": "Femal",
+                    "title": "Male or Female",
+                    "type": "single_choice_field"
+                },
+                {
+                    "id": 11,
+                    "value": [
+                        "Magazine",
+                        "Trip advisor"
+                    ],
+                    "title": "Where did you hear about us? (Gain market insight!)",
+                    "type": "multiple_choice_field"
+                },
+                {
+                    "id": 12,
+                    "type": "container_field",
+                    "title": "please enter your minors' information",
+                    "result_list": [
+                        [
+                            {
+                                "id": 1,
+                                "first_name": "first",
+                                "middle_name": "",
+                                "last_name": "",
+                                "value": "C1 first m last",
+                                "title": "Please fill in your name",
+                                "type": "name_field"
+                            },
+                            {
+                                "id": 2,
+                                "title": "Please fill in your email",
+                                "value": "C1 gh@me.com",
+                                "type": "email_field"
+                            }
+                        ],
+                        [
+                            {
+                                "id": 1,
+                                "first_name": "first",
+                                "middle_name": "",
+                                "last_name": "",
+                                "value": "C2 first m last",
+                                "title": "Please fill in your name",
+                                "type": "name_field"
+                            },
+                            {
+                                "id": 2,
+                                "title": "Please fill in your email",
+                                "value": "C2 gh@me.com",
+                                "type": "email_field"
+                            }
+                        ]
+                    ]
+                }
+            ],
+            "template_title": "Bike Rental Waiver",
+            "template_version": "D6RkEV1yUK1512568456",
+            "s3_pdf_download_url": "https://s3.amazonaws.com/xxx/xxxxx.pdf",
+            "template_id": "JwIvKHHfW81493594388",
+            "tracking_id": "D6RkEV1yUK1512568456",
+            "request_id": "P4g4R0nmkY1652897359",
+            "received_at": 1510127625,
+            "signed_at": 1510127615,
+            "note": "",
+            "tags": [
+                "tag1",
+                "tag2"
+            ],
+            "ip": "1.1.1.1",
+            "geolocation": {
+                "accuracy": 5,
+                "latitude": "137.785834",
+                "longitude": "-22.406417"
+            },
+            "device": {
+                "device_model": "iPhone 5 (GSM CDMA)(9.3.5)",
+                "username": "a",
+                "id": "opZTzJP2gI1504892592",
+                "device_name": "Jing's iPhone",
+                "identifier": ""
+            }
+        }
+    ]
 }
 ```
 
@@ -2421,6 +2588,7 @@ start_timestamp|query|int|false|start timestamp in seconds
 end_timestamp|query|int|false|end timestamp in seconds
 page|query|int|false|page index, default 1
 per_page|query|int|false|results per page, default 10
+include_waivers|query|bool|false|include waivers in the response
 
 > Example responses
 
@@ -2442,7 +2610,143 @@ per_page|query|int|false|results per page, default 10
       "status": "collecting",
       "accepted_count": 0,
       "submitted_count": 0,
-      "name": "open api created 2"
+      "name": "open api created 2",
+      "waivers": [
+        {
+            "id": "zZ613txA741510127626",
+            "status": "approved",
+            "has_pdf": true,
+            "pictures": [
+                {
+                    "id": "picture id",
+                    "title": "Your Photo",
+                    "timestamp": 1510127609
+                }
+            ],
+            "data": [
+                {
+                    "id": 1,
+                    "value": "HF",
+                    "type": "initial_field",
+                    "title": "please input your initials"
+                },
+                {
+                    "id": 2,
+                    "first_name": "first",
+                    "middle_name": "",
+                    "last_name": "",
+                    "value": "first m last",
+                    "title": "Please fill in your name",
+                    "type": "name_field"
+                },
+                {
+                    "id": 3,
+                    "title": "Please fill in your email",
+                    "value": "gh@me.com",
+                    "type": "email_field"
+                },
+                {
+                    "id": 4,
+                    "value": "1 851-234-5678",
+                    "title": "Please fill in your phone number",
+                    "type": "phone_field"
+                },
+                {
+                    "id": 5,
+                    "state": "TX",
+                    "first_line": "No 123",
+                    "value": "No 123 TX, USA",
+                    "type": "address_field",
+                    "country": "USA",
+                    "title": "Please fill in your address",
+                    "zipcode": "123456",
+                    "second_line": "",
+                    "city": ""
+                },
+                {
+                    "id": 6,
+                    "value": "18",
+                    "title": "Please fill in your age",
+                    "type": "age_field"
+                },
+                {
+                    "id": 7,
+                    "type": "date_field",
+                    "title": "Please fill date",
+                    "value": "2017-11-8",
+                    "year": "2017",
+                    "month": "11",
+                    "day": "8"
+                },
+                {
+                    "id": 8,
+                    "type": "checkbox_field",
+                    "title": "Text to agree on",
+                    "value": "checked"
+                },
+                {
+                    "id": 9,
+                    "value": "Ghosts ",
+                    "title": "Your fav team",
+                    "type": "short_answer_field"
+                },
+                {
+                    "id": 10,
+                    "value": "Femal",
+                    "title": "Male or Female",
+                    "type": "single_choice_field"
+                },
+                {
+                    "id": 11,
+                    "value": [
+                        "Magazine",
+                        "Trip advisor"
+                    ],
+                    "title": "Where did you hear about us? (Gain market insight!)",
+                    "type": "multiple_choice_field"
+                },
+                {
+                    "id": 12,
+                    "type": "container_field",
+                    "title": "please enter your minors' information",
+                    "result_list": [
+                        [
+                            {
+                                "id": 1,
+                                "first_name": "first",
+                                "middle_name": "",
+                                "last_name": "",
+                                "value": "C1 first m last",
+                                "title": "Please fill in your name",
+                                "type": "name_field"
+                            },
+                            {
+                                "id": 2,
+                                "title": "Please fill in your email",
+                                "value": "C1 gh@me.com",
+                                "type": "email_field"
+                            }
+                        ],
+                        [
+                            {
+                                "id": 1,
+                                "first_name": "first",
+                                "middle_name": "",
+                                "last_name": "",
+                                "value": "C2 first m last",
+                                "title": "Please fill in your name",
+                                "type": "name_field"
+                            },
+                            {
+                                "id": 2,
+                                "title": "Please fill in your email",
+                                "value": "C2 gh@me.com",
+                                "type": "email_field"
+                            }
+                        ]
+                    ]
+                }
+            ],
     },
     ...
   ]
@@ -2455,6 +2759,14 @@ Status|Meaning|Description|Schema
 ---|---|---|---|
 200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
 403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
+
+Status Code **200**
+
+Name|Type|Required|Description
+---|---|---|---|---|
+result|boolean|true|request success or fail
+msg|string|true|response message
+data|[WaiverRequest](#schemawaiverrequest)|true|Waiver Request
 
 ## Send Requests via Email
 
@@ -3548,7 +3860,143 @@ identifier|string|true|device identifier. should always be an empty string
     "status": "collecting",
     "accepted_count": 0,
     "submitted_count": 0,
-    "name": "open api created 2"
+    "name": "open api created 2",
+    "waivers": [
+        {
+            "id": "zZ613txA741510127626",
+            "status": "approved",
+            "has_pdf": true,
+            "pictures": [
+                {
+                    "id": "picture id",
+                    "title": "Your Photo",
+                    "timestamp": 1510127609
+                }
+            ],
+            "data": [
+                {
+                    "id": 1,
+                    "value": "HF",
+                    "type": "initial_field",
+                    "title": "please input your initials"
+                },
+                {
+                    "id": 2,
+                    "first_name": "first",
+                    "middle_name": "",
+                    "last_name": "",
+                    "value": "first m last",
+                    "title": "Please fill in your name",
+                    "type": "name_field"
+                },
+                {
+                    "id": 3,
+                    "title": "Please fill in your email",
+                    "value": "gh@me.com",
+                    "type": "email_field"
+                },
+                {
+                    "id": 4,
+                    "value": "1 851-234-5678",
+                    "title": "Please fill in your phone number",
+                    "type": "phone_field"
+                },
+                {
+                    "id": 5,
+                    "state": "TX",
+                    "first_line": "No 123",
+                    "value": "No 123 TX, USA",
+                    "type": "address_field",
+                    "country": "USA",
+                    "title": "Please fill in your address",
+                    "zipcode": "123456",
+                    "second_line": "",
+                    "city": ""
+                },
+                {
+                    "id": 6,
+                    "value": "18",
+                    "title": "Please fill in your age",
+                    "type": "age_field"
+                },
+                {
+                    "id": 7,
+                    "type": "date_field",
+                    "title": "Please fill date",
+                    "value": "2017-11-8",
+                    "year": "2017",
+                    "month": "11",
+                    "day": "8"
+                },
+                {
+                    "id": 8,
+                    "type": "checkbox_field",
+                    "title": "Text to agree on",
+                    "value": "checked"
+                },
+                {
+                    "id": 9,
+                    "value": "Ghosts ",
+                    "title": "Your fav team",
+                    "type": "short_answer_field"
+                },
+                {
+                    "id": 10,
+                    "value": "Femal",
+                    "title": "Male or Female",
+                    "type": "single_choice_field"
+                },
+                {
+                    "id": 11,
+                    "value": [
+                        "Magazine",
+                        "Trip advisor"
+                    ],
+                    "title": "Where did you hear about us? (Gain market insight!)",
+                    "type": "multiple_choice_field"
+                },
+                {
+                    "id": 12,
+                    "type": "container_field",
+                    "title": "please enter your minors' information",
+                    "result_list": [
+                        [
+                            {
+                                "id": 1,
+                                "first_name": "first",
+                                "middle_name": "",
+                                "last_name": "",
+                                "value": "C1 first m last",
+                                "title": "Please fill in your name",
+                                "type": "name_field"
+                            },
+                            {
+                                "id": 2,
+                                "title": "Please fill in your email",
+                                "value": "C1 gh@me.com",
+                                "type": "email_field"
+                            }
+                        ],
+                        [
+                            {
+                                "id": 1,
+                                "first_name": "first",
+                                "middle_name": "",
+                                "last_name": "",
+                                "value": "C2 first m last",
+                                "title": "Please fill in your name",
+                                "type": "name_field"
+                            },
+                            {
+                                "id": 2,
+                                "title": "Please fill in your email",
+                                "value": "C2 gh@me.com",
+                                "type": "email_field"
+                            }
+                        ]
+                    ]
+                }
+            ],
 }
 ```
 
@@ -3568,6 +4016,7 @@ request_link|string|true|request share link
 datetime|int|true|created timestamp
 accepted_count|int|true| user accepted count
 submitted_count|int|true| user submitted count
+waivers|[Waiver](#schemawaiver)|false|waiver list
 
 ## WaiverTrackingResponse
 
