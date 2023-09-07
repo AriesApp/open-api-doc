@@ -2589,6 +2589,7 @@ end_timestamp|query|int|false|end timestamp in seconds
 page|query|int|false|page index, default 1
 per_page|query|int|false|results per page, default 10
 include_waivers|query|bool|false|include waivers in the response
+request_ids|query|string|false|request id list
 
 > Example responses
 
