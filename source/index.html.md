@@ -2523,6 +2523,8 @@ data|[WaiverRequest](#schemawaiverrequest)|true|Waiver Request
 ```shell
 # You can also use wget
 curl -X GET https://api.waiverforever.com/openapi/v2/waiverRequests?template_id=TutFEMdPgR1519947925&name=open&status=collecting&start_timestamp=1593532800&end_timestamp=1595174400&page=1&per_page=5 \
+&include_waivers=true \
+&request_ids[]=id1&request_ids[]=id2 \
   -H 'Accept: application/json' \
   -H 'X-Api-Key: <api_key>'
 ```
@@ -2535,7 +2537,7 @@ const headers = {
   'X-Api-Key': '<api_key>'
 };
 
-fetch('https://api.waiverforever.com/openapi/v2/waiverRequests?template_id=TutFEMdPgR1519947925&name=open&status=collecting&start_timestamp=1593532800&end_timestamp=1595174400&page=1&per_page=5', {
+fetch('https://api.waiverforever.com/openapi/v2/waiverRequests?template_id=TutFEMdPgR1519947925&name=open&status=collecting&start_timestamp=1593532800&end_timestamp=1595174400&page=1&per_page=5&include_waivers=true&request_ids[]=id1&request_ids[]=id2', {
   method: 'GET',
   headers: headers
 }).then(res => res.json())
@@ -2554,7 +2556,7 @@ headers = {
   'X-Api-Key' => '<api_key>'
 }
 
-result = RestClient.get 'https://api.waiverforever.com/openapi/v2/waiverRequests?template_id=TutFEMdPgR1519947925&name=open&status=collecting&start_timestamp=1593532800&end_timestamp=1595174400&page=1&per_page=5', headers
+result = RestClient.get 'https://api.waiverforever.com/openapi/v2/waiverRequests?template_id=TutFEMdPgR1519947925&name=open&status=collecting&start_timestamp=1593532800&end_timestamp=1595174400&page=1&per_page=5&include_waivers=true&request_ids[]=id1&request_ids[]=id2', headers
 
 p JSON.parse(result)
 ```
@@ -2566,7 +2568,7 @@ headers = {
   'X-Api-Key': '<api_key>'
 }
 
-r = requests.get('https://api.waiverforever.com/openapi/v2/waiverRequests?template_id=TutFEMdPgR1519947925&name=open&status=collecting&start_timestamp=1593532800&end_timestamp=1595174400&page=1&per_page=5', params={
+r = requests.get('https://api.waiverforever.com/openapi/v2/waiverRequests?template_id=TutFEMdPgR1519947925&name=open&status=collecting&start_timestamp=1593532800&end_timestamp=1595174400&page=1&per_page=5&include_waivers=true&request_ids[]=id1&request_ids[]=id2', params={
 }, headers=headers)
 
 print(r.json())
@@ -2589,7 +2591,7 @@ end_timestamp|query|int|false|end timestamp in seconds
 page|query|int|false|page index, default 1
 per_page|query|int|false|results per page, default 10
 include_waivers|query|bool|false|include waivers in the response
-request_ids|query|string|false|request id list
+request_ids|query|list[string]|false|request id list
 
 > Example responses
 
