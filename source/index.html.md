@@ -3502,7 +3502,8 @@ content|[Waiver](#schemawaiver)|true| waiver content
   "last_name": "last",
   "value": "first m last",
   "title": "Please fill in your name",
-  "type": "name_field"
+  "type": "name_field",
+  "format": "0"
 }
 ```
 
@@ -3517,6 +3518,9 @@ type|string|true|always "name_field"
 first_name|string|true|first name
 last_name|string|true|last name
 middle_name|string|false|middle name (optional)
+full_name|string|false|fill name (optional)
+format|string|true| 0-[first_name+middle_name+last_name]; 1-[last_name+middle_name+first_name]; 2-[full_name];
+
 
 ## EmailField
 
