@@ -4023,7 +4023,11 @@ request_link|string|true|request share link
 datetime|int|true|created timestamp
 accepted_count|int|true| user accepted count
 submitted_count|int|true| user submitted count
-waivers|[Waiver](#schemawaiver)|false|waiver list
+waivers|[[Waiver]](#schemawaiver)|false|waiver list
+
+<aside class="notice">
+Waiver field `device`, `pictures` and `template_title` is not available in `WaiverRequest`.
+</aside>
 
 ## WaiverTrackingResponse
 
