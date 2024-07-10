@@ -1038,6 +1038,358 @@ result|boolean|true|request success or fail
 msg|string|true|response message
 data|[Waiver](#schemawaiver)|true|Signed Waiver
 
+## Get Template Prefill Schema
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X GET https://api.waiverforever.com/openapi/v2/template/{template_id}/prefill/schema \
+  -H 'Accept: application/json' \
+  -H 'X-Api-Key: <api_key>'
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'X-Api-Key': '<api_key>'
+};
+
+fetch('https://api.waiverforever.com/openapi/v2/template/{template_id}/prefill/schema', {
+  method: 'GET',
+  headers: headers
+}).then(res => res.json())
+  .then(body => console.log(body))
+  .catch(error => {
+    console.log(error);
+  });
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'X-Api-Key' => '<api_key>'
+}
+
+result = RestClient.get 'https://api.waiverforever.com/openapi/v2/template/{template_id}/prefill/schema', headers
+
+p JSON.parse(result)
+```
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'X-Api-Key': '<api_key>'
+}
+
+r = requests.get('https://api.waiverforever.com/openapi/v2/template/{template_id}/prefill/schema', params={
+}, headers=headers)
+
+print(r.json())
+
+```
+
+`GET /openapi/v2/template/{template_id}/prefill/schema`
+
+*get a prefill schema of template*
+
+<h3 id="getTemplatePrefillSchema-parameters">Parameters</h3>
+
+Parameter|In|Type|Required|Description
+---|---|---|---|---|
+template_id|path|string|true|template id
+
+> Example responses
+
+```json
+{
+    "result": true,
+    "msg": "success",
+    "data": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://app.waiverforever.com/template/ydZzcImufE1693278569/zNzssm73H01720136641/prefill.schema.json",
+        "title": "waiver example",
+        "type": "object",
+        "properties": {
+            "name-first_name-1-0": {
+                "type": "string"
+            },
+            "name-last_name-1-0": {
+                "type": "string"
+            },
+            "name-first_name-1-1": {
+                "type": "string"
+            },
+            "name-last_name-1-1": {
+                "type": "string"
+            },
+            "name-first_name-1-3": {
+                "type": "string"
+            },
+            "name-last_name-1-3": {
+                "type": "string"
+            },
+            "name-first_name-1-4": {
+                "type": "string"
+            },
+            "name-last_name-1-4": {
+                "type": "string"
+            },
+            "name-first_name-1-6": {
+                "type": "string"
+            },
+            "name-last_name-1-6": {
+                "type": "string"
+            },
+            "name-first_name-1-7": {
+                "type": "string"
+            },
+            "name-last_name-1-7": {
+                "type": "string"
+            },
+            "name-first_name-1-9": {
+                "type": "string"
+            },
+            "name-last_name-1-9": {
+                "type": "string"
+            },
+            "name-first_name-1-10": {
+                "type": "string"
+            },
+            "name-last_name-1-10": {
+                "type": "string"
+            },
+            "name-first_name-1-12": {
+                "type": "string"
+            },
+            "name-last_name-1-12": {
+                "type": "string"
+            },
+            "name-first_name-1-13": {
+                "type": "string"
+            },
+            "name-last_name-1-13": {
+                "type": "string"
+            },
+            "name-first_name-1-15": {
+                "type": "string"
+            },
+            "name-last_name-1-15": {
+                "type": "string"
+            },
+            "name-first_name-1-16": {
+                "type": "string"
+            },
+            "name-last_name-1-16": {
+                "type": "string"
+            },
+            "name-first_name-1-18": {
+                "type": "string"
+            },
+            "name-last_name-1-18": {
+                "type": "string"
+            },
+            "name-first_name-1-19": {
+                "type": "string"
+            },
+            "name-last_name-1-19": {
+                "type": "string"
+            },
+            "name-first_name-1-21": {
+                "type": "string"
+            },
+            "name-last_name-1-21": {
+                "type": "string"
+            },
+            "name-first_name-1-22": {
+                "type": "string"
+            },
+            "name-last_name-1-22": {
+                "type": "string"
+            },
+            "name-first_name-1-24": {
+                "type": "string"
+            },
+            "name-last_name-1-24": {
+                "type": "string"
+            },
+            "name-first_name-1-25": {
+                "type": "string"
+            },
+            "name-last_name-1-25": {
+                "type": "string"
+            },
+            "name-first_name-1-27": {
+                "type": "string"
+            },
+            "name-last_name-1-27": {
+                "type": "string"
+            },
+            "name-first_name-1-28": {
+                "type": "string"
+            },
+            "name-last_name-1-28": {
+                "type": "string"
+            }
+        },
+        "additionalProperties": false
+    }
+}
+```
+
+<h3 id="getTemplatePrefillSchema-responses">Responses</h3>
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
+403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
+404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Template not found|None
+
+<h3 id="getTemplatePrefillSchema-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+Name|Type|Required|Description
+---|---|---|---|---|
+result|boolean|true|request success or fail
+msg|string|true|response message
+data|object|true|template prefill schema
+
+
+## Generate Template Prefill Link
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X POST https://api.waiverforever.com/openapi/v2/template/{template_id}/prefill' \
+  -H 'Accept: application/json' \
+  -H 'X-Api-Key: <api_key>' \
+  -H 'Content-Type': 'application/json' \
+  -d '{
+    "fields": {
+        "name-first_name-1-0": "Joe"
+    }
+  }'
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'Content-Type': 'application/json',
+  'X-Api-Key': '<api_key>'
+};
+
+const inputBody = `{
+    "fields": {
+        "name-first_name-1-0": "Joe"
+    }
+}`;
+
+fetch('https://api.waiverforever.com/openapi/v2/template/{template_id}/prefill', {
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+}).then(res => res.json())
+  .then(body => console.log(body))
+  .catch(error => {
+    console.log(error);
+  });
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'Content-Type' => 'application/json',
+  'X-Api-Key' => '<api_key>'
+}
+
+payload ={
+    "fields"=> {
+        "name-first_name-1-0"=> "Joe"
+    }
+}
+
+result = RestClient.post 'https://api.waiverforever.com/openapi/v2/template/{template_id}/prefill', payload.to_json, headers
+
+p JSON.parse(result)
+```
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+  'X-Api-Key': '<api_key>'
+}
+
+data = {
+    "fields": {
+        "name-first_name-1-0": "Joe"
+    }
+}
+
+r = requests.post('https://app.waiverforever.com/openapi/v2/template/{template_id}/prefill', json=data, headers=headers)
+
+print(r.json())
+
+```
+
+`POST /openapi/v2/template/{template_id}/prefill`
+
+*Generate Template Prefill URL*
+
+<h3 id="GenerateTemplatePrefillURL-parameters">Parameters</h3>
+
+Parameter|In|Type|Required|Description
+---|---|---|---|---|
+template_id|path|string|true|template id
+fields|body|object|true|prefilled fields. must fit for prefill schema
+expire_at|body|int|false|expire datetime of prefill link
+
+
+> Example responses
+
+```json
+{
+    "result": true,
+    "msg": "success",
+    "data": {
+        "url": "https://api.waiverforever.com/pending/ydZzcImufE1693278569?prefill_id=sm5h9LXOZ51720145090",
+        "expire_at": 1720749890
+    }
+}
+```
+
+<h3 id="GenerateTemplatePrefillURL-responses">Responses</h3>
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
+403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
+404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Template not found|None
+
+<h3 id="updateWaiverNote-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+Name|Type|Required|Description
+---|---|---|---|---|
+result|boolean|true|request success or fail
+msg|string|true|response message
+data|[Prefill](#templatePrefillResponse)|true|response message
+
 # Waiver Endpoints
 
 Access waiver
@@ -3110,6 +3462,25 @@ title|string|true|template title
 disabled|boolean|true|true if disabled by user
 created_at|integer|true|created timestamp
 updated_at|integer|true|updated timestamp
+
+## TemplatePrefillResponse
+
+<a name="templatePrefillResponse"></a>
+
+```json
+ {
+    "url": "https://app.waiverforever.com/pending/ydZzcImufE1693278569?prefill_id=uZgzpO5Wq11720142756",
+    "expire_at": 1720143820
+}
+```
+
+### Properties
+
+Name|Type|Required|Description
+---|---|---|---|
+url|string|true|prefill url
+expire_at|int|true|expire datetime of prefill url
+
 
 ## Waiver
 
