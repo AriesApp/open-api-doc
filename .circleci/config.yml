@@ -27,7 +27,7 @@ jobs:
         type: string
         default: ${CIRCLE_BRANCH}-${CIRCLE_SHA1:0:7}
     docker:
-      - image: 288298902208.dkr.ecr.us-east-1.amazonaws.com/ariesapp/wf-builder:v1.1.0
+      - image: 288298902208.dkr.ecr.us-east-1.amazonaws.com/ariesapp/wf-builder:v20240103
         aws_auth:
           aws_access_key_id: $AWS_ACCESS_KEY_ID
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
