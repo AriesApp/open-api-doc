@@ -33,7 +33,6 @@ jobs:
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
     steps:
       - setup_remote_docker:
-          version: 19.03.13
           docker_layer_caching: true
       - checkout
       - run:
