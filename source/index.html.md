@@ -595,6 +595,7 @@ title|string|true|template title
 disabled|boolean|true|true if disabled by user
 created_at|integer|true|created timestamp
 updated_at|integer|true|updated timestamp
+tags|list|true|template tags
 
 ## Get Template list
 
@@ -667,7 +668,8 @@ print(r.json())
       "id": "oBrbmWnp7X1446531274",
       "disabled": false,
       "created_at": 1446531274,
-      "updated_at": 1493594388
+      "updated_at": 1493594388,
+      "tags": []
     }
   ]
 }
