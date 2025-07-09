@@ -532,6 +532,8 @@ License: <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a
 <p><strong>Waiver</strong> is similar to an <em>instance</em> in object-oriented languages, in other words a filled waiver form. Each time after user sign and submit/upload, a new waiver is created and saved. Waiver may have pictures attached.</p>
 
 <p><strong>Field</strong> is the smallest logical unit of a template or a waiver. You can find all the fields we support here: <a href="#schemafield">Field Types</a>.</p>
+<h3 id='api-rate-limiting'>API Rate Limiting</h3>
+<p>Each API key is limited to a maximum of 300 requests per minute.</p>
 <h2 id='workflow'>Workflow</h2>
 <p>How does it work really?</p>
 <h3 id='1-authentication'>1. Authentication</h3>
@@ -3710,6 +3712,8 @@ curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/wa
 
 <p><em>Create waiver request</em></p>
 
+<p><em>Limit: each account can create up to 100 requests every 24 hours</em></p>
+
 <h3 id="createWaiverRequest-parameters">Parameters</h3>
 
 <table><thead>
@@ -4811,6 +4815,8 @@ curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/wa
 <p><code>POST /openapi/v2/waiverRequests/sendGroupEmail</code></p>
 
 <p><em>Once a waiver request has been created, you should use this API to send email requests to your customers asking them to sign the waiver.</em></p>
+
+<p><em>Limit: Each Account can send up to 5000 emails every 24 hours</em></p>
 
 <h3 id="sendGroupEmail-parameters">Parameters</h3>
 
