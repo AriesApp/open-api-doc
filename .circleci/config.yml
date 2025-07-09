@@ -8,7 +8,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - $DEPLOY_KEY
+            - SHA256:hyr6t7rICwpwoIkps7yuZ2CsxFUXHBvA3UL2JFoaNn0
       - run:
           name: deploy
           command: |
