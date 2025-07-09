@@ -41,6 +41,10 @@ Let's explain some frequently-used terms of WaiverForever.
 
 **Field** is the smallest logical unit of a template or a waiver. You can find all the fields we support here: [Field Types](#schemafield).
 
+### API Rate Limiting
+
+Each API key is limited to a maximum of 300 requests per minute.
+
 ## Workflow
 
 How does it work really?
@@ -2410,6 +2414,8 @@ print(r.json())
 
 *Create waiver request*
 
+*Limit: each account can create up to 100 requests every 24 hours*
+
 <h3 id="createWaiverRequest-parameters">Parameters</h3>
 
 Parameter|In|Type|Required|Description
@@ -3228,6 +3234,8 @@ print(r.json())
 `POST /openapi/v2/waiverRequests/sendGroupEmail`
 
 *Once a waiver request has been created, you should use this API to send email requests to your customers asking them to sign the waiver.*
+
+*Limit: Each Account can send up to 5000 emails every 24 hours*
 
 <h3 id="sendGroupEmail-parameters">Parameters</h3>
 
