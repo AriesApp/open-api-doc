@@ -24,3 +24,6 @@ doc/
 .idea/
 *~
 vendor/
+
+# Local Claude configuration (not committed)
+CLAUDE.local.md
