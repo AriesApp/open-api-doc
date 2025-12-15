@@ -3131,6 +3131,128 @@ result|boolean|true|request success or fail
 msg|string|true|response message
 data|[WaiverRequest](#schemawaiverrequest)|true|Waiver Request
 
+## Get Waiver Request Prefill Schema
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X GET https://api.waiverforever.com/openapi/v2/waiverRequest/{template_id}/prefill/schema \
+  -H 'Accept: application/json' \
+  -H 'X-Api-Key: <api_key>'
+```
+
+```javascript--nodejs
+const fetch = require('node-fetch');
+
+const headers = {
+  'Accept':'application/json',
+  'X-Api-Key': '<api_key>'
+};
+
+fetch('https://api.waiverforever.com/openapi/v2/waiverRequest/{template_id}/prefill/schema', {
+  method: 'GET',
+  headers: headers
+}).then(res => res.json())
+  .then(body => console.log(body))
+  .catch(error => {
+    console.log(error);
+  });
+```
+
+```ruby
+require 'rest-client'
+require 'json'
+
+headers = {
+  'Accept' => 'application/json',
+  'X-Api-Key' => '<api_key>'
+}
+
+result = RestClient.get 'https://api.waiverforever.com/openapi/v2/waiverRequest/{template_id}/prefill/schema', headers
+
+p JSON.parse(result)
+```
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'X-Api-Key': '<api_key>'
+}
+
+r = requests.get('https://api.waiverforever.com/openapi/v2/waiverRequest/{template_id}/prefill/schema', params={
+}, headers=headers)
+
+print(r.json())
+
+```
+
+`GET /openapi/v2/waiverRequest/{template_id}/prefill/schema`
+
+*Get prefill schema for waiver request. This schema includes required `name` and `email` fields for recipient identification, plus all prefillable fields from the template.*
+
+<h3 id="getWaiverRequestPrefillSchema-parameters">Parameters</h3>
+
+Parameter|In|Type|Required|Description
+---|---|---|---|---|
+template_id|path|string|true|template id
+
+> Example responses
+
+```json
+{
+    "result": true,
+    "msg": "success",
+    "data": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "https://app.waiverforever.com/template/ydZzcImufE1693278569/zNzssm73H01720136641/request-prefill.schema.json",
+        "title": "waiver example - Request Prefill List",
+        "type": "array",
+        "items": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Recipient name"
+                },
+                "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "Recipient email address"
+                },
+                "name-first_name-1-0": {
+                    "type": "string"
+                },
+                "name-last_name-1-0": {
+                    "type": "string"
+                }
+            },
+            "required": ["name", "email"],
+            "additionalProperties": false
+        }
+    }
+}
+```
+
+<h3 id="getWaiverRequestPrefillSchema-responses">Responses</h3>
+
+Status|Meaning|Description|Schema
+---|---|---|---|
+200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
+403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key or permission denied|None
+404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Template not found|None
+
+<h3 id="getWaiverRequestPrefillSchema-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+Name|Type|Required|Description
+---|---|---|---|---|
+result|boolean|true|request success or fail
+msg|string|true|response message
+data|object|true|JSON Schema for waiver request prefill list
+
 ## Send Requests via Email
 
 > Code samples
@@ -3235,18 +3357,88 @@ print(r.json())
 
 *Once a waiver request has been created, you should use this API to send email requests to your customers asking them to sign the waiver.*
 
-*Limit: Each Account can send up to 5000 emails every 24 hours*
+*Limit: Each Account can send up to 5000 emails every 24 hours. Maximum 100 recipients per request when using prefill_list.*
+
+**Note:** You must provide either `recipient_list` or `prefill_list`, but not both. Use `prefill_list` when you want to pre-fill waiver fields for each recipient.
 
 <h3 id="sendGroupEmail-parameters">Parameters</h3>
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
 group_id|body|string|true|request group id
-template_id|body|string|true|request template id
-reply_to|body|string|true|request reply_to
-recipient_list|body|string|true|request email list
-email_note|body|string|true|request email note
-expired_in|body|int|true|request expired timestamp
+reply_to|body|string|true|reply-to email address (must be a verified email in your account)
+recipient_list|body|string|false|comma-separated email list. Either recipient_list or prefill_list is required
+prefill_list|body|array|false|array of recipient objects with prefill data. Either recipient_list or prefill_list is required. Max 100 items. See [Waiver Request Prefill Schema](#get-waiver-request-prefill-schema) for field names
+email_note|body|string|false|email note content
+expired_in|body|int|false|link expiration timestamp (unix timestamp)
+
+**prefill_list item structure:**
+
+Name|Type|Required|Description
+---|---|---|---|
+name|string|true|recipient display name
+email|string|true|recipient email address
+*field_name*|string|false|any prefillable field from the template (e.g., "name-first_name-1-0")
+
+> Example request with prefill_list
+
+```shell
+curl -X POST https://api.waiverforever.com/openapi/v2/waiverRequests/sendGroupEmail \
+  -H 'Accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -H 'X-Api-Key: <api_key>' \
+  -d '{
+    "group_id": "AboljiXtzg1672625614",
+    "reply_to": "sender@example.com",
+    "email_note": "Please sign this waiver",
+    "prefill_list": [
+        {
+            "name": "John Doe",
+            "email": "john@example.com",
+            "name-first_name-1-0": "John",
+            "name-last_name-1-0": "Doe"
+        },
+        {
+            "name": "Jane Smith",
+            "email": "jane@example.com",
+            "name-first_name-1-0": "Jane",
+            "name-last_name-1-0": "Smith"
+        }
+    ]
+}'
+```
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+  'X-Api-Key': '<api_key>'
+}
+
+data = {
+    "group_id": "AboljiXtzg1672625614",
+    "reply_to": "sender@example.com",
+    "email_note": "Please sign this waiver",
+    "prefill_list": [
+        {
+            "name": "John Doe",
+            "email": "john@example.com",
+            "name-first_name-1-0": "John",
+            "name-last_name-1-0": "Doe"
+        },
+        {
+            "name": "Jane Smith",
+            "email": "jane@example.com",
+            "name-first_name-1-0": "Jane",
+            "name-last_name-1-0": "Smith"
+        }
+    ]
+}
+
+r = requests.post('https://api.waiverforever.com/openapi/v2/waiverRequests/sendGroupEmail', json=data, headers=headers)
+print(r.json())
+```
 
 > Example responses
 
