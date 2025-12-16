@@ -3743,32 +3743,32 @@ curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/wa
 <td>request size. between 0 and 1000</td>
 </tr>
 <tr>
-<td>note</td>
+<td>template_id</td>
 <td>body</td>
 <td>string</td>
 <td>true</td>
+<td>request template id</td>
+</tr>
+<tr>
+<td>note</td>
+<td>body</td>
+<td>string</td>
+<td>false</td>
 <td>request note</td>
 </tr>
 <tr>
 <td>type</td>
 <td>body</td>
 <td>string</td>
-<td>true</td>
-<td>request type. possible values <code>normal</code>, <code>anonymous</code></td>
+<td>false</td>
+<td>request type. possible values <code>normal</code>, <code>anonymous</code> (default: <code>normal</code>)</td>
 </tr>
 <tr>
 <td>contact_info</td>
 <td>body</td>
 <td>string</td>
-<td>true</td>
+<td>false</td>
 <td>request contact info</td>
-</tr>
-<tr>
-<td>template_id</td>
-<td>body</td>
-<td>string</td>
-<td>true</td>
-<td>request template id</td>
 </tr>
 </tbody></table>
 
@@ -3816,6 +3816,12 @@ curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/wa
 <td>404</td>
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.4">Not Found</a></td>
 <td>Template not found</td>
+<td>None</td>
+</tr>
+<tr>
+<td>429</td>
+<td><a href="https://tools.ietf.org/html/rfc6585#section-4">Too Many Requests</a></td>
+<td>Rate limit exceeded</td>
 <td>None</td>
 </tr>
 </tbody></table>
@@ -4135,7 +4141,7 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v2/wai
 <tr>
 <td>404</td>
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.4">Not Found</a></td>
-<td>Template not found</td>
+<td>Waiver request not found</td>
 <td>None</td>
 </tr>
 </tbody></table>
@@ -4292,14 +4298,14 @@ curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/wa
 <td>note</td>
 <td>body</td>
 <td>string</td>
-<td>true</td>
+<td>false</td>
 <td>request note</td>
 </tr>
 <tr>
 <td>contact_info</td>
 <td>body</td>
 <td>string</td>
-<td>true</td>
+<td>false</td>
 <td>request contact info</td>
 </tr>
 </tbody></table>
@@ -4347,7 +4353,7 @@ curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/wa
 <tr>
 <td>404</td>
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.4">Not Found</a></td>
-<td>Template not found</td>
+<td>Waiver request not found</td>
 <td>None</td>
 </tr>
 </tbody></table>
@@ -4731,7 +4737,7 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v2/wai
 <p>Code samples</p>
 </blockquote>
 <div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
-curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v2/waiverRequest/<span class="o">{</span>template_id<span class="o">}</span>/prefill/schema <span class="se">\</span>
+curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v2/waiverRequest/<span class="o">{</span>group_id<span class="o">}</span>/prefill/schema <span class="se">\</span>
   <span class="nt">-H</span> <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
   <span class="nt">-H</span> <span class="s1">'X-Api-Key: &lt;api_key&gt;'</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript--nodejs"><code><span class="kd">const</span> <span class="nx">fetch</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">node-fetch</span><span class="dl">'</span><span class="p">);</span>
@@ -4741,7 +4747,7 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v2/wai
   <span class="dl">'</span><span class="s1">X-Api-Key</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;api_key&gt;</span><span class="dl">'</span>
 <span class="p">};</span>
 
-<span class="nx">fetch</span><span class="p">(</span><span class="dl">'</span><span class="s1">https://api.waiverforever.com/openapi/v2/waiverRequest/{template_id}/prefill/schema</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+<span class="nx">fetch</span><span class="p">(</span><span class="dl">'</span><span class="s1">https://api.waiverforever.com/openapi/v2/waiverRequest/{group_id}/prefill/schema</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
   <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">GET</span><span class="dl">'</span><span class="p">,</span>
   <span class="na">headers</span><span class="p">:</span> <span class="nx">headers</span>
 <span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
@@ -4757,7 +4763,7 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v2/wai
   <span class="s1">'X-Api-Key'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;api_key&gt;'</span>
 <span class="p">}</span>
 
-<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.waiverforever.com/openapi/v2/waiverRequest/{template_id}/prefill/schema'</span><span class="p">,</span> <span class="n">headers</span>
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">get</span> <span class="s1">'https://api.waiverforever.com/openapi/v2/waiverRequest/{group_id}/prefill/schema'</span><span class="p">,</span> <span class="n">headers</span>
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
@@ -4766,13 +4772,13 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v2/wai
   <span class="s">'X-Api-Key'</span><span class="p">:</span> <span class="s">'&lt;api_key&gt;'</span>
 <span class="p">}</span>
 
-<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.waiverforever.com/openapi/v2/waiverRequest/{template_id}/prefill/schema'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://api.waiverforever.com/openapi/v2/waiverRequest/{group_id}/prefill/schema'</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span>
 <span class="p">},</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 
 <span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">json</span><span class="p">())</span>
 
 </code></pre></div>
-<p><code>GET /openapi/v2/waiverRequest/{template_id}/prefill/schema</code></p>
+<p><code>GET /openapi/v2/waiverRequest/{group_id}/prefill/schema</code></p>
 
 <p><em>Get prefill schema for waiver request. This schema includes required <code>name</code> and <code>email</code> fields for recipient identification, plus all prefillable fields from the template.</em></p>
 
@@ -4788,11 +4794,11 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v2/wai
 </tr>
 </thead><tbody>
 <tr>
-<td>template_id</td>
+<td>group_id</td>
 <td>path</td>
 <td>string</td>
 <td>true</td>
-<td>template id</td>
+<td>waiver request group id</td>
 </tr>
 </tbody></table>
 
@@ -4804,7 +4810,7 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v2/wai
     </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://json-schema.org/draft/2020-12/schema"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://app.waiverforever.com/template/ydZzcImufE1693278569/zNzssm73H01720136641/request-prefill.schema.json"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"$id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://app.waiverforever.com/group/ydZzcImufE1693278569/zNzssm73H01720136641/request-prefill.schema.json"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"waiver example - Request Prefill List"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"array"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -4857,7 +4863,7 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v2/wai
 <tr>
 <td>404</td>
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.4">Not Found</a></td>
-<td>Template not found</td>
+<td>Group not found</td>
 <td>None</td>
 </tr>
 </tbody></table>
@@ -4900,16 +4906,14 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v2/wai
 <div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># You can also use wget</span>
 curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/waiverRequests/sendGroupEmail <span class="se">\</span>
   <span class="nt">-H</span> <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
-  <span class="nt">-H</span> <span class="s1">'Content-Type'</span>: <span class="s1">'application/json'</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
   <span class="nt">-H</span> <span class="s1">'X-Api-Key: &lt;api_key&gt;'</span> <span class="se">\</span>
   <span class="nt">-d</span> <span class="s1">'{
     "group_id": "AboljiXtzg1672625614",
-    "template_id": "sgMbm2RMWo1670977664",
     "recipient_list": "xx1@gmail.com&lt;xx1@gmail.com&gt;",
     "expired_in": 1672502400,
-    "email_note": "email node",
-    "enable_secondary_distribution": "false"
-    "reply_to": "xx2@gmail.com",
+    "email_note": "email note",
+    "reply_to": "xx2@gmail.com"
 }'</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript--nodejs"><code><span class="kd">const</span> <span class="nx">fetch</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">node-fetch</span><span class="dl">'</span><span class="p">);</span>
 
@@ -4919,19 +4923,17 @@ curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/wa
   <span class="dl">'</span><span class="s1">X-Api-Key</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">&lt;api_key&gt;</span><span class="dl">'</span>
 <span class="p">};</span>
 
-<span class="kd">const</span> <span class="nx">inputBody</span> <span class="o">=</span> <span class="s2">`{
-    "group_id": "AboljiXtzg1672625614",
-    "template_id": "sgMbm2RMWo1670977664",
-    "recipient_list": "xx1@gmail.com&lt;xx1@gmail.com&gt;",
-    "expired_in": 1672502400,
-    "email_note": "email node",
-    "enable_secondary_distribution": "false"
-    "reply_to": "xx2@gmail.com",
-}`</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">inputBody</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">group_id</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">AboljiXtzg1672625614</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">recipient_list</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">xx1@gmail.com&lt;xx1@gmail.com&gt;</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">expired_in</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1672502400</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">email_note</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">email note</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">reply_to</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">xx2@gmail.com</span><span class="dl">"</span>
+<span class="p">};</span>
 
 <span class="nx">fetch</span><span class="p">(</span><span class="dl">'</span><span class="s1">https://api.waiverforever.com/openapi/v2/waiverRequests/sendGroupEmail</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
   <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span>
-  <span class="na">body</span><span class="p">:</span> <span class="nx">inputBody</span><span class="p">,</span>
+  <span class="na">body</span><span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">inputBody</span><span class="p">),</span>
   <span class="na">headers</span><span class="p">:</span> <span class="nx">headers</span>
 <span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
   <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">body</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">))</span>
@@ -4947,17 +4949,15 @@ curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/wa
   <span class="s1">'X-Api-Key'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;api_key&gt;'</span>
 <span class="p">}</span>
 
-<span class="n">payload</span> <span class="o">=</span><span class="p">{</span>
-    <span class="s2">"group_id"</span><span class="o">=&gt;</span> <span class="s2">"AboljiXtzg1672625614"</span><span class="p">,</span>
-    <span class="s2">"template_id"</span><span class="o">=&gt;</span> <span class="s2">"sgMbm2RMWo1670977664"</span><span class="p">,</span>
-    <span class="s2">"recipient_list"</span><span class="o">=&gt;</span> <span class="s2">"xx1@gmail.com&lt;xx1@gmail.com&gt;"</span><span class="p">,</span>
-    <span class="s2">"expired_in"</span><span class="o">=&gt;</span> <span class="mi">1672502400</span><span class="p">,</span>
-    <span class="s2">"email_note"</span><span class="o">=&gt;</span> <span class="s2">"email node"</span><span class="p">,</span>
-    <span class="s2">"enable_secondary_distribution"</span><span class="o">=&gt;</span> <span class="kp">false</span>
-    <span class="s2">"reply_to"</span><span class="o">=&gt;</span> <span class="s2">"xx2@gmail.com"</span><span class="p">,</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"group_id"</span> <span class="o">=&gt;</span> <span class="s2">"AboljiXtzg1672625614"</span><span class="p">,</span>
+    <span class="s2">"recipient_list"</span> <span class="o">=&gt;</span> <span class="s2">"xx1@gmail.com&lt;xx1@gmail.com&gt;"</span><span class="p">,</span>
+    <span class="s2">"expired_in"</span> <span class="o">=&gt;</span> <span class="mi">1672502400</span><span class="p">,</span>
+    <span class="s2">"email_note"</span> <span class="o">=&gt;</span> <span class="s2">"email note"</span><span class="p">,</span>
+    <span class="s2">"reply_to"</span> <span class="o">=&gt;</span> <span class="s2">"xx2@gmail.com"</span>
 <span class="p">}</span>
 
-<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">post</span> <span class="s1">'https://api.waiverforever.com/openapi/v2/waiverRequests/sendGroupEmail'</span><span class="p">,</span><span class="n">payload</span><span class="p">.</span><span class="nf">to_json</span><span class="p">,</span> <span class="n">headers</span>
+<span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">post</span> <span class="s1">'https://api.waiverforever.com/openapi/v2/waiverRequests/sendGroupEmail'</span><span class="p">,</span> <span class="n">payload</span><span class="p">.</span><span class="nf">to_json</span><span class="p">,</span> <span class="n">headers</span>
 
 <span class="nb">p</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
@@ -4969,12 +4969,10 @@ curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/wa
 
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">"group_id"</span><span class="p">:</span> <span class="s">"AboljiXtzg1672625614"</span><span class="p">,</span>
-    <span class="s">"template_id"</span><span class="p">:</span> <span class="s">"sgMbm2RMWo1670977664"</span><span class="p">,</span>
     <span class="s">"recipient_list"</span><span class="p">:</span> <span class="s">"xx1@gmail.com&lt;xx1@gmail.com&gt;"</span><span class="p">,</span>
-    <span class="s">"expired_in"</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
-    <span class="s">"email_note"</span><span class="p">:</span> <span class="s">"email node"</span><span class="p">,</span>
-    <span class="s">"enable_secondary_distribution"</span><span class="p">:</span> <span class="s">"false"</span>
-    <span class="s">"reply_to"</span><span class="p">:</span> <span class="s">"xx2@gmail.com"</span><span class="p">,</span>
+    <span class="s">"expired_in"</span><span class="p">:</span> <span class="mi">1672502400</span><span class="p">,</span>
+    <span class="s">"email_note"</span><span class="p">:</span> <span class="s">"email note"</span><span class="p">,</span>
+    <span class="s">"reply_to"</span><span class="p">:</span> <span class="s">"xx2@gmail.com"</span>
 <span class="p">}</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://api.waiverforever.com/openapi/v2/waiverRequests/sendGroupEmail'</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
@@ -5042,6 +5040,13 @@ curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/wa
 <td>int</td>
 <td>false</td>
 <td>link expiration timestamp (unix timestamp)</td>
+</tr>
+<tr>
+<td>skip_send_email</td>
+<td>body</td>
+<td>boolean</td>
+<td>false</td>
+<td>if true, creates tracking records without sending emails (default: false)</td>
 </tr>
 </tbody></table>
 
