@@ -2422,10 +2422,10 @@ Parameter|In|Type|Required|Description
 ---|---|---|---|---|
 name|body|string|true|request name
 size|body|int|true|request size. between 0 and 1000
-note|body|string|true|request note
-type|body|string|true|request type. possible values `normal`, `anonymous`
-contact_info|body|string|true|request contact info
 template_id|body|string|true|request template id
+note|body|string|false|request note
+type|body|string|false|request type. possible values `normal`, `anonymous` (default: `normal`)
+contact_info|body|string|false|request contact info
 
 > Example responses
 
@@ -2453,6 +2453,7 @@ Status|Meaning|Description|Schema
 200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
 403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
 404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Template not found|None
+429|[Too Many Requests](https://tools.ietf.org/html/rfc6585#section-4)|Rate limit exceeded|None
 
 <h3 id="createWaiverRequest-responseschema">Response Schema</h3>
 
@@ -2721,7 +2722,7 @@ Status|Meaning|Description|Schema
 ---|---|---|---|
 200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
 403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
-404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Template not found|None
+404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Waiver request not found|None
 
 <h3 id="getWaiverRequest-responseschema">Response Schema</h3>
 
@@ -2836,8 +2837,8 @@ Parameter|In|Type|Required|Description
 waiver_request_id|path|string|true|waiver request id
 name|body|string|true|request name
 size|body|int|true|request size. between 0 and 1000
-note|body|string|true|request note
-contact_info|body|string|true|request contact info
+note|body|string|false|request note
+contact_info|body|string|false|request contact info
 
 > Example responses
 
@@ -2864,7 +2865,7 @@ Status|Meaning|Description|Schema
 ---|---|---|---|
 200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
 403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
-404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Template not found|None
+404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Waiver request not found|None
 
 <h3 id="editWaiverRequest-responseschema">Response Schema</h3>
 
@@ -3137,7 +3138,7 @@ data|[WaiverRequest](#schemawaiverrequest)|true|Waiver Request
 
 ```shell
 # You can also use wget
-curl -X GET https://api.waiverforever.com/openapi/v2/waiverRequest/{template_id}/prefill/schema \
+curl -X GET https://api.waiverforever.com/openapi/v2/waiverRequest/{group_id}/prefill/schema \
   -H 'Accept: application/json' \
   -H 'X-Api-Key: <api_key>'
 ```
@@ -3150,7 +3151,7 @@ const headers = {
   'X-Api-Key': '<api_key>'
 };
 
-fetch('https://api.waiverforever.com/openapi/v2/waiverRequest/{template_id}/prefill/schema', {
+fetch('https://api.waiverforever.com/openapi/v2/waiverRequest/{group_id}/prefill/schema', {
   method: 'GET',
   headers: headers
 }).then(res => res.json())
@@ -3169,7 +3170,7 @@ headers = {
   'X-Api-Key' => '<api_key>'
 }
 
-result = RestClient.get 'https://api.waiverforever.com/openapi/v2/waiverRequest/{template_id}/prefill/schema', headers
+result = RestClient.get 'https://api.waiverforever.com/openapi/v2/waiverRequest/{group_id}/prefill/schema', headers
 
 p JSON.parse(result)
 ```
@@ -3181,14 +3182,14 @@ headers = {
   'X-Api-Key': '<api_key>'
 }
 
-r = requests.get('https://api.waiverforever.com/openapi/v2/waiverRequest/{template_id}/prefill/schema', params={
+r = requests.get('https://api.waiverforever.com/openapi/v2/waiverRequest/{group_id}/prefill/schema', params={
 }, headers=headers)
 
 print(r.json())
 
 ```
 
-`GET /openapi/v2/waiverRequest/{template_id}/prefill/schema`
+`GET /openapi/v2/waiverRequest/{group_id}/prefill/schema`
 
 *Get prefill schema for waiver request. This schema includes required `name` and `email` fields for recipient identification, plus all prefillable fields from the template.*
 
@@ -3196,7 +3197,7 @@ print(r.json())
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
-template_id|path|string|true|template id
+group_id|path|string|true|waiver request group id
 
 > Example responses
 
@@ -3206,7 +3207,7 @@ template_id|path|string|true|template id
     "msg": "success",
     "data": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "$id": "https://app.waiverforever.com/template/ydZzcImufE1693278569/zNzssm73H01720136641/request-prefill.schema.json",
+        "$id": "https://app.waiverforever.com/group/ydZzcImufE1693278569/zNzssm73H01720136641/request-prefill.schema.json",
         "title": "waiver example - Request Prefill List",
         "type": "array",
         "items": {
@@ -3241,7 +3242,7 @@ Status|Meaning|Description|Schema
 ---|---|---|---|
 200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
 403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key or permission denied|None
-404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Template not found|None
+404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Group not found|None
 
 <h3 id="getWaiverRequestPrefillSchema-responseschema">Response Schema</h3>
 
@@ -3261,16 +3262,14 @@ data|object|true|JSON Schema for waiver request prefill list
 # You can also use wget
 curl -X POST https://api.waiverforever.com/openapi/v2/waiverRequests/sendGroupEmail \
   -H 'Accept: application/json' \
-  -H 'Content-Type': 'application/json' \
+  -H 'Content-Type: application/json' \
   -H 'X-Api-Key: <api_key>' \
   -d '{
     "group_id": "AboljiXtzg1672625614",
-    "template_id": "sgMbm2RMWo1670977664",
     "recipient_list": "xx1@gmail.com<xx1@gmail.com>",
     "expired_in": 1672502400,
-    "email_note": "email node",
-    "enable_secondary_distribution": "false"
-    "reply_to": "xx2@gmail.com",
+    "email_note": "email note",
+    "reply_to": "xx2@gmail.com"
 }'
 ```
 
@@ -3283,19 +3282,17 @@ const headers = {
   'X-Api-Key': '<api_key>'
 };
 
-const inputBody = `{
+const inputBody = {
     "group_id": "AboljiXtzg1672625614",
-    "template_id": "sgMbm2RMWo1670977664",
     "recipient_list": "xx1@gmail.com<xx1@gmail.com>",
     "expired_in": 1672502400,
-    "email_note": "email node",
-    "enable_secondary_distribution": "false"
-    "reply_to": "xx2@gmail.com",
-}`;
+    "email_note": "email note",
+    "reply_to": "xx2@gmail.com"
+};
 
 fetch('https://api.waiverforever.com/openapi/v2/waiverRequests/sendGroupEmail', {
   method: 'POST',
-  body: inputBody,
+  body: JSON.stringify(inputBody),
   headers: headers
 }).then(res => res.json())
   .then(body => console.log(body))
@@ -3314,17 +3311,15 @@ headers = {
   'X-Api-Key' => '<api_key>'
 }
 
-payload ={
-    "group_id"=> "AboljiXtzg1672625614",
-    "template_id"=> "sgMbm2RMWo1670977664",
-    "recipient_list"=> "xx1@gmail.com<xx1@gmail.com>",
-    "expired_in"=> 1672502400,
-    "email_note"=> "email node",
-    "enable_secondary_distribution"=> false
-    "reply_to"=> "xx2@gmail.com",
+payload = {
+    "group_id" => "AboljiXtzg1672625614",
+    "recipient_list" => "xx1@gmail.com<xx1@gmail.com>",
+    "expired_in" => 1672502400,
+    "email_note" => "email note",
+    "reply_to" => "xx2@gmail.com"
 }
 
-result = RestClient.post 'https://api.waiverforever.com/openapi/v2/waiverRequests/sendGroupEmail',payload.to_json, headers
+result = RestClient.post 'https://api.waiverforever.com/openapi/v2/waiverRequests/sendGroupEmail', payload.to_json, headers
 
 p JSON.parse(result)
 ```
@@ -3339,12 +3334,10 @@ headers = {
 
 data = {
     "group_id": "AboljiXtzg1672625614",
-    "template_id": "sgMbm2RMWo1670977664",
     "recipient_list": "xx1@gmail.com<xx1@gmail.com>",
-    "expired_in": None,
-    "email_note": "email node",
-    "enable_secondary_distribution": "false"
-    "reply_to": "xx2@gmail.com",
+    "expired_in": 1672502400,
+    "email_note": "email note",
+    "reply_to": "xx2@gmail.com"
 }
 
 r = requests.post('https://api.waiverforever.com/openapi/v2/waiverRequests/sendGroupEmail', json=data, headers=headers)
@@ -3371,6 +3364,7 @@ recipient_list|body|string|false|comma-separated email list. Either recipient_li
 prefill_list|body|array|false|array of recipient objects with prefill data. Either recipient_list or prefill_list is required. Max 100 items. See [Waiver Request Prefill Schema](#get-waiver-request-prefill-schema) for field names
 email_note|body|string|false|email note content
 expired_in|body|int|false|link expiration timestamp (unix timestamp)
+skip_send_email|body|boolean|false|if true, creates tracking records without sending emails (default: false)
 
 **prefill_list item structure:**
 
