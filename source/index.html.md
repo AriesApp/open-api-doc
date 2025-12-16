@@ -3438,20 +3438,22 @@ print(r.json())
 
 ```json
 {
-  "tracks": [
+  "trackings": [
             {
                 "tracking_id": "9SfrMTYPtO1672625614",
                 "email": "xx@gmail.com",
                 "human_name": "xx@gmail.com",
                 "status": "open",
-                "send_result": false
+                "send_result": false,
+                "request_url": "https://app.waiverforever.com/pending/9SfrMTYPtO1672625614"
             },
             {
                 "tracking_id": "oB40y1XQlM1672625614",
                 "email": "xx2@163.com",
                 "human_name": "xx2@163.com",
                 "status": "open",
-                "send_result": false
+                "send_result": false,
+                "request_url": "https://app.waiverforever.com/pending/oB40y1XQlM1672625614"
             }
         ]
 }
@@ -4642,7 +4644,8 @@ data|[WaiverTracking](#schemawaivertracking)|true|track list
     "status": "normal",
     "email": "xx@gmail.com",
     "human_name": "name",
-    "send_result": True,
+    "send_result": true,
+    "request_url": "https://app.waiverforever.com/pending/B7Z3Z5pymj1594862535"
 }
 ```
 
@@ -4655,3 +4658,4 @@ status|string|true|status
 email|string|true|email
 human_name|string|true|human_name
 send_result|boolean|true|send_result
+request_url|string|true|waiver request url
