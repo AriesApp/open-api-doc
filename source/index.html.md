@@ -860,6 +860,8 @@ print(r.json())
 
 *get a sample waiver of template*
 
+**Note:** Each item in `data` includes `field_uid` for stable field mapping.
+
 <h3 id="getSampleWaiver-parameters">Parameters</h3>
 
 Parameter|In|Type|Required|Description
@@ -883,12 +885,14 @@ template_id|path|string|true|template id
   "data": [
     {
       "id": 1,
+      "field_uid": "initial-1-0",
       "value": "HF",
       "type": "initial_field",
       "title": "please input your initials"
     },
     {
       "id": 2,
+      "field_uid": "name-1-0",
       "first_name": "first",
       "middle_name": "",
       "last_name": "",
@@ -1105,7 +1109,7 @@ print(r.json())
 
 *get a prefill schema of template*
 
-**Note:** Each prefillable field may include a `field_uid` schema fragment (for stable field mapping), for example:
+**Note:** Each prefillable field includes a `field_uid` schema fragment (for stable field mapping), for example:
 `"field_uid": { "type": "string", "const": "<field_uid>" }`.
 
 <h3 id="getTemplatePrefillSchema-parameters">Parameters</h3>
@@ -3203,7 +3207,7 @@ print(r.json())
 
 *Get prefill schema for waiver request. This schema includes required `name` and `email` fields for recipient identification, plus all prefillable fields from the template.*
 
-**Note:** Prefill field entries may contain `field_uid` metadata in schema-fragment format:
+**Note:** Prefill field entries include `field_uid` metadata in schema-fragment format:
 `"field_uid": { "type": "string", "const": "<field_uid>" }`.
 
 <h3 id="getWaiverRequestPrefillSchema-parameters">Parameters</h3>
