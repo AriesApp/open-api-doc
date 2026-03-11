@@ -2423,6 +2423,8 @@ print(r.json())
 
 *Limit: each account can create up to 100 requests every 24 hours*
 
+**Note:** Use `groupPrefillData` to set a shared prefill payload for the whole request group at create time.
+
 <h3 id="createWaiverRequest-parameters">Parameters</h3>
 
 Parameter|In|Type|Required|Description
@@ -2433,6 +2435,7 @@ template_id|body|string|true|request template id
 note|body|string|false|request note
 type|body|string|false|request type. possible values `normal`, `anonymous` (default: `normal`)
 contact_info|body|string|false|request contact info
+groupPrefillData|body|object|false|shared group-level prefill data. Keys should follow [Waiver Request Prefill Schema](#get-waiver-request-prefill-schema). When set, do not send per-recipient `prefill_list` / `prefillList` in `sendGroupEmail`
 
 > Example responses
 
