@@ -860,7 +860,7 @@ print(r.json())
 
 *get a sample waiver of template*
 
-**Note:** Each item in `data` includes `field_uid` for stable field mapping.
+**Note:** Each item in `data` includes `field_uid` for stable field mapping. `field_uid` is metadata and is not the prefill payload key.
 
 <h3 id="getSampleWaiver-parameters">Parameters</h3>
 
@@ -885,14 +885,14 @@ template_id|path|string|true|template id
   "data": [
     {
       "id": 1,
-      "field_uid": "initial-1-0",
+      "field_uid": "uid_fld_initial_7f2c91",
       "value": "HF",
       "type": "initial_field",
       "title": "please input your initials"
     },
     {
       "id": 2,
-      "field_uid": "name-1-0",
+      "field_uid": "uid_fld_name_3ab8de",
       "first_name": "first",
       "middle_name": "",
       "last_name": "",
@@ -1109,7 +1109,7 @@ print(r.json())
 
 *get a prefill schema of template*
 
-**Note:** Each prefillable field includes a `field_uid` schema fragment (for stable field mapping), for example:
+**Note:** Each prefillable field includes a `field_uid` schema fragment (for stable field mapping). `field_uid` is field metadata, not the JSON prefill key:
 `"field_uid": { "type": "string", "const": "<field_uid>" }`.
 
 <h3 id="getTemplatePrefillSchema-parameters">Parameters</h3>
@@ -1134,7 +1134,7 @@ template_id|path|string|true|template id
                 "type": "string",
                 "field_uid": {
                     "type": "string",
-                    "const": "name-first_name-1-0"
+                    "const": "uid_fld_name_first_3ab8de"
                 }
             },
             "name-last_name-1-0": {
@@ -2427,8 +2427,6 @@ print(r.json())
 
 *Limit: each account can create up to 100 requests every 24 hours*
 
-**Note:** Use `groupPrefillData` to set a shared prefill payload for the whole request group at create time.
-
 <h3 id="createWaiverRequest-parameters">Parameters</h3>
 
 Parameter|In|Type|Required|Description
@@ -2439,7 +2437,6 @@ template_id|body|string|true|request template id
 note|body|string|false|request note
 type|body|string|false|request type. possible values `normal`, `anonymous` (default: `normal`)
 contact_info|body|string|false|request contact info
-groupPrefillData|body|object|false|shared group-level prefill data. Keys should follow [Waiver Request Prefill Schema](#get-waiver-request-prefill-schema). When set, do not send per-recipient `prefill_list` / `prefillList` in `sendGroupEmail`
 
 > Example responses
 
@@ -3207,7 +3204,7 @@ print(r.json())
 
 *Get prefill schema for waiver request. This schema includes required `name` and `email` fields for recipient identification, plus all prefillable fields from the template.*
 
-**Note:** Prefill field entries include `field_uid` metadata in schema-fragment format:
+**Note:** Prefill field entries include `field_uid` metadata in schema-fragment format. `field_uid` is field metadata, not the JSON prefill key:
 `"field_uid": { "type": "string", "const": "<field_uid>" }`.
 
 <h3 id="getWaiverRequestPrefillSchema-parameters">Parameters</h3>
@@ -3243,7 +3240,7 @@ group_id|path|string|true|waiver request group id
                     "type": "string",
                     "field_uid": {
                         "type": "string",
-                        "const": "name-first_name-1-0"
+                        "const": "uid_fld_name_first_3ab8de"
                     }
                 },
                 "name-last_name-1-0": {
@@ -3373,11 +3370,9 @@ print(r.json())
 
 *Limit: Each Account can send up to 5000 emails every 24 hours. Maximum 100 recipients per request when using prefill_list.*
 
-**Note:** You must provide either `recipient_list` or `prefill_list` / `prefillList`, but not both. Use `prefill_list` / `prefillList` when you want to pre-fill waiver fields for each recipient.
+**Note:** You must provide either `recipient_list` or `prefill_list`, but not both. Use `prefill_list` when you want to pre-fill waiver fields for each recipient.
 
-**Note:** Group-level prefill (`groupPrefillData`) is create-only. Set it when creating the request group, not in `sendGroupEmail`.
-
-**Note:** If a group already has `groupPrefillData`, do not send `prefill_list` / `prefillList` in the same send flow.
+**Compatibility note:** This `openapi/v2` endpoint accepts `prefill_list` only. It does not support `groupPrefillData` or `prefillList`.
 
 <h3 id="sendGroupEmail-parameters">Parameters</h3>
 
@@ -3387,7 +3382,6 @@ group_id|body|string|true|request group id
 reply_to|body|string|true|reply-to email address (must be a verified email in your account)
 recipient_list|body|string|false|comma-separated email list. Either recipient_list or prefill_list is required
 prefill_list|body|array|false|array of recipient objects with prefill data. Either recipient_list or prefill_list is required. Max 100 items. See [Waiver Request Prefill Schema](#get-waiver-request-prefill-schema) for field names
-prefillList|body|array|false|camelCase alias of `prefill_list` (same behavior and limits)
 email_note|body|string|false|email note content
 expired_in|body|int|false|link expiration timestamp (unix timestamp)
 skip_send_email|body|boolean|false|if true, creates tracking records without sending emails (default: false)
@@ -3399,35 +3393,6 @@ Name|Type|Required|Description
 name|string|true|recipient display name
 email|string|true|recipient email address
 *field_name*|string|false|any prefillable field from the template (e.g., "name-first_name-1-0")
-
-> Minimal flow example (shared group prefill at create time + send without per-recipient prefill)
-
-```shell
-# 1) Create request group with group-level prefill
-curl -X POST https://api.waiverforever.com/openapi/v2/waiverRequest \
-  -H 'Accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -H 'X-Api-Key: <api_key>' \
-  -d '{
-    "name": "Boat Tour Request",
-    "size": 2,
-    "template_id": "TutFEMdPgR1519947925",
-    "groupPrefillData": {
-      "name-first_name-1-0": "Guest"
-    }
-}'
-
-# 2) Send emails (do not include prefill_list/prefillList when groupPrefillData is set)
-curl -X POST https://api.waiverforever.com/openapi/v2/waiverRequests/sendGroupEmail \
-  -H 'Accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -H 'X-Api-Key: <api_key>' \
-  -d '{
-    "group_id": "<group_id_from_create_response>",
-    "recipient_list": "john@example.com,jane@example.com",
-    "reply_to": "sender@example.com"
-}'
-```
 
 > Example request with prefill_list
 
