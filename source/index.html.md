@@ -861,7 +861,7 @@ print(r.json())
 *get a sample waiver of template*
 
 <aside class="notice">
-When available, fields in the sample waiver response include both <code>uid</code> and <code>field_uid</code>. Use <code>data[].field_uid</code> as the stable identifier when mapping visible template fields to prefill schema properties.
+When available, fields in the sample waiver response include <code>uid</code>. Use <code>data[].uid</code> as the stable identifier when mapping visible template fields to prefill schema properties.
 </aside>
 
 <h3 id="getSampleWaiver-parameters">Parameters</h3>
@@ -948,7 +948,6 @@ template_id|path|string|true|template id
     {
       "id": 9,
       "uid": "uid-boat-001",
-      "field_uid": "uid-boat-001",
       "value": "Ghosts ",
       "title": "Your fav team",
       "type": "short_answer_field"
@@ -1112,7 +1111,7 @@ print(r.json())
 *get a prefill schema of template*
 
 <aside class="notice">
-Each prefill property is a request key you can send in template prefill <code>fields</code> or waiver request <code>group_prefill_data</code>. When a property contains <code>field_uid.const</code>, that value is the stable identifier of the source template field. Match it with <code>field_uid</code> from <a href="#get-sample-waiver">Get Sample Waiver</a>. Do not send <code>field_uid</code> itself in your request payload.
+Each prefill property is a request key you can send in template prefill <code>fields</code> or waiver request <code>group_prefill_data</code>. When a property contains <code>uid.const</code>, that value is the stable identifier of the source template field. Match it with <code>uid</code> from <a href="#get-sample-waiver">Get Sample Waiver</a>. Do not send <code>uid</code> itself in your request payload.
 </aside>
 
 <h3 id="getTemplatePrefillSchema-parameters">Parameters</h3>
@@ -1135,14 +1134,14 @@ template_id|path|string|true|template id
         "properties": {
             "name-first_name-1-0": {
                 "type": "string",
-                "field_uid": {
+                "uid": {
                     "type": "string",
                     "const": "uid-name-1"
                 }
             },
             "name-last_name-1-0": {
                 "type": "string",
-                "field_uid": {
+                "uid": {
                     "type": "string",
                     "const": "uid-name-1"
                 }
@@ -1283,7 +1282,7 @@ Name|Type|Required|Description
 ---|---|---|---|---|
 result|boolean|true|request success or fail
 msg|string|true|response message
-data|object|true|template prefill schema. Generated properties may include `field_uid` mapping metadata
+data|object|true|template prefill schema. Generated properties may include `uid` mapping metadata
 
 
 ## Generate Template Prefill Link
@@ -2336,8 +2335,8 @@ datetime|int|true|created timestamp
 
 Use the following flow when you want to build shared prefill data entirely through OpenAPI:
 
-1. Call [Get Sample Waiver](#get-sample-waiver) to inspect the human-readable fields in the template and read each field's `field_uid`.
-2. Call [Get Template Prefill Schema](#get-template-prefill-schema) to get the exact prefill keys. Match each schema property's `field_uid.const` to the sample waiver's `field_uid`.
+1. Call [Get Sample Waiver](#get-sample-waiver) to inspect the human-readable fields in the template and read each field's `uid`.
+2. Call [Get Template Prefill Schema](#get-template-prefill-schema) to get the exact prefill keys. Match each schema property's `uid.const` to the sample waiver's `uid`.
 3. Build `group_prefill_data` by using the schema property names as keys.
 4. Create the waiver request group with `POST /openapi/v2/waiverRequest`.
 5. Send emails with `POST /openapi/v2/waiverRequests/sendGroupEmail` using `recipient_list`. The shared `group_prefill_data` will be applied to every recipient automatically.
@@ -2348,12 +2347,12 @@ Example mapping:
 {
   "sample_waiver_field": {
     "title": "Boat Number",
-    "field_uid": "uid-boat-001"
+    "uid": "uid-boat-001"
   },
   "template_prefill_schema_property": {
     "short_answer-value-9": {
       "type": "string",
-      "field_uid": {
+      "uid": {
         "type": "string",
         "const": "uid-boat-001"
       }
@@ -2495,7 +2494,7 @@ template_id|body|string|true|request template id
 note|body|string|false|request note
 type|body|string|false|request type. possible values `normal`, `anonymous` (default: `normal`)
 contact_info|body|string|false|request contact info
-group_prefill_data|body|object|false|shared prefill data for the whole request group. Must match the [Template Prefill Schema](#get-template-prefill-schema). Use schema property names as keys; do not send `field_uid` itself
+group_prefill_data|body|object|false|shared prefill data for the whole request group. Must match the [Template Prefill Schema](#get-template-prefill-schema). Use schema property names as keys; do not send `uid` itself
 
 **Note:** `group_prefill_data` is shared by every recipient in the waiver request group. If you set it when creating the group, later calls to `sendGroupEmail` must use `recipient_list`; `prefill_list` is not allowed for that group.
 
@@ -3271,7 +3270,7 @@ This schema is only used for `prefill_list` in `sendGroupEmail`. If the waiver r
 </aside>
 
 <aside class="notice">
-Each generated prefill property may include <code>field_uid.const</code>. Match that value with <code>field_uid</code> from <a href="#get-sample-waiver">Get Sample Waiver</a> to identify the source template field. Send the property name as the request key, not the <code>field_uid</code> metadata.
+Each generated prefill property may include <code>uid.const</code>. Match that value with <code>uid</code> from <a href="#get-sample-waiver">Get Sample Waiver</a> to identify the source template field. Send the property name as the request key, not the <code>uid</code> metadata.
 </aside>
 
 <h3 id="getWaiverRequestPrefillSchema-parameters">Parameters</h3>
@@ -3305,14 +3304,14 @@ group_id|path|string|true|waiver request group id
                 },
                 "name-first_name-1-0": {
                     "type": "string",
-                    "field_uid": {
+                    "uid": {
                         "type": "string",
                         "const": "uid-name-1"
                     }
                 },
                 "name-last_name-1-0": {
                     "type": "string",
-                    "field_uid": {
+                    "uid": {
                         "type": "string",
                         "const": "uid-name-1"
                     }
@@ -3341,7 +3340,7 @@ Name|Type|Required|Description
 ---|---|---|---|---|
 result|boolean|true|request success or fail
 msg|string|true|response message
-data|object|true|JSON Schema for waiver request prefill list. Generated properties may include `field_uid` mapping metadata
+data|object|true|JSON Schema for waiver request prefill list. Generated properties may include `uid` mapping metadata
 
 ## Send Requests via Email
 
@@ -3463,7 +3462,7 @@ name|string|true|recipient display name
 email|string|true|recipient email address
 *field_name*|string|false|any prefillable field from the template (e.g., "name-first_name-1-0")
 
-`field_uid` is schema metadata used for field mapping. Do not include `field_uid` inside `prefill_list` items.
+`uid` is schema metadata used for field mapping. Do not include `uid` inside `prefill_list` items.
 
 > Example request with prefill_list
 
