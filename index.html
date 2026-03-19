@@ -1569,6 +1569,10 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v1/tem
 
 <p><em>get a sample waiver of template</em></p>
 
+<aside class="notice">
+When available, fields in the sample waiver response include <code>uid</code>. Use <code>data[].uid</code> as the stable identifier when mapping visible template fields to prefill schema properties.
+</aside>
+
 <h3 id="getSampleWaiver-parameters">Parameters</h3>
 
 <table><thead>
@@ -1666,6 +1670,7 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v1/tem
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uid-boat-001"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ghosts "</span><span class="p">,</span><span class="w">
       </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Your fav team"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"short_answer_field"</span><span class="w">
@@ -1859,6 +1864,10 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v2/tem
 
 <p><em>get a prefill schema of template</em></p>
 
+<aside class="notice">
+Each prefill property is a request key you can send in template prefill <code>fields</code> or waiver request <code>group_prefill_data</code>. When a property contains <code>uid.const</code>, that value is the stable identifier of the source template field. Match it with <code>uid</code> from <a href="#get-sample-waiver">Get Sample Waiver</a>. Do not send <code>uid</code> itself in your request payload.
+</aside>
+
 <h3 id="getTemplatePrefillSchema-parameters">Parameters</h3>
 
 <table><thead>
@@ -1892,10 +1901,18 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v2/tem
         </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
             </span><span class="nl">"name-first_name-1-0"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"uid"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"const"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uid-name-1"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
             </span><span class="p">},</span><span class="w">
             </span><span class="nl">"name-last_name-1-0"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+                </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"uid"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"const"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uid-name-1"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
             </span><span class="p">},</span><span class="w">
             </span><span class="nl">"name-first_name-1-1"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
                 </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
@@ -2074,7 +2091,7 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v2/tem
 <td>data</td>
 <td>object</td>
 <td>true</td>
-<td>template prefill schema</td>
+<td>template prefill schema. Generated properties may include <code>uid</code> mapping metadata</td>
 </tr>
 </tbody></table>
 <h2 id='generate-template-prefill-link'>Generate Template Prefill Link</h2>
@@ -3626,6 +3643,38 @@ Waiver field `device`, `pictures` and `template_title` is not available in searc
 <td>created timestamp</td>
 </tr>
 </tbody></table>
+<h3 id='group-prefill-workflow'>Group Prefill Workflow</h3>
+<p>Use the following flow when you want to build shared prefill data entirely through OpenAPI:</p>
+
+<ol>
+<li>Call <a href="#get-sample-waiver">Get Sample Waiver</a> to inspect the human-readable fields in the template and read each field&#39;s <code>uid</code>.</li>
+<li>Call <a href="#get-template-prefill-schema">Get Template Prefill Schema</a> to get the exact prefill keys. Match each schema property&#39;s <code>uid.const</code> to the sample waiver&#39;s <code>uid</code>.</li>
+<li>Build <code>group_prefill_data</code> by using the schema property names as keys.</li>
+<li>Create the waiver request group with <code>POST /openapi/v2/waiverRequest</code>.</li>
+<li>Send emails with <code>POST /openapi/v2/waiverRequests/sendGroupEmail</code> using <code>recipient_list</code>. The shared <code>group_prefill_data</code> will be applied to every recipient automatically.</li>
+</ol>
+
+<p>Example mapping:</p>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"sample_waiver_field"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Boat Number"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uid-boat-001"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"template_prefill_schema_property"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"short_answer-value-9"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"uid"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"const"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uid-boat-001"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"group_prefill_data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"short_answer-value-9"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A-17"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p>If you need different prefill values for each recipient, do not set <code>group_prefill_data</code>. Create the group first, then use <a href="#get-waiver-request-prefill-schema">Get Waiver Request Prefill Schema</a> and send <code>prefill_list</code> in <code>sendGroupEmail</code> instead.</p>
 <h2 id='create-waiver-request'>Create Waiver Request</h2>
 <blockquote>
 <p>Code samples</p>
@@ -3641,7 +3690,11 @@ curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/wa
     "note": "note",
     "type": "normal",
     "contact_info": "contact info",
-    "template_id": "TutFEMdPgR1519947925"
+    "template_id": "TutFEMdPgR1519947925",
+    "group_prefill_data": {
+        "name-first_name-1-0": "John",
+        "name-last_name-1-0": "Doe"
+    }
 }'</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript--nodejs"><code><span class="kd">const</span> <span class="nx">fetch</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">node-fetch</span><span class="dl">'</span><span class="p">);</span>
 
@@ -3657,7 +3710,11 @@ curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/wa
     "note": "note",
     "type": "normal",
     "contact_info": "contact info",
-    "template_id": "TutFEMdPgR1519947925"
+    "template_id": "TutFEMdPgR1519947925",
+    "group_prefill_data": {
+        "name-first_name-1-0": "John",
+        "name-last_name-1-0": "Doe"
+    }
 }`</span><span class="p">;</span>
 
 <span class="nx">fetch</span><span class="p">(</span><span class="dl">'</span><span class="s1">https://api.waiverforever.com/openapi/v2/waiverRequest</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
@@ -3684,7 +3741,11 @@ curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/wa
     <span class="s2">"note"</span><span class="o">=&gt;</span> <span class="s2">"note"</span><span class="p">,</span>
     <span class="s2">"type"</span><span class="o">=&gt;</span> <span class="s2">"normal"</span><span class="p">,</span>
     <span class="s2">"contact_info"</span><span class="o">=&gt;</span> <span class="s2">"contact info"</span><span class="p">,</span>
-    <span class="s2">"template_id"</span><span class="o">=&gt;</span> <span class="s2">"TutFEMdPgR1519947925"</span>
+    <span class="s2">"template_id"</span><span class="o">=&gt;</span> <span class="s2">"TutFEMdPgR1519947925"</span><span class="p">,</span>
+    <span class="s2">"group_prefill_data"</span><span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="s2">"name-first_name-1-0"</span><span class="o">=&gt;</span> <span class="s2">"John"</span><span class="p">,</span>
+        <span class="s2">"name-last_name-1-0"</span><span class="o">=&gt;</span> <span class="s2">"Doe"</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="n">result</span> <span class="o">=</span> <span class="no">RestClient</span><span class="p">.</span><span class="nf">post</span> <span class="s1">'https://api.waiverforever.com/openapi/v2/waiverRequest'</span><span class="p">,</span><span class="n">payload</span><span class="p">.</span><span class="nf">to_json</span><span class="p">,</span> <span class="n">headers</span>
@@ -3703,7 +3764,11 @@ curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/wa
     <span class="s">"note"</span><span class="p">:</span> <span class="s">"note"</span><span class="p">,</span>
     <span class="s">"type"</span><span class="p">:</span> <span class="s">"normal"</span><span class="p">,</span>
     <span class="s">"contact_info"</span><span class="p">:</span> <span class="s">"contact info"</span><span class="p">,</span>
-    <span class="s">"template_id"</span><span class="p">:</span> <span class="s">"TutFEMdPgR1519947925"</span>
+    <span class="s">"template_id"</span><span class="p">:</span> <span class="s">"TutFEMdPgR1519947925"</span><span class="p">,</span>
+    <span class="s">"group_prefill_data"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">"name-first_name-1-0"</span><span class="p">:</span> <span class="s">"John"</span><span class="p">,</span>
+        <span class="s">"name-last_name-1-0"</span><span class="p">:</span> <span class="s">"Doe"</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="s">'https://api.waiverforever.com/openapi/v2/waiverRequest'</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
@@ -3770,7 +3835,16 @@ curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/wa
 <td>false</td>
 <td>request contact info</td>
 </tr>
+<tr>
+<td>group_prefill_data</td>
+<td>body</td>
+<td>object</td>
+<td>false</td>
+<td>shared prefill data for the whole request group. Must match the <a href="#get-template-prefill-schema">Template Prefill Schema</a>. Use schema property names as keys; do not send <code>uid</code> itself</td>
+</tr>
 </tbody></table>
+
+<p><strong>Note:</strong> <code>group_prefill_data</code> is shared by every recipient in the waiver request group. If you set it when creating the group, later calls to <code>sendGroupEmail</code> must use <code>recipient_list</code>; <code>prefill_list</code> is not allowed for that group.</p>
 
 <blockquote>
 <p>Example responses</p>
@@ -3805,6 +3879,12 @@ curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/wa
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
 <td>Successful request</td>
 <td>Inline</td>
+</tr>
+<tr>
+<td>400</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.1">Bad Request</a></td>
+<td>Invalid request payload or invalid <code>group_prefill_data</code></td>
+<td>None</td>
 </tr>
 <tr>
 <td>403</td>
@@ -4782,6 +4862,14 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v2/wai
 
 <p><em>Get prefill schema for waiver request. This schema includes required <code>name</code> and <code>email</code> fields for recipient identification, plus all prefillable fields from the template.</em></p>
 
+<aside class="notice">
+This schema is only used for `prefill_list` in `sendGroupEmail`. If the waiver request group was created with <code>group_prefill_data</code>, `prefill_list` cannot be used for that group.
+</aside>
+
+<aside class="notice">
+Each generated prefill property may include <code>uid.const</code>. Match that value with <code>uid</code> from <a href="#get-sample-waiver">Get Sample Waiver</a> to identify the source template field. Send the property name as the request key, not the <code>uid</code> metadata.
+</aside>
+
 <h3 id="getWaiverRequestPrefillSchema-parameters">Parameters</h3>
 
 <table><thead>
@@ -4826,10 +4914,18 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v2/wai
                     </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Recipient email address"</span><span class="w">
                 </span><span class="p">},</span><span class="w">
                 </span><span class="nl">"name-first_name-1-0"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+                    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"uid"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"const"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uid-name-1"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
                 </span><span class="p">},</span><span class="w">
                 </span><span class="nl">"name-last_name-1-0"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+                    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"uid"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                        </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+                        </span><span class="nl">"const"</span><span class="p">:</span><span class="w"> </span><span class="s2">"uid-name-1"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
                 </span><span class="p">}</span><span class="w">
             </span><span class="p">},</span><span class="w">
             </span><span class="nl">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"name"</span><span class="p">,</span><span class="w"> </span><span class="s2">"email"</span><span class="p">],</span><span class="w">
@@ -4896,7 +4992,7 @@ curl <span class="nt">-X</span> GET https://api.waiverforever.com/openapi/v2/wai
 <td>data</td>
 <td>object</td>
 <td>true</td>
-<td>JSON Schema for waiver request prefill list</td>
+<td>JSON Schema for waiver request prefill list. Generated properties may include <code>uid</code> mapping metadata</td>
 </tr>
 </tbody></table>
 <h2 id='send-requests-via-email'>Send Requests via Email</h2>
@@ -4986,7 +5082,7 @@ curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/wa
 
 <p><em>Limit: Each Account can send up to 5000 emails every 24 hours. Maximum 100 recipients per request when using prefill_list.</em></p>
 
-<p><strong>Note:</strong> You must provide either <code>recipient_list</code> or <code>prefill_list</code>, but not both. Use <code>prefill_list</code> when you want to pre-fill waiver fields for each recipient.</p>
+<p><strong>Note:</strong> You must provide either <code>recipient_list</code> or <code>prefill_list</code>, but not both. Use <code>prefill_list</code> when you want to pre-fill waiver fields for each recipient. If the waiver request group was created with <code>group_prefill_data</code>, <code>prefill_list</code> is not allowed and the shared group-level prefill will be applied to every recipient automatically.</p>
 
 <h3 id="sendGroupEmail-parameters">Parameters</h3>
 
@@ -5025,7 +5121,7 @@ curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/wa
 <td>body</td>
 <td>array</td>
 <td>false</td>
-<td>array of recipient objects with prefill data. Either recipient_list or prefill_list is required. Max 100 items. See <a href="#get-waiver-request-prefill-schema">Waiver Request Prefill Schema</a> for field names</td>
+<td>array of recipient objects with prefill data. Either recipient_list or prefill_list is required. Max 100 items. Not allowed when the group already has <code>group_prefill_data</code>. Use property names from the <a href="#get-waiver-request-prefill-schema">Waiver Request Prefill Schema</a> as keys</td>
 </tr>
 <tr>
 <td>email_note</td>
@@ -5079,6 +5175,8 @@ curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/wa
 <td>any prefillable field from the template (e.g., &quot;name-first_name-1-0&quot;)</td>
 </tr>
 </tbody></table>
+
+<p><code>uid</code> is schema metadata used for field mapping. Do not include <code>uid</code> inside <code>prefill_list</code> items.</p>
 
 <blockquote>
 <p>Example request with prefill_list</p>
@@ -5175,6 +5273,12 @@ curl <span class="nt">-X</span> POST https://api.waiverforever.com/openapi/v2/wa
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
 <td>Successful request</td>
 <td>Inline</td>
+</tr>
+<tr>
+<td>400</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.5.1">Bad Request</a></td>
+<td>Invalid request payload or <code>prefill_list</code> conflict</td>
+<td>None</td>
 </tr>
 <tr>
 <td>403</td>
