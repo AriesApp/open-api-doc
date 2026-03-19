@@ -860,6 +860,10 @@ print(r.json())
 
 *get a sample waiver of template*
 
+<aside class="notice">
+When available, fields in the sample waiver response include <code>uid</code>. Use <code>data[].uid</code> as the stable identifier when mapping visible template fields to prefill schema properties.
+</aside>
+
 <h3 id="getSampleWaiver-parameters">Parameters</h3>
 
 Parameter|In|Type|Required|Description
@@ -943,6 +947,7 @@ template_id|path|string|true|template id
     },
     {
       "id": 9,
+      "uid": "uid-boat-001",
       "value": "Ghosts ",
       "title": "Your fav team",
       "type": "short_answer_field"
@@ -1105,6 +1110,10 @@ print(r.json())
 
 *get a prefill schema of template*
 
+<aside class="notice">
+Each prefill property is a request key you can send in template prefill <code>fields</code> or waiver request <code>group_prefill_data</code>. When a property contains <code>uid.const</code>, that value is the stable identifier of the source template field. Match it with <code>uid</code> from <a href="#get-sample-waiver">Get Sample Waiver</a>. Do not send <code>uid</code> itself in your request payload.
+</aside>
+
 <h3 id="getTemplatePrefillSchema-parameters">Parameters</h3>
 
 Parameter|In|Type|Required|Description
@@ -1124,10 +1133,18 @@ template_id|path|string|true|template id
         "type": "object",
         "properties": {
             "name-first_name-1-0": {
-                "type": "string"
+                "type": "string",
+                "uid": {
+                    "type": "string",
+                    "const": "uid-name-1"
+                }
             },
             "name-last_name-1-0": {
-                "type": "string"
+                "type": "string",
+                "uid": {
+                    "type": "string",
+                    "const": "uid-name-1"
+                }
             },
             "name-first_name-1-1": {
                 "type": "string"
@@ -1265,7 +1282,7 @@ Name|Type|Required|Description
 ---|---|---|---|---|
 result|boolean|true|request success or fail
 msg|string|true|response message
-data|object|true|template prefill schema
+data|object|true|template prefill schema. Generated properties may include `uid` mapping metadata
 
 
 ## Generate Template Prefill Link
@@ -2314,6 +2331,41 @@ status|string|true|request status. possible values `collecting`, `accepted`
 request_link|string|true|request share link
 datetime|int|true|created timestamp
 
+### Group Prefill Workflow
+
+Use the following flow when you want to build shared prefill data entirely through OpenAPI:
+
+1. Call [Get Sample Waiver](#get-sample-waiver) to inspect the human-readable fields in the template and read each field's `uid`.
+2. Call [Get Template Prefill Schema](#get-template-prefill-schema) to get the exact prefill keys. Match each schema property's `uid.const` to the sample waiver's `uid`.
+3. Build `group_prefill_data` by using the schema property names as keys.
+4. Create the waiver request group with `POST /openapi/v2/waiverRequest`.
+5. Send emails with `POST /openapi/v2/waiverRequests/sendGroupEmail` using `recipient_list`. The shared `group_prefill_data` will be applied to every recipient automatically.
+
+Example mapping:
+
+```json
+{
+  "sample_waiver_field": {
+    "title": "Boat Number",
+    "uid": "uid-boat-001"
+  },
+  "template_prefill_schema_property": {
+    "short_answer-value-9": {
+      "type": "string",
+      "uid": {
+        "type": "string",
+        "const": "uid-boat-001"
+      }
+    }
+  },
+  "group_prefill_data": {
+    "short_answer-value-9": "A-17"
+  }
+}
+```
+
+If you need different prefill values for each recipient, do not set `group_prefill_data`. Create the group first, then use [Get Waiver Request Prefill Schema](#get-waiver-request-prefill-schema) and send `prefill_list` in `sendGroupEmail` instead.
+
 ## Create Waiver Request
 
 > Code samples
@@ -2330,7 +2382,11 @@ curl -X POST https://api.waiverforever.com/openapi/v2/waiverRequest \
     "note": "note",
     "type": "normal",
     "contact_info": "contact info",
-    "template_id": "TutFEMdPgR1519947925"
+    "template_id": "TutFEMdPgR1519947925",
+    "group_prefill_data": {
+        "name-first_name-1-0": "John",
+        "name-last_name-1-0": "Doe"
+    }
 }'
 ```
 
@@ -2349,7 +2405,11 @@ const inputBody = `{
     "note": "note",
     "type": "normal",
     "contact_info": "contact info",
-    "template_id": "TutFEMdPgR1519947925"
+    "template_id": "TutFEMdPgR1519947925",
+    "group_prefill_data": {
+        "name-first_name-1-0": "John",
+        "name-last_name-1-0": "Doe"
+    }
 }`;
 
 fetch('https://api.waiverforever.com/openapi/v2/waiverRequest', {
@@ -2379,7 +2439,11 @@ payload ={
     "note"=> "note",
     "type"=> "normal",
     "contact_info"=> "contact info",
-    "template_id"=> "TutFEMdPgR1519947925"
+    "template_id"=> "TutFEMdPgR1519947925",
+    "group_prefill_data"=> {
+        "name-first_name-1-0"=> "John",
+        "name-last_name-1-0"=> "Doe"
+    }
 }
 
 result = RestClient.post 'https://api.waiverforever.com/openapi/v2/waiverRequest',payload.to_json, headers
@@ -2401,7 +2465,11 @@ data = {
     "note": "note",
     "type": "normal",
     "contact_info": "contact info",
-    "template_id": "TutFEMdPgR1519947925"
+    "template_id": "TutFEMdPgR1519947925",
+    "group_prefill_data": {
+        "name-first_name-1-0": "John",
+        "name-last_name-1-0": "Doe"
+    }
 }
 
 r = requests.post('https://api.waiverforever.com/openapi/v2/waiverRequest', json=data, headers=headers)
@@ -2426,6 +2494,9 @@ template_id|body|string|true|request template id
 note|body|string|false|request note
 type|body|string|false|request type. possible values `normal`, `anonymous` (default: `normal`)
 contact_info|body|string|false|request contact info
+group_prefill_data|body|object|false|shared prefill data for the whole request group. Must match the [Template Prefill Schema](#get-template-prefill-schema). Use schema property names as keys; do not send `uid` itself
+
+**Note:** `group_prefill_data` is shared by every recipient in the waiver request group. If you set it when creating the group, later calls to `sendGroupEmail` must use `recipient_list`; `prefill_list` is not allowed for that group.
 
 > Example responses
 
@@ -2451,6 +2522,7 @@ contact_info|body|string|false|request contact info
 Status|Meaning|Description|Schema
 ---|---|---|---|
 200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
+400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Invalid request payload or invalid `group_prefill_data`|None
 403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
 404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Template not found|None
 429|[Too Many Requests](https://tools.ietf.org/html/rfc6585#section-4)|Rate limit exceeded|None
@@ -3193,6 +3265,14 @@ print(r.json())
 
 *Get prefill schema for waiver request. This schema includes required `name` and `email` fields for recipient identification, plus all prefillable fields from the template.*
 
+<aside class="notice">
+This schema is only used for `prefill_list` in `sendGroupEmail`. If the waiver request group was created with <code>group_prefill_data</code>, `prefill_list` cannot be used for that group.
+</aside>
+
+<aside class="notice">
+Each generated prefill property may include <code>uid.const</code>. Match that value with <code>uid</code> from <a href="#get-sample-waiver">Get Sample Waiver</a> to identify the source template field. Send the property name as the request key, not the <code>uid</code> metadata.
+</aside>
+
 <h3 id="getWaiverRequestPrefillSchema-parameters">Parameters</h3>
 
 Parameter|In|Type|Required|Description
@@ -3223,10 +3303,18 @@ group_id|path|string|true|waiver request group id
                     "description": "Recipient email address"
                 },
                 "name-first_name-1-0": {
-                    "type": "string"
+                    "type": "string",
+                    "uid": {
+                        "type": "string",
+                        "const": "uid-name-1"
+                    }
                 },
                 "name-last_name-1-0": {
-                    "type": "string"
+                    "type": "string",
+                    "uid": {
+                        "type": "string",
+                        "const": "uid-name-1"
+                    }
                 }
             },
             "required": ["name", "email"],
@@ -3252,7 +3340,7 @@ Name|Type|Required|Description
 ---|---|---|---|---|
 result|boolean|true|request success or fail
 msg|string|true|response message
-data|object|true|JSON Schema for waiver request prefill list
+data|object|true|JSON Schema for waiver request prefill list. Generated properties may include `uid` mapping metadata
 
 ## Send Requests via Email
 
@@ -3352,7 +3440,7 @@ print(r.json())
 
 *Limit: Each Account can send up to 5000 emails every 24 hours. Maximum 100 recipients per request when using prefill_list.*
 
-**Note:** You must provide either `recipient_list` or `prefill_list`, but not both. Use `prefill_list` when you want to pre-fill waiver fields for each recipient.
+**Note:** You must provide either `recipient_list` or `prefill_list`, but not both. Use `prefill_list` when you want to pre-fill waiver fields for each recipient. If the waiver request group was created with `group_prefill_data`, `prefill_list` is not allowed and the shared group-level prefill will be applied to every recipient automatically.
 
 <h3 id="sendGroupEmail-parameters">Parameters</h3>
 
@@ -3361,7 +3449,7 @@ Parameter|In|Type|Required|Description
 group_id|body|string|true|request group id
 reply_to|body|string|true|reply-to email address (must be a verified email in your account)
 recipient_list|body|string|false|comma-separated email list. Either recipient_list or prefill_list is required
-prefill_list|body|array|false|array of recipient objects with prefill data. Either recipient_list or prefill_list is required. Max 100 items. See [Waiver Request Prefill Schema](#get-waiver-request-prefill-schema) for field names
+prefill_list|body|array|false|array of recipient objects with prefill data. Either recipient_list or prefill_list is required. Max 100 items. Not allowed when the group already has `group_prefill_data`. Use property names from the [Waiver Request Prefill Schema](#get-waiver-request-prefill-schema) as keys
 email_note|body|string|false|email note content
 expired_in|body|int|false|link expiration timestamp (unix timestamp)
 skip_send_email|body|boolean|false|if true, creates tracking records without sending emails (default: false)
@@ -3373,6 +3461,8 @@ Name|Type|Required|Description
 name|string|true|recipient display name
 email|string|true|recipient email address
 *field_name*|string|false|any prefillable field from the template (e.g., "name-first_name-1-0")
+
+`uid` is schema metadata used for field mapping. Do not include `uid` inside `prefill_list` items.
 
 > Example request with prefill_list
 
@@ -3464,6 +3554,7 @@ print(r.json())
 Status|Meaning|Description|Schema
 ---|---|---|---|
 200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
+400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Invalid request payload or `prefill_list` conflict|None
 403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
 404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Template not found|None
 
