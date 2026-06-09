@@ -702,7 +702,7 @@ data|[[Template](#schematemplate)]|true|template list
 
 ```shell
 # You can also use wget
-curl -X GET https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl> \
+curl -X GET 'https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>&pending_enabled=<pending_enabled>' \
   -H 'Accept: application/json' \
   -H 'X-Api-Key: <api_key>'
 ```
@@ -715,7 +715,7 @@ const headers = {
   'X-Api-Key': '<api_key>'
 };
 
-fetch('https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>', {
+fetch('https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>&pending_enabled=<pending_enabled>', {
   method: 'GET',
   headers: headers
 }).then(res => res.json())
@@ -734,7 +734,7 @@ headers = {
   'X-Api-Key' => '<api_key>'
 }
 
-result = RestClient.get 'https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>', headers
+result = RestClient.get 'https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>&pending_enabled=<pending_enabled>', headers
 
 p JSON.parse(result)
 ```
@@ -746,23 +746,26 @@ headers = {
   'X-Api-Key': '<api_key>'
 }
 
-r = requests.get('https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>', params={
+r = requests.get('https://api.waiverforever.com/openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>&pending_enabled=<pending_enabled>', params={
 }, headers=headers)
 
 print(r.json())
 
 ```
 
-`GET /openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>`
+`GET /openapi/v1/template/{template_id}/requestWaiver?ttl=<ttl>&pending_enabled=<pending_enabled>`
 
 *Request a waiver to sign*
+
+By default, waivers submitted through a request waiver link are accepted after signing. Set `pending_enabled=true` to make submissions through this tracking link start in pending status. This setting applies only to the tracking link created by the request and requires a plan that supports pending/default waiver state.
 
 <h3 id="requestWaiver-parameters">Parameters</h3>
 
 Parameter|In|Type|Required|Description
 ---|---|---|---|---|
 template_id|path|string|true|template id
-ttl|query|string|false|request waiver expiration time (in seconds), default 86400
+ttl|query|integer|false|request waiver expiration time (in seconds), default 86400
+pending_enabled|query|boolean|false|whether submissions through this tracking link should be created as pending, default false
 
 > Example responses
 
@@ -773,7 +776,9 @@ ttl|query|string|false|request waiver expiration time (in seconds), default 8640
   "data": {
     "tracking_id": "<tracking_id>",
     "request_waiver_url": "<request_waiver_url>",
-    "ttl": 86400
+    "ttl": 86400,
+    "pending_enabled": true,
+    "pending_available": true
   }
 }
 ```
@@ -783,6 +788,7 @@ ttl|query|string|false|request waiver expiration time (in seconds), default 8640
 Status|Meaning|Description|Schema
 ---|---|---|---|
 200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful request|Inline
+400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Invalid pending_enabled value or pending workflow is not included in the current plan|None
 403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|Invalid api key|None
 404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Template not found|None
 
@@ -797,7 +803,9 @@ msg|string|true|response message
 data|object|true|data
 » tracking_id|string|true|tracking id for requested waiver
 » request_waiver_url|string|true|remote signing url for requested waiver
-» ttl|string|true|request waiver expiration time (in seconds)
+» ttl|integer|true|request waiver expiration time (in seconds)
+» pending_enabled|boolean|true|whether submissions through this tracking link will be created as pending
+» pending_available|boolean|true|whether the current plan supports pending request waiver links
 
 ## Get Sample Waiver
 
