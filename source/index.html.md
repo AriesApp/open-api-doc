@@ -4430,9 +4430,13 @@ title|string|true|choice field title
 value|[string]|true|selected choices
 type|string|true|always "multiple_choice_field"
 
-## ContainerField
+<a id="containerfield"></a>
+
+## Repeating Section Field
 
 <a name="schemacontainerfield"></a>
+
+A repeating section field groups fields that can be filled in multiple times, such as details for multiple minors or guardians. The API represents this field as `container_field`.
 
 ```json
 {
@@ -4450,7 +4454,7 @@ type|string|true|always "multiple_choice_field"
 Name|Type|Required|Description
 ---|---|---|---|
 id|integer|true|field id
-title|string|true|container field title
+title|string|true|repeating section field title
 type|string|true|always "container_field"
 result_list|[[Field](#schemafield)]|true|a list of ordinary fields set
 
