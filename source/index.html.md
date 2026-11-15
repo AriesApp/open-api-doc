@@ -4430,10 +4430,9 @@ title|string|true|choice field title
 value|[string]|true|selected choices
 type|string|true|always "multiple_choice_field"
 
-<a id="containerfield"></a>
-
 ## Repeating Section Field
 
+<a id="containerfield"></a>
 <a name="schemacontainerfield"></a>
 
 A repeating section field groups fields that can be filled in multiple times, such as details for multiple minors or guardians. The API represents this field as `container_field`.
