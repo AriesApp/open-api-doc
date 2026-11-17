@@ -8,7 +8,9 @@ VOLUME /srv/slate/source
 COPY Gemfile .
 COPY Gemfile.lock .
 
-RUN apt-get update \
+# Bullseye security packages have moved to the Debian archive.
+RUN sed -i 's|security.debian.org/debian-security|archive.debian.org/debian-security|g' /etc/apt/sources.list \
+    && apt-get update \
     && apt-get install -y --no-install-recommends \
         build-essential \
         nodejs \
