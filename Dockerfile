@@ -1,4 +1,4 @@
-FROM ruby:2.6-slim as slate-build
+FROM ruby:2.6-slim AS slate-build
 
 WORKDIR /srv/slate
 
@@ -8,7 +8,13 @@ VOLUME /srv/slate/source
 COPY Gemfile .
 COPY Gemfile.lock .
 
-RUN apt-get update \
+# This legacy Ruby builder uses Debian 11. Resolve its retired package versions
+# from Debian's archive; keep package signatures and HTTPS verification enabled.
+RUN printf '%s\n' \
+        'deb [check-valid-until=no] https://archive.debian.org/debian bullseye main' \
+        'deb [check-valid-until=no] https://archive.debian.org/debian-security bullseye-security main' \
+        > /etc/apt/sources.list \
+    && apt-get update \
     && apt-get install -y --no-install-recommends \
         build-essential \
         nodejs \

@@ -1,0 +1,77 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: open-api-doc-request-policy
+  namespace: development
+spec:
+  priority: 38
+  workloadSelector:
+    labels:
+      gateway.networking.k8s.io/gateway-name: nginx-migration-pilot
+  configPatches:
+  - applyTo: HTTP_FILTER
+    match:
+      context: GATEWAY
+      listener:
+        portNumber: 80
+        filterChain:
+          filter:
+            name: envoy.filters.network.http_connection_manager
+            subFilter:
+              name: envoy.filters.http.router
+    patch:
+      operation: INSERT_BEFORE
+      value:
+        name: envoy.filters.http.buffer.open-api-doc
+        disabled: true
+        typed_config:
+          '@type': type.googleapis.com/envoy.extensions.filters.http.buffer.v3.Buffer
+          max_request_bytes: 1048576
+  - applyTo: HTTP_ROUTE
+    match:
+      context: GATEWAY
+      routeConfiguration:
+        name: http.80
+        vhost:
+          name: open-api-doc.dev-waiverforeverk8s.com:80
+          route:
+            name: development.open-api-doc-migration-pilot.0
+    patch:
+      operation: MERGE
+      value:
+        typed_per_filter_config:
+          envoy.filters.http.buffer.open-api-doc:
+            '@type': type.googleapis.com/envoy.extensions.filters.http.buffer.v3.BufferPerRoute
+            buffer:
+              max_request_bytes: 1048576
+        request_headers_to_add:
+        - header:
+            key: x-real-ip
+            value: '%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%'
+          append_action: OVERWRITE_IF_EXISTS_OR_ADD
+        - header:
+            key: x-envoy-max-retries
+            value: '0'
+          append_action: OVERWRITE_IF_EXISTS_OR_ADD
+        request_headers_to_remove:
+        - proxy
+        - x-original-forwarded-for
+        - x-envoy-retry-on
+        - x-envoy-retry-grpc-on
+        - x-envoy-max-retries
+        - x-envoy-upstream-rq-timeout-ms
+        - x-envoy-upstream-rq-per-try-timeout-ms
+        - x-envoy-upstream-rq-timeout-alt-response
+        - x-envoy-hedge-on-per-try-timeout
+        route:
+          idle_timeout: 300s
+  - applyTo: CLUSTER
+    match:
+      context: GATEWAY
+      cluster:
+        service: open-api-doc.development.svc.cluster.local
+        portNumber: 80
+    patch:
+      operation: MERGE
+      value:
+        connect_timeout: 5s
