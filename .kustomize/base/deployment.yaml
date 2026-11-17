@@ -18,6 +18,13 @@ spec:
       - name: qs3
         image: 288298902208.dkr.ecr.us-east-1.amazonaws.com/ariesapp/open-api-doc
         imagePullPolicy: Always
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 3
+          periodSeconds: 5
+          timeoutSeconds: 2
         resources:
           limits:
             cpu: 200m

@@ -3,4 +3,6 @@ commonLabels:
 bases:
   - ../../base
 resources:
-  - ingress.yaml
+  - httproute.yaml
+  - https-redirect.yaml
+  - envoyfilter.yaml
