@@ -9,16 +9,11 @@ updates:
     default-days: 3
   groups:
     maintenance:
-      applies-to: version-updates
       patterns:
       - '*'
       update-types:
       - minor
       - patch
-    security:
-      applies-to: security-updates
-      patterns:
-      - '*'
 - package-ecosystem: docker
   directory: /
   schedule:
@@ -28,7 +23,6 @@ updates:
     default-days: 3
   groups:
     maintenance:
-      applies-to: version-updates
       patterns:
       - '*'
       update-types:
